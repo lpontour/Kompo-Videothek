@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{352AAB69-B21C-41EB-A03C-CD08ADDB4879}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompVideoData", "CompVideoData\CompVideoData.csproj", "{CE4CA641-5F7B-4FE3-B7EA-825E01C198F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompVideoLogic", "CompVideoLogic\CompVideoLogic.csproj", "{C6755A18-08D1-42CD-8A70-2503F0B85BAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompVideoDialog", "CompVideoDialog\CompVideoDialog.csproj", "{7416AEFC-B001-440B-872D-E377703C722B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{352AAB69-B21C-41EB-A03C-CD08ADDB4879}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{352AAB69-B21C-41EB-A03C-CD08ADDB4879}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{352AAB69-B21C-41EB-A03C-CD08ADDB4879}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{352AAB69-B21C-41EB-A03C-CD08ADDB4879}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE4CA641-5F7B-4FE3-B7EA-825E01C198F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE4CA641-5F7B-4FE3-B7EA-825E01C198F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE4CA641-5F7B-4FE3-B7EA-825E01C198F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE4CA641-5F7B-4FE3-B7EA-825E01C198F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6755A18-08D1-42CD-8A70-2503F0B85BAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6755A18-08D1-42CD-8A70-2503F0B85BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6755A18-08D1-42CD-8A70-2503F0B85BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6755A18-08D1-42CD-8A70-2503F0B85BAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7416AEFC-B001-440B-872D-E377703C722B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7416AEFC-B001-440B-872D-E377703C722B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7416AEFC-B001-440B-872D-E377703C722B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7416AEFC-B001-440B-872D-E377703C722B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D08C73B-4ADD-43C8-BBE8-4244065F8115}
+	EndGlobalSection
+EndGlobal
