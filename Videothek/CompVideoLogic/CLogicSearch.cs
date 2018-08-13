@@ -32,7 +32,7 @@ namespace VideoLogic
 			return Util.ToArray(genre);
 		}
 
-		public void ReadCars(VideoDtoSearch VideoSearch, out DataTable datatable) 
+		public void ReadVideos(VideoDtoSearch VideoSearch, out DataTable datatable) 
 		{
 			_dataSearch.ReadVideos(VideoSearch, out datatable);
 		}

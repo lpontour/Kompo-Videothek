@@ -6,9 +6,9 @@ namespace VideoLogic.Exceptions
     public class CErrorHandling
     {
 
-		public static void ShowAndStop( string message, string caption ) 
+		public static void ShowAndStop(string message, string caption) 
 		{
-			MessageBox.Show( message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error );
+			MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
 			CErrorHandling.StopExecution();
 		}
 
@@ -16,16 +16,15 @@ namespace VideoLogic.Exceptions
 		private static void StopExecution() 
 		{
 			// Windows Forms Anwendung (Event driven, MessageLoop)
-			if( Application.MessageLoop ) 
-{
+			if(Application.MessageLoop)
+			{
 				Application.Exit(); // Stop MessageLoop ... Dispose
+			 // Konsolenanwendung   
 			}
-			 // Konsolenanwendung       
-        else 
-		{
-            Environment.Exit(-1);
-        }
-      }
-
-   }
+			else 
+			{
+				Environment.Exit(-1);
+			}
+		}
+	}
 }

@@ -51,8 +51,8 @@ namespace VideoLogic.Utils
 			{
 				value = defaultValue;
 			}
-			return value;
 
+			return value;
 		}
 
 		public static object[] ToArray(IList<string> list) 
