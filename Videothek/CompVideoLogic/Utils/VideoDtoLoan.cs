@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VideoLogic.Utils
 {
-    class VideoDtoLoan
+    public class VideoDtoLoan
     {
     }
 }
