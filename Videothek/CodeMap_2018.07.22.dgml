@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DirectedGraph DataVirtualized="True" Layout="Sugiyama" ZoomLevel="-1" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="@2" Category="CodeSchema_Assembly" Bounds="-66.8667016736255,0,102.506666666667,25" CodeSchemaProperty_StrongName="App, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(352aab69-b21c-41eb-a03c-cd08addb4879.OutputPath)" Group="Collapsed" Label="App.exe" />
-    <Node Id="@4" Category="CodeSchema_Assembly" Bounds="145.640064993041,153.778487045399,162.756666666667,25" CodeSchemaProperty_StrongName="CompVideoData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(ce4ca641-5f7b-4fe3-b7ea-825e01c198f9.OutputPath)" Group="Collapsed" Label="CompVideoData.dll" UseManualLocation="True" />
-    <Node Id="@6" Category="CodeSchema_Assembly" Bounds="142.209805020876,-2.22161295260088,166.26,25" CodeSchemaProperty_StrongName="CompVideoLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(c6755a18-08d1-42cd-8a70-2503f0b85baa.OutputPath)" Group="Collapsed" Label="CompVideoLogic.dll" UseManualLocation="True" />
-    <Node Id="@8" Category="CodeSchema_Assembly" Bounds="132.396731659408,-100.557074090798,172.493333333333,25" CodeSchemaProperty_StrongName="CompVideoDialog, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(7416aefc-b001-440b-872d-e377703c722b.OutputPath)" Group="Collapsed" Label="CompVideoDialog.dll" UseManualLocation="True" />
+    <Node Id="@2" Category="CodeSchema_Assembly" Bounds="14.6201250557007,-58.999291970659,102.506666666667,25" CodeSchemaProperty_StrongName="App, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(352aab69-b21c-41eb-a03c-cd08addb4879.OutputPath)" Group="Collapsed" Label="App.exe" UseManualLocation="True" />
+    <Node Id="@4" Category="CodeSchema_Assembly" Bounds="-34.6169784161943,51.0007841524192,162.756666666667,25" CodeSchemaProperty_StrongName="CompVideoData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(ce4ca641-5f7b-4fe3-b7ea-825e01c198f9.OutputPath)" Group="Collapsed" Label="CompVideoData.dll" UseManualLocation="True" />
+    <Node Id="@6" Category="CodeSchema_Assembly" Bounds="-6.4002842218125,106.000784779619,166.26,25" CodeSchemaProperty_StrongName="CompVideoLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(c6755a18-08d1-42cd-8a70-2503f0b85baa.OutputPath)" Group="Collapsed" Label="CompVideoLogic.dll" UseManualLocation="True" />
+    <Node Id="@8" Category="CodeSchema_Assembly" Bounds="20.6807613574171,-3.99921667636722,172.493333333333,25" CodeSchemaProperty_StrongName="CompVideoDialog, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(7416aefc-b001-440b-872d-e377703c722b.OutputPath)" Group="Collapsed" Label="CompVideoDialog.dll" UseManualLocation="True" />
   </Nodes>
   <Links>
-    <Link Source="@2" Target="@4" Category="CodeMap_ProjectReference" Bounds="4.10913733397651,25,195.584965977112,123.960520792425" />
-    <Link Source="@2" Target="@6" Category="CodeMap_ProjectReference" Bounds="35.6399649930412,11.1278315624987,97.5702225497508,0.899607451443551" />
-    <Link Source="@2" Target="@8" Category="CodeMap_ProjectReference" Bounds="13.5065082054947,-72.0069895735247,167.746771745184,72.0069895735247" />
-    <Link Source="@4" Target="@6" Category="CodeMap_ProjectReference" Bounds="225.571143856975,31.777866073431,1.31275188690793,122.000620971968" />
-    <Link Source="@8" Target="@6" Category="CodeMap_ProjectReference" Bounds="219.494618045962,-75.5570740907982,4.38250517732516,64.3562566006265" />
+    <Link Source="@2" Target="@4" Category="CodeMap_ProjectReference" Bounds="10.5743188858032,-33.9992179870605,34.0000104904175,77.4795036315918" />
+    <Link Source="@2" Target="@6" Category="CodeMap_ProjectReference" Bounds="-44.7621879577637,-33.9992179870605,94.8871765136719,137.681545257568" />
+    <Link Source="@2" Target="@8" Category="CodeMap_ProjectReference" Bounds="75.2831604345022,-33.9992164209695,16.9787960858955,22.7834890583" />
+    <Link Source="@4" Target="@6" Category="CodeMap_ProjectReference" Bounds="53.5648542675111,76.0007835790305,12.0469736432091,22.0979683955267" />
+    <Link Source="@8" Target="@6" Category="CodeMap_ProjectReference" Bounds="114.295219421387,21.0007839202881,21.9038162231445,81.3725681304932" />
   </Links>
   <Categories>
     <Category Id="CodeMap_ProjectReference" Label="Projektverweis" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Verweis durch" OutgoingActionLabel="Verweise" />
