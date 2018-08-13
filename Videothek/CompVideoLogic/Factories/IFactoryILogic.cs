@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VideoLogic.Factories
 {
-    interface IFactoryILogic
+    public interface IFactoryILogic
     {
     }
 }

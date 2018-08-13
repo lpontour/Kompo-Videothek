@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VideoLogic
 {
-    interface IDataSearch
+    public interface IDataSearch
     {
     }
 }

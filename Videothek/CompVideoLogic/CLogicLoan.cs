@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VideoLogic
 {
-    class CLogicLoan
+    internal class CLogicLoan
     {
     }
 }

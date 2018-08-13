@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VideoLogic
 {
-    interface IData
+    public interface IData
     {
     }
 }

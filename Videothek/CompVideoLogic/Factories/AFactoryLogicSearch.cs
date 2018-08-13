@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VideoLogic.Factories
 {
-    class AFactoryLogicSearch
+    abstract internal class AFactoryLogicSearch
     {
     }
 }
