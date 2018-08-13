@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace VideoLogic.Factories
 {
-    abstract internal class AFactoryLogicSearch
+    public abstract class AFactoryLogicSearch
     {
-    }
+		public static void Create(ILogic logic, IDataSearch dataSearch) 
+		{
+			if(logic is CLogic)
+			{
+				(logic as CLogic).Search = new CLogicSearch(dataSearch);
+			}      
+		} 
+	}
 }

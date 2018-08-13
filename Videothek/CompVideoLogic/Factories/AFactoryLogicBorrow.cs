@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace VideoLogic.Factories
 {
-    abstract internal class AFactoryLogicBorrow
+    public abstract class AFactoryLogicBorrow
     {
+		public static void Create(ILogic logic, IDataLoan dataLoan) 
+		{
+			if(logic is CLogic)
+			{
+				(logic as CLogic).Loan = new CLogicSearch(dataLoan);
+			}      
+		} 
     }
 }

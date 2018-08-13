@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace VideoLogic.Factories
 {
-    public class CFactoryCLogic
+    public class CFactoryCLogic : IFactoryILogic
     {
+		public ILogic Create(IData data) 
+		{
+			return new CLogic(data);
+		}
     }
 }
