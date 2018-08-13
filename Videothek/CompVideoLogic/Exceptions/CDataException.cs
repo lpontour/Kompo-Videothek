@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace VideoLogic.Exceptions
 {
-    class CDataException
+    public class CDataException : Exception
     {
+		public CDataException( string message ) : base( message )  {}
     }
 }
