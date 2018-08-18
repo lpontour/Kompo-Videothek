@@ -28,12 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.dataGridViewVideoTable = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVideoTable)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // dataGridViewVideoTable
+            // 
+            this.dataGridViewVideoTable.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dataGridViewVideoTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewVideoTable.Location = new System.Drawing.Point(12, 12);
+            this.dataGridViewVideoTable.Name = "dataGridViewVideoTable";
+            this.dataGridViewVideoTable.Size = new System.Drawing.Size(776, 426);
+            this.dataGridViewVideoTable.TabIndex = 0;
+            // 
+            // CDialogSearchResult
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dataGridViewVideoTable);
+            this.Name = "CDialogSearchResult";
             this.Text = "CDialogSearchResult";
+            this.Load += new System.EventHandler(this.CDialogSearchResult_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVideoTable)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView dataGridViewVideoTable;
     }
 }

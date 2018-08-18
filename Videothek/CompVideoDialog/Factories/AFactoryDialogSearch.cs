@@ -15,7 +15,7 @@ namespace VideoDialog.Factories
         {
             if(dialogMain is CDialogMain)
             {
-                (dialogMain as CDialogMain).DialogSearch = new CDialogSearch(dialogMain);
+                (dialogMain as CDialogMain).DialogSearch = new CDialogSearch(logicSearch, dialogMain);
             }
         }
 

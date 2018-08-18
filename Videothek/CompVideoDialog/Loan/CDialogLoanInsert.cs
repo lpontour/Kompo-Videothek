@@ -30,6 +30,24 @@ namespace VideoDialog.Loan
         #endregion
 
         #region Eventhandler
+        private void buttonConfirm_Click(object sender, EventArgs e)
+        {
+            VideoDtoLoan videoLoan = _dialogMain.VideoLoan;
+            videoLoan.Id = Util.CreateGUID();
+            videoLoan.Title = textBoxTitle.Text();
+            videoLoan.Borrower = textBoxBorrower.Text();
+            videoLoan.ReleaseDate = Util.ParseDate(this.textBoxReturnDate,0);
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
         #endregion
+
     }
 }

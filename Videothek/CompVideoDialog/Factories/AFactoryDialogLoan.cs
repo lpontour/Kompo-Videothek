@@ -15,21 +15,21 @@ namespace VideoDialog.Factories
         {
             if (dialogMain is CDialogMain)
             {
-                (dialogMain as CDialogMain).DialogLoanInsert = new CDialogLoanInsert(dialogMain);
+                (dialogMain as CDialogMain).DialogLoanInsert = new CDialogLoanInsert(logic, dialogMain);
             }
         }
         public static void LoanUpdateCreate(ILogic logic, IDialog dialogMain)
         {
             if (dialogMain is CDialogMain)
             {
-                (dialogMain as CDialogMain).DialogLoanUpdate = new CDialogLoanUpdate(dialogMain);
+                (dialogMain as CDialogMain).DialogLoanUpdate = new CDialogLoanUpdate(logic, dialogMain);
             }
         }
         public static void LoanDeleteCreate(ILogic logic, IDialog dialogMain)
         {
             if (dialogMain is CDialogMain)
             {
-                (dialogMain as CDialogMain).DialogLoanDelete = new CDialogLoanDelete(dialogMain);
+                (dialogMain as CDialogMain).DialogLoanDelete = new CDialogLoanDelete(logic, dialogMain);
             }
         }
     }

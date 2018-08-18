@@ -39,6 +39,27 @@ namespace VideoDialog.Search
         #endregion
 
         #region Eventhandler
+
         #endregion
+
+        private void CDialogSearchResult_Load(object sender, EventArgs e)
+        {
+            // set datasource
+            this.dataGridViewVideoTable.DataSource = ResultTable;
+
+            // set primary key and foreign keys columns invisible
+            foreach (DataGridViewColumn column in this.dataGridViewVideoTable.Columns)
+            {
+                if (column.Name.Substring(0, 2) == "pk" ||
+                    column.Name.Substring(0, 2) == "fk")
+                    column.Visible = false;
+            }
+
+            // column width auto
+            foreach (DataGridViewColumn dataGridViewColumn in this.dataGridViewVideoTable.Columns)
+            {
+                dataGridViewColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            }
+        }
     }
 }
