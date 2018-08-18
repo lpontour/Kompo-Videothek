@@ -1,12 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+
+using VideoLogic;
+using VideoLogic.Exceptions;
 
 namespace VideoDialog.Search
 {
-    class CDialogSearchResult
+    internal partial class CDialogSearchResult : Form
     {
+        #region fields
+        private CDialogMain _dialogMain;
+        #endregion
+
+        #region properties
+        internal DataTable ResultTable { get; set; }
+        #endregion
+
+        #region ctor
+        internal CDialogSearchResult(IDialog dialogMain)
+        {
+            InitializeComponent();
+            if (dialogMain is CDialogMain)
+            {
+                _dialogMain = dialogMain as CDialogMain;
+            }
+            else
+            {
+                CErrorHandling.ShowAndStop("Fehler beim Initialisieren von CDialogSearchResult", "Programmabbruch");
+            }
+        }
+        #endregion
+
+        #region Eventhandler
+        #endregion
     }
 }
