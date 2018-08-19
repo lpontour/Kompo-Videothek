@@ -121,7 +121,7 @@
             this.buttonCancel.TabIndex = 14;
             this.buttonCancel.Text = "Abbrechen";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
             // buttonConfirm
             // 
@@ -132,7 +132,7 @@
             this.buttonConfirm.TabIndex = 15;
             this.buttonConfirm.Text = "Bestätigen";
             this.buttonConfirm.UseVisualStyleBackColor = true;
-            this.buttonConfirm.Click += new System.EventHandler(this.buttonConfirm_Click);
+            this.buttonConfirm.Click += new System.EventHandler(this.ButtonConfirm_Click);
             // 
             // CDialogLoanInsert
             // 

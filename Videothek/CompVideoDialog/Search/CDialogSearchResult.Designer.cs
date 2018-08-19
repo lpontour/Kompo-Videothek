@@ -38,17 +38,17 @@
             this.dataGridViewVideoTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewVideoTable.Location = new System.Drawing.Point(12, 12);
             this.dataGridViewVideoTable.Name = "dataGridViewVideoTable";
-            this.dataGridViewVideoTable.Size = new System.Drawing.Size(776, 426);
+            this.dataGridViewVideoTable.Size = new System.Drawing.Size(760, 426);
             this.dataGridViewVideoTable.TabIndex = 0;
             // 
             // CDialogSearchResult
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(784, 507);
             this.Controls.Add(this.dataGridViewVideoTable);
             this.Name = "CDialogSearchResult";
-            this.Text = "CDialogSearchResult";
+            this.Text = "Suchergebnisse";
             this.Load += new System.EventHandler(this.CDialogSearchResult_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVideoTable)).EndInit();
             this.ResumeLayout(false);

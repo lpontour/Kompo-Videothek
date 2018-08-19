@@ -22,10 +22,29 @@ namespace VideoDialog
         private VideoDtoSearch _videoSearch;
         private VideoDtoLoan _videoLoan;
         private ILogic _logic;
+        private object[] _id;
+        private object[] _arrayTitle;
+        private object[] _arrayGenre;
+        private object[] _borrowingRate;
+        private object[] _releaseYear;
+        private object[] _runningTime;
+        private object[] _rated;
+        private object[] _borrower;
+        private object[] _returnDate;
+
         #endregion
 
         #region properties
-        // Anzeigen Treffer?
+        internal object[] ID { get { return _id; } }
+        internal object[] Titel { get { return _arrayTitle; } }
+        internal object[] Genre { get { return _arrayGenre; } }
+        internal object[] BorrowingRate { get { return _borrowingRate; } }
+        internal object[] ReleaseYear { get { return _releaseYear; } }
+        internal object[] RunningTime { get { return _runningTime; } }
+        internal object[] Rated { get { return _rated; } }
+        internal object[] Borrower { get { return _borrower; } }
+        internal object[] ReturnDate { get { return _returnDate; } }
+
         internal VideoDtoSearch VideoSearch { get { return _videoSearch; } }
         internal VideoDtoLoan VideoLoan { get { return _videoLoan; } }
         internal CDialogSearch DialogSearch { get; set; }

@@ -111,6 +111,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Search\CDialogSearch.resx">
+      <DependentUpon>CDialogSearch.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Search\CDialogSearchResult.resx">
       <DependentUpon>CDialogSearchResult.cs</DependentUpon>
     </EmbeddedResource>

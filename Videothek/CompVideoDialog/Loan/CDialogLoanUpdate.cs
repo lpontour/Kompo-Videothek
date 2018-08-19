@@ -30,7 +30,7 @@ namespace VideoDialog.Loan
         #endregion
 
         #region Eventhandler
-        private void buttonConfirm_Click(object sender, EventArgs e)
+        private void ButtonConfirm_Click(object sender, EventArgs e)
         {
             VideoDtoLoan videoLoan = _dialogMain.VideoLoan;
             videoLoan.Id = Util.CreateGUID();
@@ -42,11 +42,12 @@ namespace VideoDialog.Loan
             this.Close();
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
         #endregion
+
     }
 }

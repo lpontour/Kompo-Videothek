@@ -30,7 +30,7 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.suchenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bearbeitenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ausleiheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.neueAusleiheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ausleiheVerlängernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rückgabeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,7 +41,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.suchenToolStripMenuItem,
-            this.bearbeitenToolStripMenuItem});
+            this.ausleiheToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(784, 24);
@@ -55,15 +55,15 @@
             this.suchenToolStripMenuItem.Text = "Suchen";
             this.suchenToolStripMenuItem.Click += new System.EventHandler(this.SuchenToolStripMenuItem_Click);
             // 
-            // bearbeitenToolStripMenuItem
+            // ausleiheToolStripMenuItem
             // 
-            this.bearbeitenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ausleiheToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.neueAusleiheToolStripMenuItem,
             this.ausleiheVerlängernToolStripMenuItem,
             this.rückgabeToolStripMenuItem});
-            this.bearbeitenToolStripMenuItem.Name = "bearbeitenToolStripMenuItem";
-            this.bearbeitenToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
-            this.bearbeitenToolStripMenuItem.Text = "Ausleihe";
+            this.ausleiheToolStripMenuItem.Name = "ausleiheToolStripMenuItem";
+            this.ausleiheToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.ausleiheToolStripMenuItem.Text = "Ausleihe";
             // 
             // neueAusleiheToolStripMenuItem
             // 
@@ -78,7 +78,6 @@
             this.ausleiheVerlängernToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ausleiheVerlängernToolStripMenuItem.Text = "Ausleihe verlängern";
             this.ausleiheVerlängernToolStripMenuItem.Click += new System.EventHandler(this.AusleiheVerlängernToolStripMenuItem_Click);
-
             // 
             // rückgabeToolStripMenuItem
             // 
@@ -86,7 +85,6 @@
             this.rückgabeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.rückgabeToolStripMenuItem.Text = "Rückgabe";
             this.rückgabeToolStripMenuItem.Click += new System.EventHandler(this.RückgabeToolStripMenuItem_Click);
-
             // 
             // CDialogMain
             // 
@@ -94,7 +92,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::VideoDialog.Properties.Resources.Videothek_verleihhüllen;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.ClientSize = new System.Drawing.Size(784, 507);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "CDialogMain";
@@ -110,7 +108,7 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem suchenToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bearbeitenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ausleiheToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem neueAusleiheToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ausleiheVerlängernToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rückgabeToolStripMenuItem;
