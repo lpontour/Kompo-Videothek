@@ -32,6 +32,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,14 +42,51 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CDialogMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CDialogMain.Designer.cs">
+      <DependentUpon>CDialogMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Factories\AFactoryDialogLoan.cs" />
     <Compile Include="Factories\AFactoryDialogSearch.cs" />
     <Compile Include="Factories\CFactoryCDialog.cs" />
-    <Compile Include="Loan\CDialogLoanBorrow.cs" />
-    <Compile Include="Loan\CDialogLoanSearch.cs" />
+    <Compile Include="Loan\CDialogLoanDelete.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loan\CDialogLoanDelete.Designer.cs">
+      <DependentUpon>CDialogLoanDelete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Loan\CDialogLoanInsert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loan\CDialogLoanInsert.Designer.cs">
+      <DependentUpon>CDialogLoanInsert.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Loan\CDialogLoanUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loan\CDialogLoanUpdate.Designer.cs">
+      <DependentUpon>CDialogLoanUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Search\CDialogSearch.cs" />
-    <Compile Include="Search\CDialogSearchResult.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\CDialogSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Search\CDialogSearch.Designer.cs">
+      <DependentUpon>CDialogSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Search\CDialogSearchResult.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Search\CDialogSearchResult.Designer.cs">
+      <DependentUpon>CDialogSearchResult.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CompVideoLogic\CompVideoLogic.csproj">
@@ -55,6 +94,33 @@
       <Name>CompVideoLogic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CDialogMain.resx">
+      <DependentUpon>CDialogMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Loan\CDialogLoanDelete.resx">
+      <DependentUpon>CDialogLoanDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Loan\CDialogLoanInsert.resx">
+      <DependentUpon>CDialogLoanInsert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Loan\CDialogLoanUpdate.resx">
+      <DependentUpon>CDialogLoanUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Search\CDialogSearch.resx">
+      <DependentUpon>CDialogSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Search\CDialogSearchResult.resx">
+      <DependentUpon>CDialogSearchResult.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Videothek_verleihhüllen.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
