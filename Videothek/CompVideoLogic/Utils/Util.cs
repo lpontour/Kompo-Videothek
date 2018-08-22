@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace VideoLogic.Utils
 {
@@ -48,6 +49,19 @@ namespace VideoLogic.Utils
 			s = s.Replace(".", "");
 
 			if(!int.TryParse(s, out value)) 
+			{
+				value = defaultValue;
+			}
+
+			return value;
+		}
+
+		public static DateTime ParseDate(string s, DateTime defaultValue)
+		{
+			DateTime value;
+			s = s.Replace(".", "");
+
+			if (!DateTime.TryParse(s, out value))
 			{
 				value = defaultValue;
 			}
