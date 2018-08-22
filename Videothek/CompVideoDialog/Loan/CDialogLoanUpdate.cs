@@ -33,9 +33,9 @@ namespace VideoDialog.Loan
         private void ButtonConfirm_Click(object sender, EventArgs e)
         {
             VideoDtoLoan videoLoan = _dialogMain.VideoLoan;
-            videoLoan.Id = Util.CreateGUID();
-            videoLoan.Title = textBoxTitle.Text();
-            videoLoan.Borrower = textBoxBorrower.Text();
+            videoLoan.Id = textBoxID.Text; ;
+            videoLoan.Title = textBoxTitle.Text;
+            videoLoan.Borrower = textBoxBorrower.Text;
             videoLoan.ReleaseDate = Util.ParseDate(this.textBoxReturnDate, 0);
 
             this.DialogResult = DialogResult.OK;
