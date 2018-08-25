@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VideoData.Access
+﻿namespace VideoData.Access
 {
-    class CData
+    class CData : AData
     {
+        #region ctor
+        internal CData(string connection) : base(connection)
+        {
+            _provider = "System.Data.OleDb";
+            _dataSearch = new CDataSearch(this);
+            _dataLoan = new CDataLoan(this);
+        }
+        #endregion
     }
 }

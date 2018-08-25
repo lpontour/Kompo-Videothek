@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VideoData.Access
+﻿namespace VideoData.Access
 {
-    class CDataLoan
+    class CDataLoan : ADataLoan
     {
+        internal CDataLoan(AData data) : base(data)
+        {
+        }
     }
 }
