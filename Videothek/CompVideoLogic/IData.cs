@@ -7,6 +7,6 @@ namespace VideoLogic
 		IDataSearch Search {get;}
 		IDataLoan Loan {get;}
 		void Init();
-		void InitApp(ref int nVideos, out IList<string> makers);
+		//void InitApp(ref int nVideos, out IList<string> makers);
     }
 }

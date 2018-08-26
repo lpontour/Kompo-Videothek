@@ -6,7 +6,7 @@
 		{
 			if(logic is CLogic)
 			{
-				(logic as CLogic).Loan = new CLogicSearch(dataLoan);
+				(logic as CLogic).Loan = new CLogicLoan(dataLoan);
 			}      
 		} 
     }

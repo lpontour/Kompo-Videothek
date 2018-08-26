@@ -23,20 +23,22 @@ namespace VideoLogic
 		#endregion
 
 		#region interface ILogic methods
-		 // 2. Initialisierung der Anwendung
-		 // Anzahl Autos in der DB ermitteln(=nCars)    
-		// Liste der Hersteller (=makers) ermitteln, als object Array
-		public void InitApp(ref int nVideos, out object[] arrayMakers) 
+		// 2. Initialisierung der Anwendung
+		// Anzahl Autos in der DB ermitteln(=nVideos)    
+		// Liste der Titel (=titels) ermitteln, als object Array
+		/*
+		public void InitApp(ref int nVideos, out object[] arrayTitels) 
 		{
-			_data.InitApp(ref nVideos, out IList<string> makers);
+			_data.InitApp(ref nVideos, out IList<string> titels);
 
-			if(makers == null)
+			if(titels == null)
 			{
-				throw new CDataException("Produzentenliste ist leer");
+				throw new CDataException("Titelliste ist leer");
 			}
             
-			arrayMakers = Util.ToArray(makers);
-		}      
+			arrayTitels = Util.ToArray(titels);
+		} 
+		*/
 		#endregion
     }
 }

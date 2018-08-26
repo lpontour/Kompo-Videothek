@@ -4,6 +4,6 @@
     {
 		ILogicSearch Search {get;}
 		ILogicLoan Loan {get;}
-		void InitApp(ref int _nVideos, out object[] _arrayMakers);
+		//void InitApp(ref int _nVideos, out object[] _arrayMakers);
     }
 }
