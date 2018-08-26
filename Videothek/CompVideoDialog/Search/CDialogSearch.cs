@@ -135,7 +135,7 @@ namespace VideoDialog.Search
             // Alle IDs der Filme aus der Datenbank lesen und in der 
             // comboBoxID anzeigen 
             comboBoxID.Items.Clear();
-            comboBoxID.Items.AddRange(_logicSearch.ReadID(id));
+            comboBoxID.Items.AddRange(_logicSearch.ReadID(Util.ParseInt(id,0)));
             // ComboBox Text auf das erste Element setzen
             if (comboBoxID.Items.Count > 0)
                 comboBoxID.Text = comboBoxID.Items[0].ToString();
@@ -166,7 +166,7 @@ namespace VideoDialog.Search
             // Auswahl Preis
             string borrowingRate = comboBoxBorrowingRate.Text;
             comboBoxBorrowingRate.Items.Clear();
-            comboBoxBorrowingRate.Items.AddRange(_logicSearch.ReadBorrowingRate(borrowingRate));
+            comboBoxBorrowingRate.Items.AddRange(_logicSearch.ReadBorrowingrate(Util.ParseDouble(borrowingRate,10.0)));
             if (comboBoxBorrowingRate.Items.Count > 0)
                 comboBoxBorrowingRate.Text = comboBoxBorrowingRate.Items[0].ToString();
         }
@@ -176,7 +176,7 @@ namespace VideoDialog.Search
             // Auswahl Erscheinungsjahr
             string releaseYear = comboBoxReleaseYear.Text;
             comboBoxReleaseYear.Items.Clear();
-            comboBoxReleaseYear.Items.AddRange(_logicSearch.ReadReleaseYear(releaseYear));
+            comboBoxReleaseYear.Items.AddRange(_logicSearch.ReadReleaseYear(Util.ParseInt(releaseYear,2000)));
             if (comboBoxReleaseYear.Items.Count > 0)
                 comboBoxReleaseYear.Text = comboBoxReleaseYear.Items[0].ToString();
         }
@@ -186,7 +186,7 @@ namespace VideoDialog.Search
             // Auswahl Laufzeit
             string runningTime = comboBoxRunningTime.Text;
             comboBoxRunningTime.Items.Clear();
-            comboBoxRunningTime.Items.AddRange(_logicSearch.ReadRunningTime(runningTime));
+            comboBoxRunningTime.Items.AddRange(_logicSearch.ReadRunningTime(Util.ParseInt(runningTime,120)));
             if (comboBoxRunningTime.Items.Count > 0)
                 comboBoxRunningTime.Text = comboBoxRunningTime.Items[0].ToString();
         }
@@ -196,7 +196,7 @@ namespace VideoDialog.Search
             // Auswahl FSK
             string rated = comboBoxRated.Text;
             comboBoxRated.Items.Clear();
-            comboBoxRated.Items.AddRange(_logicSearch.ReadRated(rated));
+            comboBoxRated.Items.AddRange(_logicSearch.ReadRated(Util.ParseInt(rated, 0)));
             if (comboBoxRated.Items.Count > 0)
                 comboBoxRated.Text = comboBoxRated.Items[0].ToString();
         }
@@ -216,7 +216,7 @@ namespace VideoDialog.Search
             // Auswahl Rückgabedatum
             string returnDate = comboBoxReturnDate.Text;
             comboBoxReturnDate.Items.Clear();
-            comboBoxReturnDate.Items.AddRange(_logicSearch.ReadReturnDate(returnDate));
+            comboBoxReturnDate.Items.AddRange(_logicSearch.ReadReturnDate(Util.ParseDate(returnDate,DateTime.Now)));
             if (comboBoxReturnDate.Items.Count > 0)
                 comboBoxReturnDate.Text = comboBoxReturnDate.Items[0].ToString();
         }
@@ -224,7 +224,7 @@ namespace VideoDialog.Search
         private void ButtonConfirm_Click(object sender, EventArgs e)
         {
             VideoDtoSearch videoSearch = _dialogMain.VideoSearch;
-            videoSearch.ID = comboBoxID.Text;
+            videoSearch.ID = Util.ParseInt(comboBoxID.Text, videoSearch.ID);
             videoSearch.Title = comboBoxTitle.Text;
             videoSearch.Genre = comboBoxGenre.Text;
             videoSearch.BorrowingRate = Util.ParseDouble(comboBoxBorrowingRate.Text, videoSearch.BorrowingRate);

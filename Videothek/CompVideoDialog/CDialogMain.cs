@@ -109,7 +109,7 @@ namespace VideoDialog
                 if (dialogResult == DialogResult.OK)
                 {
                     _logic.Loan.InsertVideoTable(_videoLoan);
-                    _logic.Search.ReadVideos(_videoLoan, out dataTable);
+                    _logic.Search.ReadVideo(_videoLoan, out dataTable);
                     DialogSearchResult.ResultTable = dataTable;
                     dialogResult = DialogSearchResult.ShowDialog();
                 }
@@ -136,7 +136,7 @@ namespace VideoDialog
                 if (dialogResult == DialogResult.OK)
                 {
                     _logic.Loan.UpdateVideoTable(_videoLoan);
-                    _logic.Search.ReadVideos(_videoLoan, out dataTable);
+                    _logic.Search.ReadVideo(_videoLoan, out dataTable);
                     DialogSearchResult.ResultTable = dataTable;
                     dialogResult = DialogSearchResult.ShowDialog();
                 }
@@ -163,7 +163,7 @@ namespace VideoDialog
                 if (dialogResult == DialogResult.OK)
                 {
                     _logic.Loan.DeleteVideoTable(_videoLoan);
-                    _logic.Search.ReadVideos(_videoLoan, out dataTable);
+                    _logic.Search.ReadVideo(_videoLoan, out dataTable);
                     DialogSearchResult.ResultTable = dataTable;
                     dialogResult = DialogSearchResult.ShowDialog();
                 }
