@@ -11,6 +11,11 @@ namespace VideoLogic.Utils
 			ID = id;
 		}
 
+		public VideoDtoLoan ()
+		{
+
+		}
+
 		public VideoDtoLoan(DataRow dataRow)
 		{
 			ID = Convert.ToInt32(dataRow.ItemArray[1]);
