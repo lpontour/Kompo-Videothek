@@ -1,13 +1,14 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using VideoLogic;
 using VideoLogic.Exceptions;
 namespace VideoData
 {
-    public class AData : IData
+    internal abstract class AData : IData
     {
         #region fields      
         protected string _connection;
@@ -50,22 +51,22 @@ namespace VideoData
             _dataSearch.Init(_dbProviderFactory, _dbConnection, _dbCommand);
             _dataLoan.Init(_dbProviderFactory, _dbConnection, _dbCommand);
         }
-        public void InitApp(ref int nCars, out IList<string> makers)
+        public void InitApp(ref int nVideos, out IList<string> genres)
         {
             AData.Open(_dbConnection);
             _dbCommand.CommandText = "SELECT COUNT(*) FROM VideoTable;";
             _dbCommand.CommandType = CommandType.Text;
-            nCars = (int)_dbCommand.ExecuteScalar();
+            nVideos = (int)_dbCommand.ExecuteScalar();
             AData.Close(_dbConnection);
             AData.Open(_dbConnection);
-            makers = new List<string>();
+            genres = new List<string>();
             _dbCommand.CommandText = "SELECT DISTINCT Genre FROM VideoTable ORDER BY Genre;";
             _dbCommand.CommandType = CommandType.Text;
             DbDataReader dbDataReader = _dbCommand.ExecuteReader();
             if (dbDataReader != null)
             {
                 while (dbDataReader.Read())
-                    makers.Add(dbDataReader[0].ToString());
+                    genres.Add(dbDataReader[0].ToString());
             }
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
@@ -107,7 +108,6 @@ namespace VideoData
             dbSelectCommand.CommandText = sql;
             DbDataAdapter dbDataAdapter = dbProviderFactory.CreateDataAdapter();
             dbDataAdapter.SelectCommand = dbSelectCommand;
-            // --- fertig, wenn keine schreibenden Datenbankzugriffe erforderlich ----
             DbCommandBuilder dbCommandBuilder = dbProviderFactory.CreateCommandBuilder();
             dbCommandBuilder.DataAdapter = dbDataAdapter;
             dbDataAdapter.InsertCommand = dbCommandBuilder.GetInsertCommand();

@@ -1,6 +1,6 @@
 ﻿namespace VideoData.Access
 {
-    class CData : AData
+    internal class CData : AData
     {
         #region ctor
         internal CData(string connection) : base(connection)

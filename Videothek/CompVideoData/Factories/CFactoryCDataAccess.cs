@@ -7,7 +7,7 @@ using VideoData;
 using VideoData.Access;
 namespace VideoData.Factories
 {
-    class CFactoryCDataAccess : IFactoryIData
+    public class CFactoryCDataAccess : IFactoryIData
     {
 
         public IData Create(string connection)

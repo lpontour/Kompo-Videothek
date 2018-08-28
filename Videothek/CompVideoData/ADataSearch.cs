@@ -9,7 +9,7 @@ using VideoLogic;
 using VideoLogic.Utils;
 namespace VideoData
 {
-    class ADataSearch : IDataSearch
+    internal abstract class ADataSearch : IDataSearch
     {
         #region fields
         protected AData _data;
@@ -31,23 +31,25 @@ namespace VideoData
             _dbConnection = dbConnection;
             _dbCommand = dbCommand;
         }
-        public void ReadGenre(string video, out IList<string> genre)
+
+        public void ReadGenre(string genre, out IList<string> listGenre)
         {
-            genre = new List<string>();
+            listGenre = new List<string>();
             AData.Open(_dbConnection);
-            this.SqlGetGenre(video, _dbCommand);
+            this.SqlGetGenre(genre, _dbCommand);
             DbDataReader dbDataReader = _dbCommand.ExecuteReader();
             if (dbDataReader.HasRows)
             {
                 while (dbDataReader.Read())
-                    genre.Add(dbDataReader[0].ToString());
+                    listGenre.Add(dbDataReader[0].ToString());
             }
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
         }
-        public void ReadVideos(VideoDtoSearch videoSearch, out IList<Video> videos)
+
+        public void ReadVideos(VideoDtoSearch videoSearch, out IList<Loan> videos)
         {
-            videos = new List<Video>();
+            videos = new List<Loan>();
             AData.Open(_dbConnection);
             this.SqlSelectVideo(videoSearch, _dbCommand);
             DbDataReader dbDataReader = _dbCommand.ExecuteReader();
@@ -56,16 +58,12 @@ namespace VideoData
                 int nColumns = dbDataReader.FieldCount;
                 while (dbDataReader.Read())
                 {
-                    Video video = new Video(dbDataReader.GetInt32(0))
+                    Loan video = new Loan()
                     {
+                        ID = dbDataReader.GetInt32(0),
                         Title = dbDataReader.GetString(1),
-                        Genre = dbDataReader.GetString(2),
-                        BorrowingRate = dbDataReader.GetDouble(3),
-                        ReleaseYear = dbDataReader.GetInt32(4),
-                        RunningTime = dbDataReader.GetInt32(5),
-                        Rated = dbDataReader.GetInt32(6),
-                        Borrower = dbDataReader.GetString(6),
-                        ReturnDate = dbDataReader.GetDateTime(6)
+                        Borrower = dbDataReader.GetString(2),
+                        ReturnDate = dbDataReader.GetDateTime(3)
                     };
                     videos.Add(video);
                 }
@@ -73,6 +71,7 @@ namespace VideoData
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
         }
+
         public void ReadVideos(VideoDtoSearch videoSearch, out DataTable dataTableVideos)
         {
             dataTableVideos = new DataTable("Videos");
@@ -81,6 +80,127 @@ namespace VideoData
             dbDataAdapter.SelectCommand = _dbCommand;
             int records = dbDataAdapter.Fill(dataTableVideos);
         }
+
+        public void ReadBorrower(string borrower, out IList<string> ListBorrower)
+        {
+            ListBorrower = new List<string>();
+            AData.Open(_dbConnection);
+            this.SqlGetBorrower(borrower, _dbCommand);
+            DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+            if (dbDataReader.HasRows)
+            {
+                while (dbDataReader.Read())
+                    ListBorrower.Add(dbDataReader[0].ToString());
+            }
+            if (!dbDataReader.IsClosed) dbDataReader.Close();
+            AData.Close(_dbConnection);
+        }
+
+        public void ReadBorrowingRate(double BorrowingRate, out IList<double> ListBorrowingRate)
+        {
+            ListBorrowingRate = new List<double>();
+            AData.Open(_dbConnection);
+            this.SqlGetBorrowingRate(BorrowingRate, _dbCommand);
+            DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+            if (dbDataReader.HasRows)
+            {
+                while (dbDataReader.Read())
+                    ListBorrowingRate.Add(dbDataReader.GetDouble(0));
+            }
+            if (!dbDataReader.IsClosed) dbDataReader.Close();
+            AData.Close(_dbConnection);
+        }
+
+        public void ReadID(int ID, out IList<int> ListID)
+        {
+            ListID = new List<int>();
+            AData.Open(_dbConnection);
+            this.SqlGetID(ID, _dbCommand);
+            DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+            if (dbDataReader.HasRows)
+            {
+                while (dbDataReader.Read())
+                    ListID.Add(dbDataReader.GetInt32(0));
+            }
+            if (!dbDataReader.IsClosed) dbDataReader.Close();
+            AData.Close(_dbConnection);
+        }
+
+        public void ReadRated(int Rated, out IList<int> ListRated)
+        {
+            ListRated = new List<int>();
+            AData.Open(_dbConnection);
+            this.SqlGetRated(Rated, _dbCommand);
+            DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+            if (dbDataReader.HasRows)
+            {
+                while (dbDataReader.Read())
+                    ListRated.Add(dbDataReader.GetInt32(0));
+            }
+            if (!dbDataReader.IsClosed) dbDataReader.Close();
+            AData.Close(_dbConnection);
+        }
+
+        public void ReadReleaseYear(int ReleaseYear, out IList<int> ListReleaseYear)
+        {
+            ListReleaseYear = new List<int>();
+            AData.Open(_dbConnection);
+            this.SqlGetReleaseYear(ReleaseYear, _dbCommand);
+            DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+            if (dbDataReader.HasRows)
+            {
+                while (dbDataReader.Read())
+                    ListReleaseYear.Add(dbDataReader.GetInt32(0));
+            }
+            if (!dbDataReader.IsClosed) dbDataReader.Close();
+            AData.Close(_dbConnection);
+        }
+
+        public void ReadReturnDate(DateTime ReturnDate, out IList<DateTime> ListReturnDate)
+        {
+            ListReturnDate = new List<DateTime>();
+            AData.Open(_dbConnection);
+            this.SqlGetReturnDate(ReturnDate, _dbCommand);
+            DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+            if (dbDataReader.HasRows)
+            {
+                while (dbDataReader.Read())
+                    ListReturnDate.Add(dbDataReader.GetDateTime(0));
+            }
+            if (!dbDataReader.IsClosed) dbDataReader.Close();
+            AData.Close(_dbConnection);
+        }
+
+        public void ReadRunningTime(int RunningTime, out IList<int> ListRunningTime)
+        {
+            ListRunningTime = new List<int>();
+            AData.Open(_dbConnection);
+            this.SqlGetRunningTime(RunningTime, _dbCommand);
+            DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+            if (dbDataReader.HasRows)
+            {
+                while (dbDataReader.Read())
+                    ListRunningTime.Add(dbDataReader.GetInt32(0));
+            }
+            if (!dbDataReader.IsClosed) dbDataReader.Close();
+            AData.Close(_dbConnection);
+        }
+
+        public void ReadTitle(string Title, out IList<string> ListTitle)
+        {
+            ListTitle = new List<string>();
+            AData.Open(_dbConnection);
+            this.SqlGetTitle(Title, _dbCommand);
+            DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+            if (dbDataReader.HasRows)
+            {
+                while (dbDataReader.Read())
+                    ListTitle.Add(dbDataReader.GetString(0));
+            }
+            if (!dbDataReader.IsClosed) dbDataReader.Close();
+            AData.Close(_dbConnection);
+        }
+
         #endregion
         #region virtual methods      
         protected virtual void SqlGetGenre(string video, DbCommand dbCommand)
@@ -91,40 +211,115 @@ namespace VideoData
             dbCommand.Parameters.Clear();
             AData.AddParameter(dbCommand, "@Video", video);
         }
+
+        protected virtual void SqlGetBorrower(string borrower, DbCommand dbCommand)
+        {
+            dbCommand.CommandText =
+            @"SELECT DISTINCT Borrower FROM VideoTable WHERE Borrower = @Borrower ORDER BY Borrower";
+            dbCommand.CommandType = CommandType.Text;
+            dbCommand.Parameters.Clear();
+            AData.AddParameter(dbCommand, "@Borrower", borrower);
+        }
+
+        protected virtual void SqlGetBorrowingRate(double borrowingRate, DbCommand dbCommand)
+        {
+            dbCommand.CommandText =
+            @"SELECT DISTINCT BorrowingRate FROM VideoTable WHERE BorrowingRate = @BorrowingRate ORDER BY BorrowingRate";
+            dbCommand.CommandType = CommandType.Text;
+            dbCommand.Parameters.Clear();
+            AData.AddParameter(dbCommand, "@BorrowingRate", borrowingRate);
+        }
+
+        protected virtual void SqlGetID(int ID, DbCommand dbCommand)
+        {
+            dbCommand.CommandText =
+            @"SELECT DISTINCT ID FROM VideoTable WHERE ID = @ID ORDER BY ID";
+            dbCommand.CommandType = CommandType.Text;
+            dbCommand.Parameters.Clear();
+            AData.AddParameter(dbCommand, "@ID", ID);
+        }
+
+        protected virtual void SqlGetRated(int rated, DbCommand dbCommand)
+        {
+            dbCommand.CommandText =
+            @"SELECT DISTINCT Rated FROM VideoTable WHERE Rated = @Rated ORDER BY Rated";
+            dbCommand.CommandType = CommandType.Text;
+            dbCommand.Parameters.Clear();
+            AData.AddParameter(dbCommand, "@Rated", rated);
+        }
+
+        protected virtual void SqlGetReleaseYear(int releaseYear, DbCommand dbCommand)
+        {
+            dbCommand.CommandText =
+            @"SELECT DISTINCT ReleaseYear FROM VideoTable WHERE ReleaseYear = @ReleaseYear ORDER BY ReleaseYear";
+            dbCommand.CommandType = CommandType.Text;
+            dbCommand.Parameters.Clear();
+            AData.AddParameter(dbCommand, "@ReleaseYear", releaseYear);
+        }
+
+        protected virtual void SqlGetReturnDate(DateTime returnDate, DbCommand dbCommand)
+        {
+            dbCommand.CommandText =
+            @"SELECT DISTINCT ReturnDate FROM VideoTable WHERE ReturnDate = @ReturnDate ORDER BY ReturnDate";
+            dbCommand.CommandType = CommandType.Text;
+            dbCommand.Parameters.Clear();
+            AData.AddParameter(dbCommand, "@ReturnDate", returnDate);
+        }
+        
+        protected virtual void SqlGetRunningTime(int runningTime, DbCommand dbCommand)
+        {
+            dbCommand.CommandText =
+            @"SELECT DISTINCT RunningTime FROM VideoTable WHERE RunningTime = @RunningTime ORDER BY RunningTime";
+            dbCommand.CommandType = CommandType.Text;
+            dbCommand.Parameters.Clear();
+            AData.AddParameter(dbCommand, "@RunningTime", runningTime);
+        }
+        
+        protected virtual void SqlGetTitle(string title, DbCommand dbCommand)
+        {
+            dbCommand.CommandText =
+            @"SELECT DISTINCT Title FROM VideoTable WHERE Title = @Title ORDER BY Title";
+            dbCommand.CommandType = CommandType.Text;
+            dbCommand.Parameters.Clear();
+            AData.AddParameter(dbCommand, "@Title", title);
+        }
+
         protected virtual void SqlSelectVideo(VideoDtoSearch videoSearch, DbCommand dbCommand)
         {
             dbCommand.CommandType = CommandType.Text;
             dbCommand.Parameters.Clear();
             dbCommand.CommandText = @"SELECT * FROM VideoTable";
-            if ((videoSearch.Title == "ALLE") || (videoSearch.Title == "alle") || (videoSearch.Title == "Alle"))
-            {
-                videoSearch.Title = "*";
-                dbCommand.CommandText = @"WHERE ";
-            }
-            else
-            {
-                dbCommand.CommandText += " WHERE Title = @Title";
-                AData.AddParameter(dbCommand, "@Title", videoSearch.Title);
-            }
-            if (videoSearch.Genre != "Genre")
-            {
-                dbCommand.CommandText += " AND Genre = @Genre";
-                AData.AddParameter(dbCommand, "@Genre", videoSearch.Genre);
-            }
-            dbCommand.CommandText += " AND BorrowingRate >= @BorrowingRateFrom";
-            AData.AddParameter(dbCommand, "@BorrowingRateFrom", videoSearch.BorrowingRateFrom);
-            dbCommand.CommandText += " AND BorrowingRate <= @BorrowingRateTo";
-            AData.AddParameter(dbCommand, "@BorrowingRateTo", videoSearch.BorrowingRateTo);
+            dbCommand.CommandText += " WHERE ID = @ID";
+            AData.AddParameter(dbCommand, "@ID", videoSearch.ID);
+
+            dbCommand.CommandText += " AND Title = @Title";
+            AData.AddParameter(dbCommand, "@Title", videoSearch.ReleaseYear);
+
+            dbCommand.CommandText += " AND Genre = @Genre";
+            AData.AddParameter(dbCommand, "@Genre", videoSearch.ReleaseYear);
+
+            dbCommand.CommandText += " AND BorrowingRate = @BorrowingRate";
+            AData.AddParameter(dbCommand, "@BorrowingRate", videoSearch.ReleaseYear);
+
             dbCommand.CommandText += " AND ReleaseYear = @ReleaseYear";
-            AData.AddParameter(dbCommand, "@ReleaseYear", videoSearch.ReleaseYear);
+            AData.AddParameter(dbCommand, "@ReleaseYear", videoSearch.Rated);
+
+            dbCommand.CommandText += " AND RunningTime = @RunningTime";
+            AData.AddParameter(dbCommand, "@RunningTime", videoSearch.Borrower);
+
             dbCommand.CommandText += " AND Rated = @Rated";
-            AData.AddParameter(dbCommand, "@Rated", videoSearch.Rated);
+            AData.AddParameter(dbCommand, "@Rated", videoSearch.ReturnDate);
+
             dbCommand.CommandText += " AND Borrower = @Borrower";
-            AData.AddParameter(dbCommand, "@Borrower", videoSearch.Borrower);
+            AData.AddParameter(dbCommand, "@Borrower", videoSearch.ReturnDate);
+
             dbCommand.CommandText += " AND ReturnDate = @ReturnDate";
             AData.AddParameter(dbCommand, "@ReturnDate", videoSearch.ReturnDate);
+
             dbCommand.CommandText += " ORDER BY BorrowingRate;";
         }
+
         #endregion
+
     }
 }
