@@ -10,7 +10,7 @@ using VideoDialog.Factories;
 using VideoLogic;
 using VideoLogic.Factories;
 using VideoData.Factories;
-
+using System.IO;
 
 namespace App
 {
@@ -27,7 +27,7 @@ namespace App
 
             // 1. Initialisierung der Datenbank  (InitDb)    
             // Vorgabe: Connection String (Datenbankserver, Datenbank ...)
-            string path = @"C:\1Projects\CBSE Autoverwaltung\CarDatabase.accdb";
+            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\VideoDatabase.accdb";
             string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             #if !DEBUG
