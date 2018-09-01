@@ -34,7 +34,7 @@ namespace VideoLogic.Utils
 		public static DateTime ParseDate(string s, DateTime defaultValue)
 		{
 			DateTime value;
-			s = s.Replace(".", "");
+			s = s.Replace(".", ",");
 
 			if (!DateTime.TryParse(s, out value))
 			{
