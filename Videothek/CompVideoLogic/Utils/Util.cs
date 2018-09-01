@@ -34,12 +34,14 @@ namespace VideoLogic.Utils
 		public static DateTime ParseDate(string s, DateTime defaultValue)
 		{
 			DateTime value;
-			s = s.Replace(".", ",");
+			s = s.Replace(".", ".");
 
 			if (!DateTime.TryParse(s, out value))
 			{
 				value = defaultValue;
 			}
+
+			String.Format("{0:d.M.yyyy HH:mm:ss}", value);
 
 			return value;
 		}
