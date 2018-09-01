@@ -18,7 +18,6 @@ namespace VideoDialog
     internal partial class CDialogMain : Form, IDialog
     {
         #region fields
-        // Felder aus der DB fehlen noch
         private VideoDtoSearch _videoSearch;
         private VideoDtoLoan _videoLoan;
         private ILogic _logic;

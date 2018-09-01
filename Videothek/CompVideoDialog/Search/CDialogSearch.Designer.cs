@@ -173,6 +173,7 @@
             // 
             // comboBoxID
             // 
+            this.comboBoxID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxID.FormattingEnabled = true;
             this.comboBoxID.Location = new System.Drawing.Point(164, 35);
             this.comboBoxID.Name = "comboBoxID";
@@ -182,6 +183,7 @@
             // 
             // comboBoxGenre
             // 
+            this.comboBoxGenre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxGenre.FormattingEnabled = true;
             this.comboBoxGenre.Location = new System.Drawing.Point(164, 109);
             this.comboBoxGenre.Name = "comboBoxGenre";
@@ -191,6 +193,7 @@
             // 
             // comboBoxRunningTime
             // 
+            this.comboBoxRunningTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxRunningTime.FormattingEnabled = true;
             this.comboBoxRunningTime.Location = new System.Drawing.Point(491, 226);
             this.comboBoxRunningTime.Name = "comboBoxRunningTime";
@@ -200,6 +203,7 @@
             // 
             // comboBoxBorrowingRate
             // 
+            this.comboBoxBorrowingRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxBorrowingRate.FormattingEnabled = true;
             this.comboBoxBorrowingRate.Location = new System.Drawing.Point(491, 149);
             this.comboBoxBorrowingRate.Name = "comboBoxBorrowingRate";
@@ -209,6 +213,7 @@
             // 
             // comboBoxReleaseYear
             // 
+            this.comboBoxReleaseYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxReleaseYear.FormattingEnabled = true;
             this.comboBoxReleaseYear.Location = new System.Drawing.Point(164, 188);
             this.comboBoxReleaseYear.Name = "comboBoxReleaseYear";
@@ -218,6 +223,7 @@
             // 
             // comboBoxTitle
             // 
+            this.comboBoxTitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTitle.FormattingEnabled = true;
             this.comboBoxTitle.Location = new System.Drawing.Point(491, 73);
             this.comboBoxTitle.Name = "comboBoxTitle";
@@ -227,6 +233,7 @@
             // 
             // comboBoxRated
             // 
+            this.comboBoxRated.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxRated.FormattingEnabled = true;
             this.comboBoxRated.Location = new System.Drawing.Point(164, 267);
             this.comboBoxRated.Name = "comboBoxRated";
@@ -236,6 +243,7 @@
             // 
             // comboBoxBorrower
             // 
+            this.comboBoxBorrower.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxBorrower.FormattingEnabled = true;
             this.comboBoxBorrower.Location = new System.Drawing.Point(491, 307);
             this.comboBoxBorrower.Name = "comboBoxBorrower";
@@ -245,6 +253,7 @@
             // 
             // comboBoxReturnDate
             // 
+            this.comboBoxReturnDate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxReturnDate.FormattingEnabled = true;
             this.comboBoxReturnDate.Location = new System.Drawing.Point(164, 352);
             this.comboBoxReturnDate.Name = "comboBoxReturnDate";

@@ -40,8 +40,6 @@ namespace VideoDialog.Search
 
         #region Eventhandler
 
-        #endregion
-
         private void CDialogSearchResult_Load(object sender, EventArgs e)
         {
             // set datasource
@@ -53,5 +51,7 @@ namespace VideoDialog.Search
                 dataGridViewColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             }
         }
+
+        #endregion
     }
 }

@@ -33,8 +33,8 @@ namespace VideoDialog.Search
             else
             {
                 CErrorHandling.ShowAndStop("Fehler beim Initialisieren von CDialogSearch", "Programmabbruch");
-                _logicSearch = logicSearch;
             }
+            _logicSearch = logicSearch;
         }
 
         #endregion
