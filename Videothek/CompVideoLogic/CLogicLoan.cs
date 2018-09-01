@@ -8,7 +8,7 @@ using VideoLogic.Utils;
 
 namespace VideoLogic
 {
-    internal class CLogicLoan
+    internal class CLogicLoan : ILogicLoan
     {
 		#region  fields
 		private IDataLoan _dataLoan;
