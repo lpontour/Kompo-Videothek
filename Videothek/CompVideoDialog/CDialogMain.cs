@@ -116,12 +116,12 @@ namespace VideoDialog
             }
             catch (DataException dataException)
             {
-                MessageBox.Show(dataException.Message, "Abbruch Verkaufen: neues Auto",
+                MessageBox.Show(dataException.Message, "Fehler bei neuer Ausleihe",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message, "Abbruch Verkaufen: neues Auto",
+                MessageBox.Show(exception.Message, "Fehler bei neuer Ausleihe",
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -143,12 +143,12 @@ namespace VideoDialog
             }
             catch (DataException dataException)
             {
-                MessageBox.Show(dataException.Message, "Abbruch Verkaufen: Auto ändern",
+                MessageBox.Show(dataException.Message, "Fehler beim Ändern der Ausleihe",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message, "Abbruch Verkaufen: Auto ändern",
+                MessageBox.Show(exception.Message, "Fehler beim Ändern der Ausleihe",
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -170,12 +170,12 @@ namespace VideoDialog
             }
             catch (DataException dataException)
             {
-                MessageBox.Show(dataException.Message, "Abbruch Verkaufen: Auto löschen",
+                MessageBox.Show(dataException.Message, "Fehler bei der Rückgabe",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message, "Abbruch Verkaufen: Auto löschen",
+                MessageBox.Show(exception.Message, "Fehler bei der Rückgabe",
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
