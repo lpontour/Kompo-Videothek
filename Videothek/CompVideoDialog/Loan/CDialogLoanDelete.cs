@@ -32,12 +32,18 @@ namespace VideoDialog.Loan
         #region Eventhandler
         private void ButtonConfirm_Click(object sender, EventArgs e)
         {
-            VideoDtoLoan videoLoan = _dialogMain.VideoLoan;
-            videoLoan.ID = Util.ParseInt(textBoxID.Text, 0); ;
-            videoLoan.Title = textBoxTitle.Text;
-            videoLoan.Borrower = textBoxBorrower.Text;
-            videoLoan.ReturnDate = Util.ParseDate(textBoxReturnDate.Text, DateTime.Now);
+            if(textBoxBorrower.Text == "")
+            {
 
+            }
+            else
+            {
+                VideoDtoLoan videoLoan = _dialogMain.VideoLoan;
+                videoLoan.ID = Util.ParseInt(textBoxID.Text, 0); ;
+                videoLoan.Title = textBoxTitle.Text;
+                videoLoan.Borrower = textBoxBorrower.Text;
+                videoLoan.ReturnDate = Util.ParseDate(textBoxReturnDate.Text, DateTime.Now);
+            }
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
