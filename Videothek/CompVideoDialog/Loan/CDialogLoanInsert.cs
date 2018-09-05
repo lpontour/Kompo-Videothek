@@ -34,11 +34,13 @@ namespace VideoDialog.Loan
         {
             if (textBoxBorrower.Text == "" || textBoxReturnDate.Text == "")
             {
-                
+                MessageBox.Show("Ausleihender und Rückgabedatum müssen angegeben werden.", "Hinweis: Neue Ausleihe",
+                   MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            else if(textBoxID.Text == "" && textBoxTitle.Text == "")
+            else if (textBoxID.Text == "" && textBoxTitle.Text == "")
             {
-
+                MessageBox.Show("ID oder Titel des Film muss noch angegeben werden.", "Hinweis: Neue Ausleihe",
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
@@ -47,11 +49,9 @@ namespace VideoDialog.Loan
                 videoLoan.Title = textBoxTitle.Text;
                 videoLoan.Borrower = textBoxBorrower.Text;
                 videoLoan.ReturnDate = Util.ParseDate(textBoxReturnDate.Text, DateTime.Now);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
-
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)

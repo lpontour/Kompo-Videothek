@@ -32,17 +32,20 @@ namespace VideoDialog.Loan
         #region Eventhandler
         private void ButtonConfirm_Click(object sender, EventArgs e)
         {
-            if(textBoxReturnDate.Text == "")
+            if (textBoxReturnDate.Text == "")
             {
-
+                MessageBox.Show("Das Rückgabedatum muss angegeben werden.", "Hinweis: Ausleihe ändern",
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (textBoxID.Text == "" && textBoxTitle.Text == "" && textBoxBorrower.Text == "")
             {
-
+                MessageBox.Show("ID, Titel oder Ausleihender muss angegeben werden.", "Hinweis: Ausleihe ändern",
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            else if(textBoxID.Text == "" && textBoxBorrower.Text == "" && !(textBoxTitle.Text == "") && !(textBoxReturnDate.Text == ""))
+            else if (textBoxID.Text == "" && textBoxBorrower.Text == "" && !(textBoxTitle.Text == "") && !(textBoxReturnDate.Text == ""))
             {
-
+                MessageBox.Show("ID oder Ausleihender muss angegeben werden.", "Hinweis: Ausleihe ändern",
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
@@ -51,9 +54,9 @@ namespace VideoDialog.Loan
                 videoLoan.Title = textBoxTitle.Text;
                 videoLoan.Borrower = textBoxBorrower.Text;
                 videoLoan.ReturnDate = Util.ParseDate(textBoxReturnDate.Text, DateTime.Now);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
-            this.DialogResult = DialogResult.OK;
-            this.Close();
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)

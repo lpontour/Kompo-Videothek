@@ -32,9 +32,10 @@ namespace VideoDialog.Loan
         #region Eventhandler
         private void ButtonConfirm_Click(object sender, EventArgs e)
         {
-            if(textBoxBorrower.Text == "")
+            if (textBoxBorrower.Text == "")
             {
-
+                MessageBox.Show("Ausleihender muss angegeben werden.", "Hinweis: Rückgabe",
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
@@ -43,9 +44,9 @@ namespace VideoDialog.Loan
                 videoLoan.Title = textBoxTitle.Text;
                 videoLoan.Borrower = textBoxBorrower.Text;
                 videoLoan.ReturnDate = Util.ParseDate(textBoxReturnDate.Text, DateTime.Now);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
-            this.DialogResult = DialogResult.OK;
-            this.Close();
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)
