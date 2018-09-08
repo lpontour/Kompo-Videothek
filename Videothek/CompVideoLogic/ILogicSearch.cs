@@ -7,15 +7,15 @@ namespace VideoLogic
 {
     public interface ILogicSearch
     {
-		object[] ReadID(int ID);
+		object[] ReadID(string ID);
 		object[] ReadTitle(string Title);
 		object[] ReadGenre(string Genre);
-		object[] ReadBorrowingrate(double BorrowingRate);
-		object[] ReadReleaseYear(int ReleaseYear);
-		object[] ReadRunningTime(int RunningTime);
-		object[] ReadRated(int Rated);
+		object[] ReadBorrowingrate(string BorrowingRate);
+		object[] ReadReleaseYear(string ReleaseYear);
+		object[] ReadRunningTime(string RunningTime);
+		object[] ReadRated(string Rated);
 		object[] ReadBorrower(string Borrower);
-		object[] ReadReturnDate(DateTime ReturnDate);
+		object[] ReadReturnDate(string ReturnDate);
 		// Lese alle Daten der Tabelle
 		void ReadVideos(VideoDtoSearch videoSearch, out DataTable dataTable);
 		// Lese nur geänderte Einträge der Tabelle
