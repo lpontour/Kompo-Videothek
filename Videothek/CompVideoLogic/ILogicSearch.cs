@@ -10,7 +10,7 @@ namespace VideoLogic
 		object[] ReadID(string ID);
 		object[] ReadTitle(string Title);
 		object[] ReadGenre(string Genre);
-		object[] ReadBorrowingrate(string BorrowingRate);
+		object[] ReadBorrowingRate(string BorrowingRate);
 		object[] ReadReleaseYear(string ReleaseYear);
 		object[] ReadRunningTime(string RunningTime);
 		object[] ReadRated(string Rated);
