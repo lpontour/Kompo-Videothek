@@ -66,7 +66,7 @@ namespace VideoLogic
 			return Util.ToArray(listGenre);
 		}
 
-		public object[] ReadBorrowingrate(string value)
+		public object[] ReadBorrowingRate(string value)
 		{
 			IList<double> listBorrowingRate = null;
 			_dataSearch.ReadBorrowingRate(value, out listBorrowingRate);
