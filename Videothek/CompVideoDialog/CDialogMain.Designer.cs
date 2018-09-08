@@ -34,6 +34,8 @@
             this.neueAusleiheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ausleiheVerlängernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rückgabeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,23 +70,45 @@
             // neueAusleiheToolStripMenuItem
             // 
             this.neueAusleiheToolStripMenuItem.Name = "neueAusleiheToolStripMenuItem";
-            this.neueAusleiheToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.neueAusleiheToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.neueAusleiheToolStripMenuItem.Text = "Neue Ausleihe";
             this.neueAusleiheToolStripMenuItem.Click += new System.EventHandler(this.NeueAusleiheToolStripMenuItem_Click);
             // 
             // ausleiheVerlängernToolStripMenuItem
             // 
             this.ausleiheVerlängernToolStripMenuItem.Name = "ausleiheVerlängernToolStripMenuItem";
-            this.ausleiheVerlängernToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ausleiheVerlängernToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.ausleiheVerlängernToolStripMenuItem.Text = "Ausleihe verlängern";
             this.ausleiheVerlängernToolStripMenuItem.Click += new System.EventHandler(this.AusleiheVerlängernToolStripMenuItem_Click);
             // 
             // rückgabeToolStripMenuItem
             // 
             this.rückgabeToolStripMenuItem.Name = "rückgabeToolStripMenuItem";
-            this.rückgabeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rückgabeToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.rückgabeToolStripMenuItem.Text = "Rückgabe";
             this.rückgabeToolStripMenuItem.Click += new System.EventHandler(this.RückgabeToolStripMenuItem_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Impact", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(264, 119);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(295, 80);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Analogflix";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Impact", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(12, 396);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(196, 102);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Dana Lachmann\r\nLukas Paulmann\r\nRoman Putilov";
             // 
             // CDialogMain
             // 
@@ -93,6 +117,8 @@
             this.BackgroundImage = global::VideoDialog.Properties.Resources.Videothek_verleihhüllen;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(784, 507);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "CDialogMain";
@@ -112,5 +138,7 @@
         private System.Windows.Forms.ToolStripMenuItem neueAusleiheToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ausleiheVerlängernToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rückgabeToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
