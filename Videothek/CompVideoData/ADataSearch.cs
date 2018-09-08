@@ -99,11 +99,13 @@ namespace VideoData
             AData.Close(_dbConnection);
         }
 
-        public void ReadBorrowingRate(double BorrowingRate, out IList<double> ListBorrowingRate)
+        public void ReadBorrowingRate(string BorrowingRate, out IList<double> ListBorrowingRate)
         {
             ListBorrowingRate = new List<double>();
             AData.Open(_dbConnection);
-            this.SqlGetBorrowingRate(BorrowingRate, _dbCommand);
+            double doubleBorrowingRate=0.0;
+            double.TryParse(BorrowingRate, out doubleBorrowingRate);
+            this.SqlGetBorrowingRate(doubleBorrowingRate, _dbCommand);
             DbDataReader dbDataReader = _dbCommand.ExecuteReader();
             if (dbDataReader.HasRows)
             {
@@ -114,11 +116,13 @@ namespace VideoData
             AData.Close(_dbConnection);
         }
 
-        public void ReadID(int ID, out IList<int> ListID)
+        public void ReadID(string ID, out IList<int> ListID)
         {
             ListID = new List<int>();
             AData.Open(_dbConnection);
-            this.SqlGetID(ID, _dbCommand);
+            int intid = 0;
+            Int32.TryParse(ID,out intid);
+            this.SqlGetID(intid, _dbCommand);
             DbDataReader dbDataReader = _dbCommand.ExecuteReader();
             if (dbDataReader.HasRows)
             {
@@ -129,11 +133,29 @@ namespace VideoData
             AData.Close(_dbConnection);
         }
 
-        public void ReadRated(int Rated, out IList<int> ListRated)
+        //public void ReadID(int ID, out IList<int> ListID)
+        //{
+        //    ListID = new List<int>();
+        //    AData.Open(_dbConnection);
+
+        //    this.SqlGetID(ID, _dbCommand);
+        //    DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+        //    if (dbDataReader.HasRows)
+        //    {
+        //        while (dbDataReader.Read())
+        //            ListID.Add(dbDataReader.GetInt32(0));
+        //    }
+        //    if (!dbDataReader.IsClosed) dbDataReader.Close();
+        //    AData.Close(_dbConnection);
+        //}
+
+        public void ReadRated(string Rated, out IList<int> ListRated)
         {
             ListRated = new List<int>();
             AData.Open(_dbConnection);
-            this.SqlGetRated(Rated, _dbCommand);
+            int intrated = 0;
+            Int32.TryParse(Rated, out intrated);
+            this.SqlGetRated(intrated, _dbCommand);
             DbDataReader dbDataReader = _dbCommand.ExecuteReader();
             if (dbDataReader.HasRows)
             {
@@ -144,11 +166,13 @@ namespace VideoData
             AData.Close(_dbConnection);
         }
 
-        public void ReadReleaseYear(int ReleaseYear, out IList<int> ListReleaseYear)
+        public void ReadReleaseYear(string ReleaseYear, out IList<int> ListReleaseYear)
         {
             ListReleaseYear = new List<int>();
             AData.Open(_dbConnection);
-            this.SqlGetReleaseYear(ReleaseYear, _dbCommand);
+            int intreleaseYear = 0;
+            Int32.TryParse(ReleaseYear, out intreleaseYear);
+            this.SqlGetReleaseYear(intreleaseYear, _dbCommand);
             DbDataReader dbDataReader = _dbCommand.ExecuteReader();
             if (dbDataReader.HasRows)
             {
@@ -159,11 +183,14 @@ namespace VideoData
             AData.Close(_dbConnection);
         }
 
-        public void ReadReturnDate(DateTime ReturnDate, out IList<DateTime> ListReturnDate)
+        public void ReadReturnDate(string ReturnDate, out IList<DateTime> ListReturnDate)
         {
             ListReturnDate = new List<DateTime>();
             AData.Open(_dbConnection);
-            this.SqlGetReturnDate(ReturnDate, _dbCommand);
+
+            DateTime dtRetunrDate=DateTime.MinValue;
+            dtRetunrDate= Util.ParseDate(ReturnDate, DateTime.Now);
+            this.SqlGetReturnDate(dtRetunrDate, _dbCommand);
             DbDataReader dbDataReader = _dbCommand.ExecuteReader();
             if (dbDataReader.HasRows)
             {
@@ -174,11 +201,13 @@ namespace VideoData
             AData.Close(_dbConnection);
         }
 
-        public void ReadRunningTime(int RunningTime, out IList<int> ListRunningTime)
+        public void ReadRunningTime(string RunningTime, out IList<int> ListRunningTime)
         {
             ListRunningTime = new List<int>();
             AData.Open(_dbConnection);
-            this.SqlGetRunningTime(RunningTime, _dbCommand);
+            int intrunningTime = 0;
+            Int32.TryParse(RunningTime, out intrunningTime);
+            this.SqlGetRunningTime(intrunningTime, _dbCommand);
             DbDataReader dbDataReader = _dbCommand.ExecuteReader();
             if (dbDataReader.HasRows)
             {

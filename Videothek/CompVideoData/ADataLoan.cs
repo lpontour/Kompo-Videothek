@@ -242,6 +242,7 @@ namespace VideoData
             //        }
             //        videoLoan.ID = GetNextFreeVideo(videoLoan).ID;
             //    }
+            
                 this.SqlUpdateVideo(videoLoan, _dbCommand);
                 AData.Open(_dbConnection);
                 int nRecords = _dbCommand.ExecuteNonQuery();
