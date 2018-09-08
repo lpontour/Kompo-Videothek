@@ -6,6 +6,8 @@ using System.Data.Common;
 using VideoLogic;
 using VideoLogic.Utils;
 using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace VideoData
 {
@@ -16,13 +18,168 @@ namespace VideoData
         private DbProviderFactory _dbProviderFactory;
         private DbConnection _dbConnection;
         private DbCommand _dbCommand;
-        private DbDataAdapter _dbDataAdapterCarTable;
+        private DbDataAdapter _dbDataAdapterVideoTable;
         #endregion
         #region ctor
         internal ADataLoan(AData data)
         {
             _data = data;
         }
+        #endregion
+        #region methods
+        private bool VideoIdMissMach(VideoDtoLoan loan)
+        {
+
+            List<Loan> videos = new List<Loan>();
+            AData.Open(_dbConnection);
+            _dbCommand.CommandType = CommandType.Text;
+            _dbCommand.Parameters.Clear();
+            _dbCommand.CommandText = @"SELECT * FROM VideoTable";
+            _dbCommand.CommandText += " WHERE ID = @ID";
+            AData.AddParameter(_dbCommand, "@ID", loan.ID);
+            _dbCommand.CommandText += " AND Title = @Title";
+            AData.AddParameter(_dbCommand, "@Title", loan.Title);
+            _dbCommand.CommandText += " ORDER BY BorrowingRate;";
+            DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+            
+            if (dbDataReader.HasRows)
+            {
+                AData.Close(_dbConnection);
+                return false;
+
+            }
+            else
+            {
+                AData.Close(_dbConnection);
+                return true;
+            }
+        }
+        private bool VideoNotLoaned(VideoDtoLoan loan)
+        {
+            List<Loan> videos = new List<Loan>();
+            AData.Open(_dbConnection);
+            _dbCommand.CommandType = CommandType.Text;
+            _dbCommand.Parameters.Clear();
+            _dbCommand.CommandText = @"SELECT * FROM VideoTable";
+            _dbCommand.CommandText += " WHERE ID = @ID";
+            AData.AddParameter(_dbCommand, "@ID", loan.ID);
+            _dbCommand.CommandText += " AND Title = @Title";
+            AData.AddParameter(_dbCommand, "@Title", loan.Title);
+
+            _dbCommand.CommandText += " ORDER BY BorrowingRate;";
+            DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+            
+            if (dbDataReader.HasRows)
+            {
+                int nColumns = dbDataReader.FieldCount;
+                while (dbDataReader.Read())
+                {
+                    Loan video = new Loan()
+                    {
+                        ID = dbDataReader.GetInt32(0),
+                        Title = dbDataReader.GetString(1),
+                        Borrower = dbDataReader.GetString(2),
+                        ReturnDate = dbDataReader.GetDateTime(3)
+                    };
+                    videos.Add(video);
+                }
+            }
+            else
+            {
+                AData.Close(_dbConnection);
+                return false;
+            }
+            if(videos[0].Borrower==""&&videos[0].ReturnDate==DateTime.MinValue)
+            {
+                AData.Close(_dbConnection);
+                return true;
+            }
+            AData.Close(_dbConnection);
+            return false;
+        }
+        private bool BorrowerMissMach(VideoDtoLoan loan)
+        {
+            List<Loan> videos = new List<Loan>();
+            AData.Open(_dbConnection);
+            _dbCommand.CommandType = CommandType.Text;
+            _dbCommand.Parameters.Clear();
+            _dbCommand.CommandText = @"SELECT * FROM VideoTable";
+            _dbCommand.CommandText += " WHERE ID = @ID";
+            AData.AddParameter(_dbCommand, "@ID", loan.ID);
+            _dbCommand.CommandText += " AND Title = @Title";
+            AData.AddParameter(_dbCommand, "@Title", loan.Title);
+            _dbCommand.CommandText += " ORDER BY BorrowingRate;";
+            DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+            
+            if (dbDataReader.HasRows)
+            {
+                int nColumns = dbDataReader.FieldCount;
+                while (dbDataReader.Read())
+                {
+                    Loan video = new Loan()
+                    {
+                        ID = dbDataReader.GetInt32(0),
+                        Title = dbDataReader.GetString(1),
+                        Borrower = dbDataReader.GetString(8),
+                        ReturnDate = dbDataReader.GetDateTime(9)
+                    };
+                    videos.Add(video);
+                }
+            }
+            else
+            {
+                AData.Close(_dbConnection);
+                return true;
+            }
+            if (videos[0].Borrower != loan.Borrower )
+            {
+                AData.Close(_dbConnection);
+                return true;
+            }
+            AData.Close(_dbConnection);
+            return false;
+        }
+
+        private Loan GetNextFreeVideo(VideoDtoLoan loan)
+        {
+            List<Loan> videos = new List<Loan>();
+            AData.Open(_dbConnection);
+            _dbCommand.CommandType = CommandType.Text;
+            _dbCommand.Parameters.Clear();
+            _dbCommand.CommandText = @"SELECT * FROM VideoTable";
+            _dbCommand.CommandText += " WHERE Title = @Title";
+            AData.AddParameter(_dbCommand, "@Title", loan.Title);
+            _dbCommand.CommandText += " ORDER BY ID;";
+            DbDataReader dbDataReader = _dbCommand.ExecuteReader();
+            AData.Close(_dbConnection);
+            if (dbDataReader.HasRows)
+            {
+                int nColumns = dbDataReader.FieldCount;
+                while (dbDataReader.Read())
+                {
+                    Loan video = new Loan()
+                    {
+                        ID = dbDataReader.GetInt32(0),
+                        Title = dbDataReader.GetString(1),
+                        Borrower = dbDataReader.GetString(8),
+                        ReturnDate = dbDataReader.GetDateTime(9)
+                    };
+                    if (video.Borrower == "" && video.ReturnDate == DateTime.MinValue)
+                    {
+                        AData.Close(_dbConnection);
+                        return video;
+                    }
+                }
+            }
+            else
+            {
+                AData.Close(_dbConnection);
+                return null;
+            }
+            AData.Close(_dbConnection);
+            return null;
+        }
+
         #endregion
         #region interface IDataLoan
         public void Init(DbProviderFactory dbProviderFactory,
@@ -31,11 +188,12 @@ namespace VideoData
             _dbProviderFactory = dbProviderFactory;
             _dbConnection = dbConnection;
             _dbCommand = dbCommand;
-            _dbDataAdapterCarTable = AData.CreateDbDataAdapter(_dbProviderFactory, _dbConnection,
+            _dbDataAdapterVideoTable = AData.CreateDbDataAdapter(_dbProviderFactory, _dbConnection,
               "SELECT * FROM VideoTable;");
         }
         public int InsertLoan(Loan video)
         {
+            
             this.SqlInsertVido(video, _dbCommand);
             AData.Open(_dbConnection);
             int nRecords = _dbCommand.ExecuteNonQuery();
@@ -52,7 +210,9 @@ namespace VideoData
         }
         public int DeleteLoan(Loan loan)
         {
-            this.SqlDeleteVideo(loan.ID, _dbCommand);
+            loan.Borrower = "";
+            loan.ReturnDate = DateTime.MinValue;
+            this.SqlUpdateVideo(loan, _dbCommand);
             AData.Open(_dbConnection);
             int nRecords = _dbCommand.ExecuteNonQuery();
             AData.Close(_dbConnection);
@@ -60,16 +220,45 @@ namespace VideoData
         }
         public int InsertVideoTable(VideoDtoLoan videoLoan)
         {
-            DataTable dataTable = AData.GetSchema(_dbDataAdapterCarTable);
-            //videoLoan.AddNewDataRow(dataTable);
-            int nRecords = AData.Update(dataTable, _dbDataAdapterCarTable);
-            return nRecords;
+            //if (VideoIdMissMach(videoLoan))
+            //{
+            //    MessageBox.Show("Video und ID Stimmen nicht Überein oder Exsestieren nicht.", "Hinweis: Neue Ausleihe",
+            //       MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //}
+            //else if (VideoNotLoaned(videoLoan) == false)
+            //{
+            //    MessageBox.Show("Video ist bereits ausgelihen.", "Hinweis: Neue Ausleihe",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //}
+            //else
+            //{
+            //    if(videoLoan.ID==0)
+            //    {
+            //        if(GetNextFreeVideo(videoLoan)== null)
+            //        {
+            //            MessageBox.Show("Kein freies exemplar des Videos vorhanden.", "Hinweis: Neue Ausleihe",
+            //                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //            return 0;
+            //        }
+            //        videoLoan.ID = GetNextFreeVideo(videoLoan).ID;
+            //    }
+                this.SqlUpdateVideo(videoLoan, _dbCommand);
+                AData.Open(_dbConnection);
+                int nRecords = _dbCommand.ExecuteNonQuery();
+                AData.Close(_dbConnection);
+                return nRecords;
+            //}
+            //return 0;
         }
         public int UpdateVideoTable(VideoDtoLoan videoLoan, DateTime returnDate)
         {
             videoLoan.ReturnDate = returnDate;
-            DataTable dataTable = AData.GetSchema(_dbDataAdapterCarTable);
-            int nRecords = AData.Update(dataTable, _dbDataAdapterCarTable);
+
+
+            this.SqlUpdateVideo(videoLoan, _dbCommand);
+            AData.Open(_dbConnection);
+            int nRecords = _dbCommand.ExecuteNonQuery();
+            AData.Close(_dbConnection);
             return nRecords;
         }
         public int DeleteVideoTable(VideoDtoLoan videoLoan, string borrower, DateTime returnDate)

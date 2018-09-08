@@ -75,10 +75,13 @@ namespace VideoData
         public void ReadVideos(VideoDtoSearch videoSearch, out DataTable dataTableVideos)
         {
             dataTableVideos = new DataTable("Videos");
+            AData.Open(_dbConnection);
             DbDataAdapter dbDataAdapter = _dbProviderFactory.CreateDataAdapter();
             this.SqlSelectVideo(videoSearch, _dbCommand);
+            _dbCommand.Connection=_dbConnection;
             dbDataAdapter.SelectCommand = _dbCommand;
             int records = dbDataAdapter.Fill(dataTableVideos);
+            AData.Close(_dbConnection);
         }
 
         public void ReadBorrower(string borrower, out IList<string> ListBorrower)
@@ -293,25 +296,55 @@ namespace VideoData
             AData.AddParameter(dbCommand, "@ID", videoSearch.ID);
 
             dbCommand.CommandText += " AND Title = @Title";
-            AData.AddParameter(dbCommand, "@Title", videoSearch.ReleaseYear);
+            AData.AddParameter(dbCommand, "@Title", videoSearch.Title);
+            if (videoSearch.Genre == null) 
+            {
 
-            dbCommand.CommandText += " AND Genre = @Genre";
-            AData.AddParameter(dbCommand, "@Genre", videoSearch.ReleaseYear);
+            }
+            else{
+                dbCommand.CommandText += " AND Genre = @Genre";
+                AData.AddParameter(dbCommand, "@Genre", videoSearch.Genre);
+            }
 
-            dbCommand.CommandText += " AND BorrowingRate = @BorrowingRate";
-            AData.AddParameter(dbCommand, "@BorrowingRate", videoSearch.ReleaseYear);
+            if (videoSearch.BorrowingRate == 0)
+            {
+            }
+            else
+            {
+                dbCommand.CommandText += " AND BorrowingRate = @BorrowingRate";
+                AData.AddParameter(dbCommand, "@BorrowingRate", videoSearch.BorrowingRate);
+            }
+            if (videoSearch.ReleaseYear == 0)
+            {
 
-            dbCommand.CommandText += " AND ReleaseYear = @ReleaseYear";
-            AData.AddParameter(dbCommand, "@ReleaseYear", videoSearch.Rated);
+            }
+            else
+            {
+                dbCommand.CommandText += " AND ReleaseYear = @ReleaseYear";
+                AData.AddParameter(dbCommand, "@ReleaseYear", videoSearch.ReleaseYear);
+            }
+            if(videoSearch.RunningTime==0)
+            {
 
-            dbCommand.CommandText += " AND RunningTime = @RunningTime";
-            AData.AddParameter(dbCommand, "@RunningTime", videoSearch.Borrower);
+            }
+            else
+            {
+                dbCommand.CommandText += " AND RunningTime = @RunningTime";
+                AData.AddParameter(dbCommand, "@RunningTime", videoSearch.RunningTime);
+            }
+           
+            if(videoSearch.Rated==0)
+            {
 
-            dbCommand.CommandText += " AND Rated = @Rated";
-            AData.AddParameter(dbCommand, "@Rated", videoSearch.ReturnDate);
+            }
+            else
+            {
+                dbCommand.CommandText += " AND Rated = @Rated";
+                AData.AddParameter(dbCommand, "@Rated", videoSearch.Rated);
+            }
 
             dbCommand.CommandText += " AND Borrower = @Borrower";
-            AData.AddParameter(dbCommand, "@Borrower", videoSearch.ReturnDate);
+            AData.AddParameter(dbCommand, "@Borrower", videoSearch.Borrower);
 
             dbCommand.CommandText += " AND ReturnDate = @ReturnDate";
             AData.AddParameter(dbCommand, "@ReturnDate", videoSearch.ReturnDate);
