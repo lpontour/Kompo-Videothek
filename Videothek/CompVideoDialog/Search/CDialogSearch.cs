@@ -22,6 +22,10 @@ namespace VideoDialog.Search
         private ILogicSearch _logicSearch;
         #endregion
 
+        #region properties
+        internal VideoDtoSearch VideoDtoSearch { get; set; }
+        #endregion
+
         #region ctor
         internal CDialogSearch(ILogicSearch logicSearch, IDialog dialog)
         {
@@ -892,7 +896,7 @@ namespace VideoDialog.Search
             videoSearch.Borrower = comboBoxBorrower.Text;
             videoSearch.ReturnDate = Util.ParseDate(comboBoxReturnDate.Text, videoSearch.ReturnDate);
 
-
+            this.VideoDtoSearch = videoSearch;
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

@@ -20,6 +20,10 @@ namespace VideoDialog.Loan
         private CDialogMain _dialogMain;
         #endregion
 
+        #region properties
+        internal VideoDtoLoan VideoDtoLoan { get; set; } 
+        #endregion
+
         #region ctor
         internal CDialogLoanUpdate(ILogic logic, IDialog dialogMain)
         {
@@ -54,6 +58,7 @@ namespace VideoDialog.Loan
                 videoLoan.Title = textBoxTitle.Text;
                 videoLoan.Borrower = textBoxBorrower.Text;
                 videoLoan.ReturnDate = Util.ParseDate(textBoxReturnDate.Text, DateTime.Now);
+                this.VideoDtoLoan = videoLoan;
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
