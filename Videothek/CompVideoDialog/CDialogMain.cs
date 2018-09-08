@@ -74,6 +74,7 @@ namespace VideoDialog
 
                     if (dialogResult == DialogResult.OK)
                     {
+                        _videoSearch = DialogSearch.VideoDtoSearch;
                         // Suchen ausführen
                         _logic.Search.ReadVideos(_videoSearch, out DataTable dataTable);
                         // Ergebnis in DialogSearchView darstellen
@@ -107,6 +108,7 @@ namespace VideoDialog
                 DataTable dataTable = new DataTable();
                 if (dialogResult == DialogResult.OK)
                 {
+                    _videoLoan = DialogLoanInsert.VideoDtoLoan;
                     _logic.Loan.InsertVideoTable(_videoLoan);
                     _logic.Search.ReadVideo(_videoLoan, out dataTable);
                     DialogSearchResult.ResultTable = dataTable;
@@ -134,6 +136,7 @@ namespace VideoDialog
                 DataTable dataTable = new DataTable();
                 if (dialogResult == DialogResult.OK)
                 {
+                    _videoLoan = DialogLoanUpdate.VideoDtoLoan;
                     _logic.Loan.UpdateVideoTable(_videoLoan);
                     _logic.Search.ReadVideo(_videoLoan, out dataTable);
                     DialogSearchResult.ResultTable = dataTable;
@@ -161,6 +164,7 @@ namespace VideoDialog
                 DataTable dataTable = new DataTable();
                 if (dialogResult == DialogResult.OK)
                 {
+                    _videoLoan = DialogLoanDelete.VideoDtoLoan;
                     _logic.Loan.DeleteVideoTable(_videoLoan);
                     _logic.Search.ReadVideo(_videoLoan, out dataTable);
                     DialogSearchResult.ResultTable = dataTable;
