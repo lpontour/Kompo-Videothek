@@ -210,9 +210,7 @@ namespace VideoData
         }
         public int DeleteLoan(Loan loan)
         {
-            loan.Borrower = "";
-            loan.ReturnDate = DateTime.MinValue;
-            this.SqlUpdateVideo(loan, _dbCommand);
+            this.SqlReturnVideoLoan(loan, _dbCommand);
             AData.Open(_dbConnection);
             int nRecords = _dbCommand.ExecuteNonQuery();
             AData.Close(_dbConnection);
@@ -220,43 +218,19 @@ namespace VideoData
         }
         public int InsertVideoTable(VideoDtoLoan videoLoan)
         {
-            //if (VideoIdMissMach(videoLoan))
-            //{
-            //    MessageBox.Show("Video und ID Stimmen nicht Überein oder Exsestieren nicht.", "Hinweis: Neue Ausleihe",
-            //       MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //}
-            //else if (VideoNotLoaned(videoLoan) == false)
-            //{
-            //    MessageBox.Show("Video ist bereits ausgelihen.", "Hinweis: Neue Ausleihe",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //}
-            //else
-            //{
-            //    if(videoLoan.ID==0)
-            //    {
-            //        if(GetNextFreeVideo(videoLoan)== null)
-            //        {
-            //            MessageBox.Show("Kein freies exemplar des Videos vorhanden.", "Hinweis: Neue Ausleihe",
-            //                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //            return 0;
-            //        }
-            //        videoLoan.ID = GetNextFreeVideo(videoLoan).ID;
-            //    }
-            
-                this.SqlUpdateVideo(videoLoan, _dbCommand);
+           
+                this.SqlUptadeVideoLoan(videoLoan, _dbCommand);
                 AData.Open(_dbConnection);
                 int nRecords = _dbCommand.ExecuteNonQuery();
                 AData.Close(_dbConnection);
                 return nRecords;
-            //}
-            //return 0;
         }
         public int UpdateVideoTable(VideoDtoLoan videoLoan, DateTime returnDate)
         {
             videoLoan.ReturnDate = returnDate;
 
 
-            this.SqlUpdateVideo(videoLoan, _dbCommand);
+            this.SqlUptadeVideoLoan(videoLoan, _dbCommand);
             AData.Open(_dbConnection);
             int nRecords = _dbCommand.ExecuteNonQuery();
             AData.Close(_dbConnection);
@@ -281,7 +255,21 @@ namespace VideoData
             AData.AddParameter(dbCommand, "@borrower", video.Borrower);
             AData.AddParameter(dbCommand, "@returnDate", video.ReturnDate);
         }
-        void SqlUpdateVideo(Loan video, DbCommand dbCommand)
+        protected void SqlUpdateVideo(Loan video, DbCommand dbCommand)
+        {
+            dbCommand.CommandType = CommandType.Text;
+            dbCommand.Parameters.Clear();
+                dbCommand.CommandText = $"UPDATE VideoTable " +
+                   $"SET " +
+                   $"Borrower = ?, ReturnDate = ? " +
+                   $"WHERE ID = ?;";
+                dbCommand.Parameters.Clear();
+                AData.AddParameter(dbCommand, "Borrower", video.Borrower);
+                AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
+                AData.AddParameter(dbCommand, "ID", video.ID);
+  
+        }
+        protected void SqlNewVideoLoan(Loan video, DbCommand dbCommand)
         {
             dbCommand.CommandType = CommandType.Text;
             dbCommand.Parameters.Clear();
@@ -293,6 +281,100 @@ namespace VideoData
             AData.AddParameter(dbCommand, "Borrower", video.Borrower);
             AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
             AData.AddParameter(dbCommand, "ID", video.ID);
+        }
+        protected void SqlReturnVideoLoan(Loan video, DbCommand dbCommand)
+        {
+            if (video.ID != 0)
+            {
+                video.Borrower = "";
+                video.ReturnDate = DateTime.MinValue;
+                dbCommand.CommandType = CommandType.Text;
+                dbCommand.Parameters.Clear();
+                dbCommand.CommandText = $"UPDATE VideoTable " +
+                   $"SET " +
+                   $"Borrower = ?, ReturnDate = ? " +
+                   $"WHERE ID = ?;";
+                dbCommand.Parameters.Clear();
+                AData.AddParameter(dbCommand, "Borrower", video.Borrower);
+                AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
+                AData.AddParameter(dbCommand, "ID", video.ID);
+            }
+            else
+            {
+                if (video.ReturnDate == DateTime.MinValue)
+                {
+                    dbCommand.CommandType = CommandType.Text;
+                    dbCommand.Parameters.Clear();
+                    dbCommand.CommandText = $"UPDATE VideoTable " +
+                       $"SET " +
+                       $"Borrower = ?, ReturnDate = ? " +
+                       $"WHERE Borrower = ?;";
+                    dbCommand.Parameters.Clear();
+                    AData.AddParameter(dbCommand, "Borrower", "");
+                    AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
+                    AData.AddParameter(dbCommand, "Borrower", video.Borrower);
+                }else
+                {
+                    dbCommand.CommandType = CommandType.Text;
+                    dbCommand.Parameters.Clear();
+                    dbCommand.CommandText = @"UPDATE VideoTable ";
+                    dbCommand.CommandText += "SET ";
+                    dbCommand.CommandText += "Borrower = @NewBorrower, ";
+                    AData.AddParameter(dbCommand, "@NewBorrower", "");
+                    dbCommand.CommandText += "ReturnDate = @newReturnDate ";
+                    AData.AddParameter(dbCommand, "@newReturnDate", DateTime.MinValue);
+                    dbCommand.CommandText += $"WHERE Borrower = @OldBorrower";
+                    AData.AddParameter(dbCommand, "@OldBorrower", video.Borrower);
+                    dbCommand.CommandText += $" AND ReturnDate >= @DateNow";
+                    AData.AddParameter(dbCommand, "@DateNow", DateTime.Now.ToString("G"));
+                    dbCommand.CommandText += $" AND ReturnDate <= @TillReturnDate;";
+                    AData.AddParameter(dbCommand, "@TillReturnDate", video.ReturnDate.ToString("G"));
+                }
+            }       
+        }
+        protected void SqlUptadeVideoLoan(Loan video, DbCommand dbCommand)
+        {
+            if (video.ID != 0)
+            {
+                dbCommand.CommandType = CommandType.Text;
+                dbCommand.Parameters.Clear();
+                dbCommand.CommandText = $"UPDATE VideoTable " +
+                   $"SET " +
+                   $"ReturnDate = ? " +
+                   $"WHERE ID = ?;";
+                dbCommand.Parameters.Clear();
+                AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
+                AData.AddParameter(dbCommand, "ID", video.ID);
+            }
+            else
+            {
+                if (video.Title !="")
+                {
+                    dbCommand.CommandType = CommandType.Text;
+                    dbCommand.Parameters.Clear();
+                    dbCommand.CommandText = $"UPDATE VideoTable " +
+                       $"SET " +
+                       $"ReturnDate = ? " +
+                       $"WHERE Title = ? "+
+                       $"AND Borrower = ?;";
+                    dbCommand.Parameters.Clear();
+                    AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
+                    AData.AddParameter(dbCommand, "Title", video.Title);
+                    AData.AddParameter(dbCommand, "Borrower", video.Borrower);
+                }
+                else
+                {
+                    dbCommand.CommandType = CommandType.Text;
+                    dbCommand.Parameters.Clear();
+                    dbCommand.CommandText = $"UPDATE VideoTable " +
+                       $"SET " +
+                       $"ReturnDate = ? " +
+                       $"WHERE Borrower = ? ";
+                    dbCommand.Parameters.Clear();
+                    AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
+                    AData.AddParameter(dbCommand, "Borrower", video.Borrower);
+                }
+            }
         }
         void SqlDeleteVideo(int id, DbCommand dbCommand)
         {
