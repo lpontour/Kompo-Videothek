@@ -20,6 +20,7 @@ namespace VideoDialog.Search
         #region fields
         private CDialogMain _dialogMain;
         private ILogicSearch _logicSearch;
+        private VideoDtoSearch _videoSearch;
         #endregion
 
         #region properties
@@ -39,22 +40,24 @@ namespace VideoDialog.Search
                 CErrorHandling.ShowAndStop("Fehler beim Initialisieren von CDialogSearch", "Programmabbruch");
             }
             _logicSearch = logicSearch;
+            _videoSearch = new VideoDtoSearch();
         }
 
         #endregion
 
-        #region Eventhandler
-
-        private void CDialogSearch_Load(object sender, EventArgs e)
+        #region methods
+        private void ResetAll()
         {
             // Auswahl ID, nur beim ersten Aufruf
             if (comboBoxID.SelectedIndex == -1)
             {
-                // Alle in der DB gefunden IDs in der comboBoxID anzeigen
+                // Leeren der Comcobox-Einträge
                 comboBoxID.Items.Clear();
-                comboBoxID.Items.AddRange(_dialogMain.ID);
                 // Leeren Eintrag einfügen, um alle Einträge zu erhalten
                 comboBoxID.Items.Add("");
+                // Alle in der DB gefunden IDs in der comboBoxID anzeigen
+                comboBoxID.Items.AddRange(_dialogMain.ID);
+                comboBoxID.Items.AddRange(_logicSearch.ReadID(""));
                 // ComboBoxID.Text auf das erste Element setzen
                 if (comboBoxID.Items.Count > 0)
                 {
@@ -66,9 +69,8 @@ namespace VideoDialog.Search
             if (comboBoxTitle.SelectedIndex == -1)
             {
                 comboBoxTitle.Items.Clear();
-                comboBoxTitle.Items.AddRange(_dialogMain.Titel);
-                // Leeren Eintrag einfügen, um alle Einträge zu erhalten
                 comboBoxTitle.Items.Add("");
+                comboBoxTitle.Items.AddRange(_logicSearch.ReadTitle(""));
                 if (comboBoxTitle.Items.Count > 0)
                 {
                     comboBoxTitle.Text = comboBoxTitle.Items[0].ToString();
@@ -79,9 +81,8 @@ namespace VideoDialog.Search
             if (comboBoxGenre.SelectedIndex == -1)
             {
                 comboBoxGenre.Items.Clear();
-                comboBoxGenre.Items.AddRange(_dialogMain.Genre);
-                // Leeren Eintrag einfügen, um alle Einträge zu erhalten
-                comboBoxGenre.Items.Add("");
+                comboBoxTitle.Items.Add("");
+                comboBoxTitle.Items.AddRange(_logicSearch.ReadGenre(""));
                 if (comboBoxGenre.Items.Count > 0)
                 {
                     comboBoxGenre.Text = comboBoxGenre.Items[0].ToString();
@@ -92,9 +93,8 @@ namespace VideoDialog.Search
             if (comboBoxBorrowingRate.SelectedIndex == -1)
             {
                 comboBoxBorrowingRate.Items.Clear();
-                comboBoxBorrowingRate.Items.AddRange(_dialogMain.BorrowingRate);
-                // Leeren Eintrag einfügen, um alle Einträge zu erhalten
-                comboBoxBorrowingRate.Items.Add("");
+                comboBoxTitle.Items.Add("");
+                comboBoxTitle.Items.AddRange(_logicSearch.ReadBorrowingRate(""));
                 if (comboBoxBorrowingRate.Items.Count > 0)
                 {
                     comboBoxBorrowingRate.Text = comboBoxBorrowingRate.Items[0].ToString();
@@ -105,9 +105,8 @@ namespace VideoDialog.Search
             if (comboBoxReleaseYear.SelectedIndex == -1)
             {
                 comboBoxReleaseYear.Items.Clear();
-                comboBoxReleaseYear.Items.AddRange(_dialogMain.ReleaseYear);
-                // Leeren Eintrag einfügen, um alle Einträge zu erhalten
-                comboBoxReleaseYear.Items.Add("");
+                comboBoxTitle.Items.Add("");
+                comboBoxTitle.Items.AddRange(_logicSearch.ReadReleaseYear(""));
                 if (comboBoxReleaseYear.Items.Count > 0)
                 {
                     comboBoxReleaseYear.Text = comboBoxReleaseYear.Items[0].ToString();
@@ -118,9 +117,8 @@ namespace VideoDialog.Search
             if (comboBoxRunningTime.SelectedIndex == -1)
             {
                 comboBoxRunningTime.Items.Clear();
-                comboBoxRunningTime.Items.AddRange(_dialogMain.RunningTime);
-                // Leeren Eintrag einfügen, um alle Einträge zu erhalten
-                comboBoxRunningTime.Items.Add("");
+                comboBoxTitle.Items.Add("");
+                comboBoxTitle.Items.AddRange(_logicSearch.ReadRunningTime(""));
                 if (comboBoxRunningTime.Items.Count > 0)
                 {
                     comboBoxRunningTime.Text = comboBoxRunningTime.Items[0].ToString();
@@ -131,9 +129,8 @@ namespace VideoDialog.Search
             if (comboBoxRated.SelectedIndex == -1)
             {
                 comboBoxRated.Items.Clear();
-                comboBoxRated.Items.AddRange(_dialogMain.Rated);
-                // Leeren Eintrag einfügen, um alle Einträge zu erhalten
-                comboBoxRated.Items.Add("");
+                comboBoxTitle.Items.Add("");
+                comboBoxTitle.Items.AddRange(_logicSearch.ReadRated(""));
                 if (comboBoxRated.Items.Count > 0)
                 {
                     comboBoxRated.Text = comboBoxRated.Items[0].ToString();
@@ -144,9 +141,8 @@ namespace VideoDialog.Search
             if (comboBoxBorrower.SelectedIndex == -1)
             {
                 comboBoxBorrower.Items.Clear();
-                comboBoxBorrower.Items.AddRange(_dialogMain.Borrower);
-                // Leeren Eintrag einfügen, um alle Einträge zu erhalten
-                comboBoxBorrower.Items.Add("");
+                comboBoxTitle.Items.Add("");
+                comboBoxTitle.Items.AddRange(_logicSearch.ReadBorrower(""));
                 if (comboBoxBorrower.Items.Count > 0)
                 {
                     comboBoxBorrower.Text = comboBoxBorrower.Items[0].ToString();
@@ -157,729 +153,1133 @@ namespace VideoDialog.Search
             if (comboBoxReturnDate.SelectedIndex == -1)
             {
                 comboBoxReturnDate.Items.Clear();
-                comboBoxReturnDate.Items.AddRange(_dialogMain.ReturnDate);
-                // Leeren Eintrag einfügen, um alle Einträge zu erhalten
-                comboBoxReturnDate.Items.Add("");
+                comboBoxTitle.Items.Add("");
+                comboBoxTitle.Items.AddRange(_logicSearch.ReadReturnDate(""));
                 if (comboBoxReturnDate.Items.Count > 0)
                 {
                     comboBoxReturnDate.Text = comboBoxReturnDate.Items[0].ToString();
                 }
             }
+        }
+        #endregion
 
+
+        #region Eventhandler
+
+        private void CDialogSearch_Load(object sender, EventArgs e)
+        {
+            ResetAll();
         }
 
         private void comboBoxID_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Auswahl ID
-            string id = comboBoxID.Text;
-
-            // Den Titel des Films der ID aus der Datenbank lesen und in der 
-            // comboBoxTitel anzeigen 
-            comboBoxTitle.Items.Clear();
-            comboBoxTitle.Items.AddRange(_logicSearch.ReadTitle(id));
-            // Leeren Eintrag einfügen, um alle Einträge zu erhalten
-            comboBoxTitle.Items.Add("");
-            // ComboBox Text auf das erste Element setzen
-            if (comboBoxTitle.Items.Count > 0)
+            if(comboBoxID.Text == "")
             {
-                comboBoxTitle.Text = comboBoxTitle.Items[0].ToString();
+                ResetAll();
             }
-
-            // Das Genre zur ID auslesen
-            comboBoxGenre.Items.Clear();
-            comboBoxGenre.Items.AddRange(_logicSearch.ReadGenre(id));
-            comboBoxGenre.Items.Add("");
-            if (comboBoxGenre.Items.Count > 0)
+            else
             {
-                comboBoxGenre.Text = comboBoxGenre.Items[0].ToString();
-            }
+                _videoSearch.ID = Util.ParseInt(comboBoxID.Text, 0);
+                _videoSearch.Rated = 1;
 
-            // Den Preis zur ID auslesen
-            comboBoxBorrowingRate.Items.Clear();
-            comboBoxBorrowingRate.Items.AddRange(_logicSearch.ReadBorrowingRate(id));
-            comboBoxBorrowingRate.Items.Add("");
-            if (comboBoxBorrowingRate.Items.Count > 0)
-            {
-                comboBoxBorrowingRate.Text = comboBoxBorrowingRate.Items[0].ToString();
-            }
+                _logicSearch.ReadVideos(_videoSearch, out DataTable dataTable);
 
-            // Das Erscheinungsjahr zur ID auslesen
-            comboBoxReleaseYear.Items.Clear();
-            comboBoxReleaseYear.Items.AddRange(_logicSearch.ReadReleaseYear(id));
-            comboBoxReleaseYear.Items.Add("");
-            if (comboBoxReleaseYear.Items.Count > 0)
-            {
-                comboBoxReleaseYear.Text = comboBoxReleaseYear.Items[0].ToString();
-            }
+                comboBoxTitle.Items.Clear();
+                comboBoxTitle.Items.Add("");
+                comboBoxTitle.Items.Add(dataTable.Rows[0]["Title"].ToString());
 
-            // Die Laufzeit zur ID auslesen
-            comboBoxRunningTime.Items.Clear();
-            comboBoxRunningTime.Items.AddRange(_logicSearch.ReadRunningTime(id));
-            comboBoxRunningTime.Items.Add("");
-            if (comboBoxRunningTime.Items.Count > 0)
-            {
-                comboBoxRunningTime.Text = comboBoxRunningTime.Items[0].ToString();
-            }
+                comboBoxGenre.Items.Clear();
+                comboBoxGenre.Items.Add("");
+                comboBoxGenre.Items.Add(dataTable.Rows[0]["Genre"].ToString());
 
+                comboBoxBorrowingRate.Items.Clear();
+                comboBoxBorrowingRate.Items.Add("");
+                comboBoxBorrowingRate.Items.Add(dataTable.Rows[0]["BorrowingRate"].ToString());
 
-            // Das FSK zur ID auslesen
-            comboBoxRated.Items.Clear();
-            comboBoxRated.Items.AddRange(_logicSearch.ReadRated(id));
-            comboBoxRated.Items.Add("");
-            if (comboBoxRated.Items.Count > 0)
-            {
-                comboBoxRated.Text = comboBoxRated.Items[0].ToString();
-            }
+                comboBoxReleaseYear.Items.Clear();
+                comboBoxReleaseYear.Items.Add("");
+                comboBoxReleaseYear.Items.Add(dataTable.Rows[0]["ReleaseYear"].ToString());
 
-            // Den Ausleihenden zur ID auslesen
-            comboBoxBorrower.Items.Clear();
-            comboBoxBorrower.Items.AddRange(_logicSearch.ReadBorrower(id));
-            comboBoxBorrower.Items.Add("");
-            if (comboBoxBorrower.Items.Count > 0)
-            {
-                comboBoxBorrower.Text = comboBoxBorrower.Items[0].ToString();
-            }
+                comboBoxRunningTime.Items.Clear();
+                comboBoxRunningTime.Items.Add("");
+                comboBoxRunningTime.Items.Add(dataTable.Rows[0]["RunningTime"].ToString());
 
-            // Das Rückgabedatum zur ID auslesen
-            comboBoxReturnDate.Items.Clear();
-            comboBoxReturnDate.Items.AddRange(_logicSearch.ReadReturnDate(id));
-            comboBoxReturnDate.Items.Add("");
-            if (comboBoxReturnDate.Items.Count > 0)
-            {
-                comboBoxReturnDate.Text = comboBoxReturnDate.Items[0].ToString();
+                comboBoxRated.Items.Clear();
+                comboBoxRated.Items.Add("");
+                comboBoxRated.Items.Add(dataTable.Rows[0]["Rated"].ToString());
+
+                comboBoxBorrower.Items.Clear();
+                comboBoxBorrower.Items.Add("");
+                comboBoxBorrower.Items.Add(dataTable.Rows[0]["Borrower"].ToString());
+
+                comboBoxReturnDate.Items.Clear();
+                comboBoxReturnDate.Items.Add("");
+                comboBoxReturnDate.Items.Add(dataTable.Rows[0]["ReturnDate"].ToString());
             }
 
         }
 
         private void comboBoxTitle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Auswahl Titel
-            string title = comboBoxTitle.Text;
-
-            // Die IDs zum Titel auslesen
-            comboBoxID.Items.Clear();
-            comboBoxID.Items.AddRange(_logicSearch.ReadID(title));
-            comboBoxID.Items.Add("");
-            if (comboBoxID.Items.Count > 0)
+            if (comboBoxTitle.Text == "")
             {
-                comboBoxID.Text = comboBoxID.Items[0].ToString();
+                ResetAll();
             }
-
-            // Das Genre zum Titel auslesen
-            comboBoxGenre.Items.Clear();
-            comboBoxGenre.Items.AddRange(_logicSearch.ReadGenre(title));
-            comboBoxGenre.Items.Add("");
-            if (comboBoxGenre.Items.Count > 0)
+            else
             {
-                comboBoxGenre.Text = comboBoxGenre.Items[0].ToString();
-            }
+                _videoSearch.Title = comboBoxTitle.Text;
+                _videoSearch.Rated = 1;
 
-            // Den Preis zum Titel auslesen
-            comboBoxBorrowingRate.Items.Clear();
-            comboBoxBorrowingRate.Items.AddRange(_logicSearch.ReadBorrowingRate(title));
-            comboBoxBorrowingRate.Items.Add("");
-            if (comboBoxBorrowingRate.Items.Count > 0)
-            {
-                comboBoxBorrowingRate.Text = comboBoxBorrowingRate.Items[0].ToString();
-            }
+                if (comboBoxBorrower.Text != "")
+                {
+                    _videoSearch.Borrower = comboBoxBorrower.Text;
+                }
 
-            // Das Erscheinungsjahr zum Titel auslesen
-            comboBoxReleaseYear.Items.Clear();
-            comboBoxReleaseYear.Items.AddRange(_logicSearch.ReadReleaseYear(title));
-            comboBoxReleaseYear.Items.Add("");
-            if (comboBoxReleaseYear.Items.Count > 0)
-            {
-                comboBoxReleaseYear.Text = comboBoxReleaseYear.Items[0].ToString();
-            }
+                if (comboBoxReturnDate.Text != "")
+                {
+                    _videoSearch.ReturnDate = Util.ParseDate(comboBoxBorrowingRate.Text, DateTime.MinValue);
+                }
 
-            // Die Laufzeit zum Titel auslesen
-            comboBoxRunningTime.Items.Clear();
-            comboBoxRunningTime.Items.AddRange(_logicSearch.ReadRunningTime(title));
-            comboBoxRunningTime.Items.Add("");
-            if (comboBoxRunningTime.Items.Count > 0)
-            {
-                comboBoxRunningTime.Text = comboBoxRunningTime.Items[0].ToString();
-            }
+                _logicSearch.ReadVideos(_videoSearch, out DataTable dataTable);
 
+                comboBoxGenre.Items.Clear();
+                comboBoxGenre.Items.Add("");
+                comboBoxGenre.Items.Add(dataTable.Rows[0]["Genre"].ToString());
 
-            // Das FSK zum Titel auslesen
-            comboBoxRated.Items.Clear();
-            comboBoxRated.Items.AddRange(_logicSearch.ReadRated(title));
-            comboBoxRated.Items.Add("");
-            if (comboBoxRated.Items.Count > 0)
-            {
-                comboBoxRated.Text = comboBoxRated.Items[0].ToString();
-            }
+                comboBoxBorrowingRate.Items.Clear();
+                comboBoxBorrowingRate.Items.Add("");
+                comboBoxBorrowingRate.Items.Add(dataTable.Rows[0]["BorrowingRate"].ToString());
 
-            // Die Ausleihenden zum Titel auslesen
-            comboBoxBorrower.Items.Clear();
-            comboBoxBorrower.Items.AddRange(_logicSearch.ReadBorrower(title));
-            comboBoxBorrower.Items.Add("");
-            if (comboBoxBorrower.Items.Count > 0)
-            {
-                comboBoxBorrower.Text = comboBoxBorrower.Items[0].ToString();
-            }
+                comboBoxReleaseYear.Items.Clear();
+                comboBoxReleaseYear.Items.Add("");
+                comboBoxReleaseYear.Items.Add(dataTable.Rows[0]["ReleaseYear"].ToString());
 
-            // Die Rückgabedaten zum Title auslesen
-            comboBoxReturnDate.Items.Clear();
-            comboBoxReturnDate.Items.AddRange(_logicSearch.ReadReturnDate(title));
-            comboBoxReturnDate.Items.Add("");
-            if (comboBoxReturnDate.Items.Count > 0)
-            {
-                comboBoxReturnDate.Text = comboBoxReturnDate.Items[0].ToString();
+                comboBoxRunningTime.Items.Clear();
+                comboBoxRunningTime.Items.Add("");
+                comboBoxRunningTime.Items.Add(dataTable.Rows[0]["RunningTime"].ToString());
+
+                comboBoxRated.Items.Clear();
+                comboBoxRated.Items.Add("");
+                comboBoxRated.Items.Add(dataTable.Rows[0]["Rated"].ToString());
+
+                comboBoxID.Items.Clear();
+                comboBoxBorrower.Items.Clear();
+                comboBoxReturnDate.Items.Clear();
+
+                comboBoxID.Items.Add("");
+                comboBoxBorrower.Items.Add("");
+                comboBoxReturnDate.Items.Add("");
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string id = row["ID"].ToString();
+                    string borrower = row["Borrower"].ToString();
+                    string returnDate = row["ReturnDate"].ToString();
+                    comboBoxID.Items.Add(id);
+                    comboBoxBorrower.Items.Add(borrower);
+                    comboBoxReturnDate.Items.Add(returnDate);
+                }
             }
         }
 
         private void comboBoxGenre_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Auswahl Genre
-            string genre = comboBoxGenre.Text;
-
-            // Die IDs zum Genre auslesen
-            comboBoxID.Items.Clear();
-            comboBoxID.Items.AddRange(_logicSearch.ReadID(genre));
-            comboBoxID.Items.Add("");
-            if (comboBoxID.Items.Count > 0)
+            if (comboBoxGenre.Text == "")
             {
-                comboBoxID.Text = comboBoxID.Items[0].ToString();
+                ResetAll();
             }
-
-            // Die Titel zum Genre auslesen
-            comboBoxTitle.Items.Clear();
-            comboBoxTitle.Items.AddRange(_logicSearch.ReadTitle(genre));
-            comboBoxTitle.Items.Add("");
-            if (comboBoxTitle.Items.Count > 0)
+            else
             {
-                comboBoxTitle.Text = comboBoxTitle.Items[0].ToString();
-            }
+                _videoSearch.Genre = comboBoxGenre.Text;
 
-            // Die Preise zum Genre auslesen
-            comboBoxBorrowingRate.Items.Clear();
-            comboBoxBorrowingRate.Items.AddRange(_logicSearch.ReadBorrowingRate(genre));
-            comboBoxBorrowingRate.Items.Add("");
-            if (comboBoxBorrowingRate.Items.Count > 0)
-            {
-                comboBoxBorrowingRate.Text = comboBoxBorrowingRate.Items[0].ToString();
-            }
+                if (comboBoxID.Text == "")
+                {
+                    comboBoxID.Items.Clear();
+                    comboBoxID.Items.Add("");
+                }
 
-            // Die Erscheinungsjahre zum Genre auslesen
-            comboBoxReleaseYear.Items.Clear();
-            comboBoxReleaseYear.Items.AddRange(_logicSearch.ReadReleaseYear(genre));
-            comboBoxReleaseYear.Items.Add("");
-            if (comboBoxReleaseYear.Items.Count > 0)
-            {
-                comboBoxReleaseYear.Text = comboBoxReleaseYear.Items[0].ToString();
-            }
+                if (comboBoxTitle.Text == "")
+                {
+                    comboBoxTitle.Items.Clear();
+                    comboBoxTitle.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Title = comboBoxTitle.Text;
+                }
 
-            // Die Laufzeiten zum Genre auslesen
-            comboBoxRunningTime.Items.Clear();
-            comboBoxRunningTime.Items.AddRange(_logicSearch.ReadRunningTime(genre));
-            comboBoxRunningTime.Items.Add("");
-            if (comboBoxRunningTime.Items.Count > 0)
-            {
-                comboBoxRunningTime.Text = comboBoxRunningTime.Items[0].ToString();
-            }
+                if (comboBoxBorrowingRate.Text == "")
+                {
+                    comboBoxBorrowingRate.Items.Clear();
+                    comboBoxBorrowingRate.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.BorrowingRate = Util.ParseDouble(comboBoxBorrowingRate.Text, 0.0);
+                }
 
+                if (comboBoxReleaseYear.Text == "")
+                {
+                    comboBoxReleaseYear.Items.Clear();
+                    comboBoxReleaseYear.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.ReleaseYear = Util.ParseInt(comboBoxReleaseYear.Text, 0);
+                }
 
-            // Die FSKs zum Genre auslesen
-            comboBoxRated.Items.Clear();
-            comboBoxRated.Items.AddRange(_logicSearch.ReadRated(genre));
-            comboBoxRated.Items.Add("");
-            if (comboBoxRated.Items.Count > 0)
-            {
-                comboBoxRated.Text = comboBoxRated.Items[0].ToString();
-            }
+                if (comboBoxRunningTime.Text == "")
+                {
+                    comboBoxRunningTime.Items.Clear();
+                    comboBoxRunningTime.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.RunningTime = Util.ParseInt(comboBoxRunningTime.Text, 0);
+                }
 
-            // Die Ausleihenden zum Genre auslesen
-            comboBoxBorrower.Items.Clear();
-            comboBoxBorrower.Items.AddRange(_logicSearch.ReadBorrower(genre));
-            comboBoxBorrower.Items.Add("");
-            if (comboBoxBorrower.Items.Count > 0)
-            {
-                comboBoxBorrower.Text = comboBoxBorrower.Items[0].ToString();
-            }
+                if (comboBoxRated.Text == "")
+                {
+                    _videoSearch.Rated = 1;
+                    comboBoxRated.Items.Clear();
+                    comboBoxRated.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Rated = Util.ParseInt(comboBoxRated.Text, 0);
+                }
 
-            // Die Rückgabedaten zum Genre auslesen
-            comboBoxReturnDate.Items.Clear();
-            comboBoxReturnDate.Items.AddRange(_logicSearch.ReadReturnDate(genre));
-            comboBoxReturnDate.Items.Add("");
-            if (comboBoxReturnDate.Items.Count > 0)
-            {
-                comboBoxReturnDate.Text = comboBoxReturnDate.Items[0].ToString();
+                if (comboBoxBorrower.Text == "")
+                {
+                    comboBoxBorrower.Items.Clear();
+                    comboBoxBorrower.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Borrower = comboBoxBorrowingRate.Text;
+                }
+
+                if (comboBoxReturnDate.Text == "")
+                {
+                    comboBoxReturnDate.Items.Clear();
+                    comboBoxReturnDate.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.ReturnDate = Util.ParseDate(comboBoxBorrowingRate.Text, DateTime.MinValue);
+                }
+
+                _logicSearch.ReadVideos(_videoSearch, out DataTable dataTable);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string id = row["ID"].ToString();
+                    string title = row["Title"].ToString();
+                    string runningTime = row["RunningTime"].ToString();
+                    string rated = row["Rated"].ToString();
+                    string releaseYear = row["ReleaseYear"].ToString();
+                    string borrower = row["Borrower"].ToString();
+                    string borrowRate = row["BorrowingRate"].ToString();
+                    string returnDate = row["ReturnDate"].ToString();
+
+                    if (comboBoxID.Text == "")
+                    {
+                        comboBoxID.Items.Add(id);
+                    }
+
+                    if (comboBoxTitle.Text == "" && comboBoxTitle.FindStringExact(title) == -1)
+                    {
+                        comboBoxTitle.Items.Add(title);
+                    }
+
+                    if (comboBoxBorrowingRate.Text == "" && comboBoxBorrowingRate.FindStringExact(borrowRate) == -1)
+                    {
+                        comboBoxBorrowingRate.Items.Add(borrowRate);
+                    }
+
+                    if (comboBoxReleaseYear.Text == "" && comboBoxReleaseYear.FindStringExact(releaseYear) == -1)
+                    {
+                        comboBoxReleaseYear.Items.Add(releaseYear);
+                    }
+
+                    if (comboBoxRunningTime.Text == "" && comboBoxRunningTime.FindStringExact(runningTime) == -1)
+                    {
+                        comboBoxRunningTime.Items.Add(runningTime);
+                    }
+
+                    if (comboBoxRated.Text == "" && comboBoxRated.FindStringExact(rated) == -1)
+                    {
+                        comboBoxRated.Items.Add(rated);
+                    }
+
+                    if (comboBoxBorrower.Text == "" && comboBoxBorrower.FindStringExact(borrower) == -1)
+                    {
+                        comboBoxBorrower.Items.Add(borrower);
+                    }
+
+                    if (comboBoxReturnDate.Text == "" && comboBoxBorrower.FindStringExact(returnDate) == -1)
+                    {
+                        comboBoxReturnDate.Items.Add(returnDate);
+                    }
+                }
             }
         }
 
         private void comboBoxBorrowingRate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Auswahl Preis
-            string borrowingRate = comboBoxBorrowingRate.Text;
-
-            // Die IDs zum Preis auslesen
-            comboBoxID.Items.Clear();
-            comboBoxID.Items.AddRange(_logicSearch.ReadID(borrowingRate));
-            comboBoxID.Items.Add("");
-            if (comboBoxID.Items.Count > 0)
+            if (comboBoxBorrowingRate.Text == "")
             {
-                comboBoxID.Text = comboBoxID.Items[0].ToString();
+                ResetAll();
             }
-
-            // Die Titel zum Preis auslesen
-            comboBoxTitle.Items.Clear();
-            comboBoxTitle.Items.AddRange(_logicSearch.ReadTitle(borrowingRate));
-            comboBoxTitle.Items.Add("");
-            if (comboBoxTitle.Items.Count > 0)
+            else
             {
-                comboBoxTitle.Text = comboBoxTitle.Items[0].ToString();
-            }
+                _videoSearch.BorrowingRate = Util.ParseDouble(comboBoxBorrowingRate.Text, 0.0);
 
-            // Die Genre zum Preis auslesen
-            comboBoxGenre.Items.Clear();
-            comboBoxGenre.Items.AddRange(_logicSearch.ReadGenre(borrowingRate));
-            comboBoxGenre.Items.Add("");
-            if (comboBoxGenre.Items.Count > 0)
-            {
-                comboBoxGenre.Text = comboBoxGenre.Items[0].ToString();
-            }
+                if (comboBoxID.Text == "")
+                {
+                    comboBoxID.Items.Clear();
+                    comboBoxID.Items.Add("");
+                }
 
-            // Die Erscheinungsjahre zum Preis auslesen
-            comboBoxReleaseYear.Items.Clear();
-            comboBoxReleaseYear.Items.AddRange(_logicSearch.ReadReleaseYear(borrowingRate));
-            comboBoxReleaseYear.Items.Add("");
-            if (comboBoxReleaseYear.Items.Count > 0)
-            {
-                comboBoxReleaseYear.Text = comboBoxReleaseYear.Items[0].ToString();
-            }
+                if (comboBoxTitle.Text == "")
+                {
+                    comboBoxTitle.Items.Clear();
+                    comboBoxTitle.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Title = comboBoxTitle.Text;
+                }
 
-            // Die Laufzeiten zum Preis auslesen
-            comboBoxRunningTime.Items.Clear();
-            comboBoxRunningTime.Items.AddRange(_logicSearch.ReadRunningTime(borrowingRate));
-            comboBoxRunningTime.Items.Add("");
-            if (comboBoxRunningTime.Items.Count > 0)
-            {
-                comboBoxRunningTime.Text = comboBoxRunningTime.Items[0].ToString();
-            }
+                if (comboBoxGenre.Text == "")
+                {
+                    comboBoxGenre.Items.Clear();
+                    comboBoxGenre.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Genre = comboBoxGenre.Text;
+                }
 
+                if (comboBoxReleaseYear.Text == "")
+                {
+                    comboBoxReleaseYear.Items.Clear();
+                    comboBoxReleaseYear.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.ReleaseYear = Util.ParseInt(comboBoxReleaseYear.Text, 0);
+                }
 
-            // Die FSKs zum Preis auslesen
-            comboBoxRated.Items.Clear();
-            comboBoxRated.Items.AddRange(_logicSearch.ReadRated(borrowingRate));
-            comboBoxRated.Items.Add("");
-            if (comboBoxRated.Items.Count > 0)
-            {
-                comboBoxRated.Text = comboBoxRated.Items[0].ToString();
-            }
+                if (comboBoxRunningTime.Text == "")
+                {
+                    comboBoxRunningTime.Items.Clear();
+                    comboBoxRunningTime.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.RunningTime = Util.ParseInt(comboBoxRunningTime.Text, 0);
+                }
 
-            // Die Ausleihenden zum Preis auslesen
-            comboBoxBorrower.Items.Clear();
-            comboBoxBorrower.Items.AddRange(_logicSearch.ReadBorrower(borrowingRate));
-            comboBoxBorrower.Items.Add("");
-            if (comboBoxBorrower.Items.Count > 0)
-            {
-                comboBoxBorrower.Text = comboBoxBorrower.Items[0].ToString();
-            }
+                if (comboBoxRated.Text == "")
+                {
+                    _videoSearch.Rated = 1;
+                    comboBoxRated.Items.Clear();
+                    comboBoxRated.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Rated = Util.ParseInt(comboBoxRated.Text, 0);
+                }
 
-            // Die Rückgabedaten zum Preis auslesen
-            comboBoxReturnDate.Items.Clear();
-            comboBoxReturnDate.Items.AddRange(_logicSearch.ReadReturnDate(borrowingRate));
-            comboBoxReturnDate.Items.Add("");
-            if (comboBoxReturnDate.Items.Count > 0)
-            {
-                comboBoxReturnDate.Text = comboBoxReturnDate.Items[0].ToString();
+                if (comboBoxBorrower.Text == "")
+                {
+                    comboBoxBorrower.Items.Clear();
+                    comboBoxBorrower.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Borrower = comboBoxBorrowingRate.Text;
+                }
+
+                if (comboBoxReturnDate.Text == "")
+                {
+                    comboBoxReturnDate.Items.Clear();
+                    comboBoxReturnDate.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.ReturnDate = Util.ParseDate(comboBoxBorrowingRate.Text, DateTime.MinValue);
+                }
+
+                _logicSearch.ReadVideos(_videoSearch, out DataTable dataTable);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string id = row["ID"].ToString();
+                    string title = row["Title"].ToString();
+                    string runningTime = row["RunningTime"].ToString();
+                    string rated = row["Rated"].ToString();
+                    string releaseYear = row["ReleaseYear"].ToString();
+                    string borrower = row["Borrower"].ToString();
+                    string genre = row["Genre"].ToString();
+                    string returnDate = row["ReturnDate"].ToString();
+
+                    if (comboBoxID.Text == "")
+                    {
+                        comboBoxID.Items.Add(id);
+                    }
+
+                    if (comboBoxTitle.Text == "" && comboBoxTitle.FindStringExact(title) == -1)
+                    {
+                        comboBoxTitle.Items.Add(title);
+                    }
+
+                    if (comboBoxGenre.Text == "" && comboBoxGenre.FindStringExact(genre) == -1)
+                    {
+                        comboBoxBorrowingRate.Items.Add(genre);
+                    }
+
+                    if (comboBoxReleaseYear.Text == "" && comboBoxReleaseYear.FindStringExact(releaseYear) == -1)
+                    {
+                        comboBoxReleaseYear.Items.Add(releaseYear);
+                    }
+
+                    if (comboBoxRunningTime.Text == "" && comboBoxRunningTime.FindStringExact(runningTime) == -1)
+                    {
+                        comboBoxRunningTime.Items.Add(runningTime);
+                    }
+
+                    if (comboBoxRated.Text == "" && comboBoxRated.FindStringExact(rated) == -1)
+                    {
+                        comboBoxRated.Items.Add(rated);
+                    }
+
+                    if (comboBoxBorrower.Text == "" && comboBoxBorrower.FindStringExact(borrower) == -1)
+                    {
+                        comboBoxBorrower.Items.Add(borrower);
+                    }
+
+                    if (comboBoxReturnDate.Text == "" && comboBoxReturnDate.FindStringExact(returnDate) == -1)
+                    {
+                        comboBoxReturnDate.Items.Add(returnDate);
+                    }
+                }
             }
         }
 
         private void comboBoxReleaseYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Auswahl Erscheinungsjahr
-            string releaseYear = comboBoxReleaseYear.Text;
-
-            // Die IDs zum Erscheinungsjahr auslesen
-            comboBoxID.Items.Clear();
-            comboBoxID.Items.AddRange(_logicSearch.ReadID(releaseYear));
-            comboBoxID.Items.Add("");
-            if (comboBoxID.Items.Count > 0)
+            if (comboBoxReleaseYear.Text == "")
             {
-                comboBoxID.Text = comboBoxID.Items[0].ToString();
+                ResetAll();
             }
-
-            // Die Titel zum Erscheinungsjahr auslesen
-            comboBoxTitle.Items.Clear();
-            comboBoxTitle.Items.AddRange(_logicSearch.ReadTitle(releaseYear));
-            comboBoxTitle.Items.Add("");
-            if (comboBoxTitle.Items.Count > 0)
+            else
             {
-                comboBoxTitle.Text = comboBoxTitle.Items[0].ToString();
-            }
+                _videoSearch.ReleaseYear = Util.ParseInt(comboBoxReleaseYear.Text, 0);
 
-            // Die Genre zum Erscheinungsjahr auslesen
-            comboBoxGenre.Items.Clear();
-            comboBoxGenre.Items.AddRange(_logicSearch.ReadGenre(releaseYear));
-            comboBoxGenre.Items.Add("");
-            if (comboBoxGenre.Items.Count > 0)
-            {
-                comboBoxGenre.Text = comboBoxGenre.Items[0].ToString();
-            }
+                if (comboBoxID.Text == "")
+                {
+                    comboBoxID.Items.Clear();
+                    comboBoxID.Items.Add("");
+                }
 
-            // Die Preise zum Erscheinungsjahr auslesen
-            comboBoxBorrowingRate.Items.Clear();
-            comboBoxBorrowingRate.Items.AddRange(_logicSearch.ReadBorrowingRate(releaseYear));
-            comboBoxBorrowingRate.Items.Add("");
-            if (comboBoxBorrowingRate.Items.Count > 0)
-            {
-                comboBoxBorrowingRate.Text = comboBoxBorrowingRate.Items[0].ToString();
-            }
+                if (comboBoxTitle.Text == "")
+                {
+                    comboBoxTitle.Items.Clear();
+                    comboBoxTitle.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Title = comboBoxTitle.Text;
+                }
 
-            // Die Laufzeiten zum Erscheinungsjahr auslesen
-            comboBoxRunningTime.Items.Clear();
-            comboBoxRunningTime.Items.AddRange(_logicSearch.ReadRunningTime(releaseYear));
-            comboBoxRunningTime.Items.Add("");
-            if (comboBoxRunningTime.Items.Count > 0)
-            {
-                comboBoxRunningTime.Text = comboBoxRunningTime.Items[0].ToString();
-            }
+                if (comboBoxGenre.Text == "")
+                {
+                    comboBoxGenre.Items.Clear();
+                    comboBoxGenre.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Genre = comboBoxGenre.Text;
+                }
 
+                if (comboBoxBorrowingRate.Text == "")
+                {
+                    comboBoxBorrowingRate.Items.Clear();
+                    comboBoxBorrowingRate.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.BorrowingRate = Util.ParseDouble(comboBoxBorrowingRate.Text, 0.0);
+                }
 
-            // Die FSKs zum Preis auslesen
-            comboBoxRated.Items.Clear();
-            comboBoxRated.Items.AddRange(_logicSearch.ReadRated(releaseYear));
-            comboBoxRated.Items.Add("");
-            if (comboBoxRated.Items.Count > 0)
-            {
-                comboBoxRated.Text = comboBoxRated.Items[0].ToString();
-            }
+                if (comboBoxRunningTime.Text == "")
+                {
+                    comboBoxRunningTime.Items.Clear();
+                    comboBoxRunningTime.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.RunningTime = Util.ParseInt(comboBoxRunningTime.Text, 0);
+                }
 
-            // Die Ausleihenden zum Preis auslesen
-            comboBoxBorrower.Items.Clear();
-            comboBoxBorrower.Items.AddRange(_logicSearch.ReadBorrower(releaseYear));
-            comboBoxBorrower.Items.Add("");
-            if (comboBoxBorrower.Items.Count > 0)
-            {
-                comboBoxBorrower.Text = comboBoxBorrower.Items[0].ToString();
-            }
+                if (comboBoxRated.Text == "")
+                {
+                    _videoSearch.Rated = 1;
+                    comboBoxRated.Items.Clear();
+                    comboBoxRated.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Rated = Util.ParseInt(comboBoxRated.Text, 0);
+                }
 
-            // Die Rückgabedaten zum Preis auslesen
-            comboBoxReturnDate.Items.Clear();
-            comboBoxReturnDate.Items.AddRange(_logicSearch.ReadReturnDate(releaseYear));
-            comboBoxReturnDate.Items.Add("");
-            if (comboBoxReturnDate.Items.Count > 0)
-            {
-                comboBoxReturnDate.Text = comboBoxReturnDate.Items[0].ToString();
+                if (comboBoxBorrower.Text == "")
+                {
+                    comboBoxBorrower.Items.Clear();
+                    comboBoxBorrower.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Borrower = comboBoxBorrowingRate.Text;
+                }
+
+                if (comboBoxReturnDate.Text == "")
+                {
+                    comboBoxReturnDate.Items.Clear();
+                    comboBoxReturnDate.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.ReturnDate = Util.ParseDate(comboBoxBorrowingRate.Text, DateTime.MinValue);
+                }
+
+                _logicSearch.ReadVideos(_videoSearch, out DataTable dataTable);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string id = row["ID"].ToString();
+                    string title = row["Title"].ToString();
+                    string runningTime = row["RunningTime"].ToString();
+                    string rated = row["Rated"].ToString();
+                    string borrowingRate = row["BorrowingRate"].ToString();
+                    string borrower = row["Borrower"].ToString();
+                    string genre = row["Genre"].ToString();
+                    string returnDate = row["ReturnDate"].ToString();
+
+                    if (comboBoxID.Text == "")
+                    {
+                        comboBoxID.Items.Add(id);
+                    }
+
+                    if (comboBoxTitle.Text == "" && comboBoxTitle.FindStringExact(title) == -1)
+                    {
+                        comboBoxTitle.Items.Add(title);
+                    }
+
+                    if (comboBoxGenre.Text == "" && comboBoxGenre.FindStringExact(genre) == -1)
+                    {
+                        comboBoxBorrowingRate.Items.Add(genre);
+                    }
+
+                    if (comboBoxBorrowingRate.Text == "" && comboBoxBorrowingRate.FindStringExact(borrowingRate) == -1)
+                    {
+                        comboBoxBorrowingRate.Items.Add(borrowingRate);
+                    }
+
+                    if (comboBoxRunningTime.Text == "" && comboBoxRunningTime.FindStringExact(runningTime) == -1)
+                    {
+                        comboBoxRunningTime.Items.Add(runningTime);
+                    }
+
+                    if (comboBoxRated.Text == "" && comboBoxRated.FindStringExact(rated) == -1)
+                    {
+                        comboBoxRated.Items.Add(rated);
+                    }
+
+                    if (comboBoxBorrower.Text == "" && comboBoxBorrower.FindStringExact(borrower) == -1)
+                    {
+                        comboBoxBorrower.Items.Add(borrower);
+                    }
+
+                    if (comboBoxReturnDate.Text == "" && comboBoxReturnDate.FindStringExact(returnDate) == -1)
+                    {
+                        comboBoxReturnDate.Items.Add(returnDate);
+                    }
+                }
             }
         }
 
         private void comboBoxRunningTime_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Auswahl Laufzeit
-            string runningTime = comboBoxRunningTime.Text;
-
-            // Die IDs zur Laufzeit auslesen
-            comboBoxID.Items.Clear();
-            comboBoxID.Items.AddRange(_logicSearch.ReadID(runningTime));
-            comboBoxID.Items.Add("");
-            if (comboBoxID.Items.Count > 0)
+            if (comboBoxRunningTime.Text == "")
             {
-                comboBoxID.Text = comboBoxID.Items[0].ToString();
+                ResetAll();
             }
-
-            // Die Titel zur Laufzeit auslesen
-            comboBoxTitle.Items.Clear();
-            comboBoxTitle.Items.AddRange(_logicSearch.ReadTitle(runningTime));
-            comboBoxTitle.Items.Add("");
-            if (comboBoxTitle.Items.Count > 0)
+            else
             {
-                comboBoxTitle.Text = comboBoxTitle.Items[0].ToString();
-            }
+                _videoSearch.RunningTime = Util.ParseInt(comboBoxRunningTime.Text, 0);
 
-            // Die Genre zur Laufzeit auslesen
-            comboBoxGenre.Items.Clear();
-            comboBoxGenre.Items.AddRange(_logicSearch.ReadGenre(runningTime));
-            comboBoxGenre.Items.Add("");
-            if (comboBoxGenre.Items.Count > 0)
-            {
-                comboBoxGenre.Text = comboBoxGenre.Items[0].ToString();
-            }
+                if (comboBoxID.Text == "")
+                {
+                    comboBoxID.Items.Clear();
+                    comboBoxID.Items.Add("");
+                }
 
-            // Die Preise zur Laufzeit auslesen
-            comboBoxBorrowingRate.Items.Clear();
-            comboBoxBorrowingRate.Items.AddRange(_logicSearch.ReadBorrowingRate(runningTime));
-            comboBoxBorrowingRate.Items.Add("");
-            if (comboBoxBorrowingRate.Items.Count > 0)
-            {
-                comboBoxBorrowingRate.Text = comboBoxBorrowingRate.Items[0].ToString();
-            }
+                if (comboBoxTitle.Text == "")
+                {
+                    comboBoxTitle.Items.Clear();
+                    comboBoxTitle.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Title = comboBoxTitle.Text;
+                }
 
-            // Die Erscheinungsjahre zur Laufzeit auslesen
-            comboBoxReleaseYear.Items.Clear();
-            comboBoxReleaseYear.Items.AddRange(_logicSearch.ReadReleaseYear(runningTime));
-            comboBoxReleaseYear.Items.Add("");
-            if (comboBoxReleaseYear.Items.Count > 0)
-            {
-                comboBoxReleaseYear.Text = comboBoxReleaseYear.Items[0].ToString();
-            }
+                if (comboBoxGenre.Text == "")
+                {
+                    comboBoxGenre.Items.Clear();
+                    comboBoxGenre.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Genre = comboBoxGenre.Text;
+                }
 
+                if (comboBoxBorrowingRate.Text == "")
+                {
+                    comboBoxBorrowingRate.Items.Clear();
+                    comboBoxBorrowingRate.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.BorrowingRate = Util.ParseDouble(comboBoxBorrowingRate.Text, 0.0);
+                }
 
-            // Die FSKs zur Laufzeit auslesen
-            comboBoxRated.Items.Clear();
-            comboBoxRated.Items.AddRange(_logicSearch.ReadRated(runningTime));
-            comboBoxRated.Items.Add("");
-            if (comboBoxRated.Items.Count > 0)
-            {
-                comboBoxRated.Text = comboBoxRated.Items[0].ToString();
-            }
+                if (comboBoxReleaseYear.Text == "")
+                {
+                    comboBoxReleaseYear.Items.Clear();
+                    comboBoxReleaseYear.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.ReleaseYear = Util.ParseInt(comboBoxReleaseYear.Text, 0);
+                }
 
-            // Die Ausleihenden zur Laufzeit auslesen
-            comboBoxBorrower.Items.Clear();
-            comboBoxBorrower.Items.AddRange(_logicSearch.ReadBorrower(runningTime));
-            comboBoxBorrower.Items.Add("");
-            if (comboBoxBorrower.Items.Count > 0)
-            {
-                comboBoxBorrower.Text = comboBoxBorrower.Items[0].ToString();
-            }
+                if (comboBoxRated.Text == "")
+                {
+                    _videoSearch.Rated = 1;
+                    comboBoxRated.Items.Clear();
+                    comboBoxRated.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Rated = Util.ParseInt(comboBoxRated.Text, 0);
+                }
 
-            // Die Rückgabedaten zur Laufzeit auslesen
-            comboBoxReturnDate.Items.Clear();
-            comboBoxReturnDate.Items.AddRange(_logicSearch.ReadReturnDate(runningTime));
-            comboBoxReturnDate.Items.Add("");
-            if (comboBoxReturnDate.Items.Count > 0)
-            {
-                comboBoxReturnDate.Text = comboBoxReturnDate.Items[0].ToString();
+                if (comboBoxBorrower.Text == "")
+                {
+                    comboBoxBorrower.Items.Clear();
+                    comboBoxBorrower.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Borrower = comboBoxBorrowingRate.Text;
+                }
+
+                if (comboBoxReturnDate.Text == "")
+                {
+                    comboBoxReturnDate.Items.Clear();
+                    comboBoxReturnDate.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.ReturnDate = Util.ParseDate(comboBoxBorrowingRate.Text, DateTime.MinValue);
+                }
+
+                _logicSearch.ReadVideos(_videoSearch, out DataTable dataTable);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string id = row["ID"].ToString();
+                    string title = row["Title"].ToString();
+                    string releaseYear = row["ReleaseYear"].ToString();
+                    string rated = row["Rated"].ToString();
+                    string borrowingRate = row["BorrowingRate"].ToString();
+                    string borrower = row["Borrower"].ToString();
+                    string genre = row["Genre"].ToString();
+                    string returnDate = row["ReturnDate"].ToString();
+
+                    if (comboBoxID.Text == "")
+                    {
+                        comboBoxID.Items.Add(id);
+                    }
+
+                    if (comboBoxTitle.Text == "" && comboBoxTitle.FindStringExact(title) == -1)
+                    {
+                        comboBoxTitle.Items.Add(title);
+                    }
+
+                    if (comboBoxGenre.Text == "" && comboBoxGenre.FindStringExact(genre) == -1)
+                    {
+                        comboBoxBorrowingRate.Items.Add(genre);
+                    }
+
+                    if (comboBoxBorrowingRate.Text == "" && comboBoxBorrowingRate.FindStringExact(borrowingRate) == -1)
+                    {
+                        comboBoxBorrowingRate.Items.Add(borrowingRate);
+                    }
+
+                    if (comboBoxReleaseYear.Text == "" && comboBoxReleaseYear.FindStringExact(releaseYear) == -1)
+                    {
+                        comboBoxReleaseYear.Items.Add(releaseYear);
+                    }
+
+                    if (comboBoxRated.Text == "" && comboBoxRated.FindStringExact(rated) == -1)
+                    {
+                        comboBoxRated.Items.Add(rated);
+                    }
+
+                    if (comboBoxBorrower.Text == "" && comboBoxBorrower.FindStringExact(borrower) == -1)
+                    {
+                        comboBoxBorrower.Items.Add(borrower);
+                    }
+
+                    if (comboBoxReturnDate.Text == "" && comboBoxReturnDate.FindStringExact(returnDate) == -1)
+                    {
+                        comboBoxReturnDate.Items.Add(returnDate);
+                    }
+                }
             }
         }
 
         private void comboBoxRated_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Auswahl FSK
-            string rated = comboBoxRated.Text;
-
-            // Die IDs zur FSK auslesen
-            comboBoxID.Items.Clear();
-            comboBoxID.Items.AddRange(_logicSearch.ReadID(rated));
-            comboBoxID.Items.Add("");
-            if (comboBoxID.Items.Count > 0)
+            if (comboBoxRated.Text == "")
             {
-                comboBoxID.Text = comboBoxID.Items[0].ToString();
+                ResetAll();
             }
-
-            // Die Titel zur FSK auslesen
-            comboBoxTitle.Items.Clear();
-            comboBoxTitle.Items.AddRange(_logicSearch.ReadTitle(rated));
-            comboBoxTitle.Items.Add("");
-            if (comboBoxTitle.Items.Count > 0)
+            else
             {
-                comboBoxTitle.Text = comboBoxTitle.Items[0].ToString();
-            }
+                _videoSearch.Rated = Util.ParseInt(comboBoxRunningTime.Text, 0);
 
-            // Die Genre zur FSK auslesen
-            comboBoxGenre.Items.Clear();
-            comboBoxGenre.Items.AddRange(_logicSearch.ReadGenre(rated));
-            comboBoxGenre.Items.Add("");
-            if (comboBoxGenre.Items.Count > 0)
-            {
-                comboBoxGenre.Text = comboBoxGenre.Items[0].ToString();
-            }
+                if (comboBoxID.Text == "")
+                {
+                    comboBoxID.Items.Clear();
+                    comboBoxID.Items.Add("");
+                }
 
-            // Die Preise zur FSK auslesen
-            comboBoxBorrowingRate.Items.Clear();
-            comboBoxBorrowingRate.Items.AddRange(_logicSearch.ReadBorrowingRate(rated));
-            comboBoxBorrowingRate.Items.Add("");
-            if (comboBoxBorrowingRate.Items.Count > 0)
-            {
-                comboBoxBorrowingRate.Text = comboBoxBorrowingRate.Items[0].ToString();
-            }
+                if (comboBoxTitle.Text == "")
+                {
+                    comboBoxTitle.Items.Clear();
+                    comboBoxTitle.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Title = comboBoxTitle.Text;
+                }
 
-            // Die Erscheinungsjahre zur FSK auslesen
-            comboBoxReleaseYear.Items.Clear();
-            comboBoxReleaseYear.Items.AddRange(_logicSearch.ReadReleaseYear(rated));
-            comboBoxReleaseYear.Items.Add("");
-            if (comboBoxReleaseYear.Items.Count > 0)
-            {
-                comboBoxReleaseYear.Text = comboBoxReleaseYear.Items[0].ToString();
-            }
+                if (comboBoxGenre.Text == "")
+                {
+                    comboBoxGenre.Items.Clear();
+                    comboBoxGenre.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Genre = comboBoxGenre.Text;
+                }
 
+                if (comboBoxBorrowingRate.Text == "")
+                {
+                    comboBoxBorrowingRate.Items.Clear();
+                    comboBoxBorrowingRate.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.BorrowingRate = Util.ParseDouble(comboBoxBorrowingRate.Text, 0.0);
+                }
 
-            // Die Laufzeiten zur FSK auslesen
-            comboBoxRunningTime.Items.Clear();
-            comboBoxRunningTime.Items.AddRange(_logicSearch.ReadRunningTime(rated));
-            comboBoxRunningTime.Items.Add("");
-            if (comboBoxRunningTime.Items.Count > 0)
-            {
-                comboBoxRunningTime.Text = comboBoxRunningTime.Items[0].ToString();
-            }
+                if (comboBoxReleaseYear.Text == "")
+                {
+                    comboBoxReleaseYear.Items.Clear();
+                    comboBoxReleaseYear.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.ReleaseYear = Util.ParseInt(comboBoxReleaseYear.Text, 0);
+                }
 
-            // Die Ausleihenden zur FSK auslesen
-            comboBoxBorrower.Items.Clear();
-            comboBoxBorrower.Items.AddRange(_logicSearch.ReadBorrower(rated));
-            comboBoxBorrower.Items.Add("");
-            if (comboBoxBorrower.Items.Count > 0)
-            {
-                comboBoxBorrower.Text = comboBoxBorrower.Items[0].ToString();
-            }
+                if (comboBoxRunningTime.Text == "")
+                {
+                    comboBoxRunningTime.Items.Clear();
+                    comboBoxRunningTime.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.RunningTime = Util.ParseInt(comboBoxRunningTime.Text, 0);
+                }
 
-            // Die Rückgabedaten zur FSK auslesen
-            comboBoxReturnDate.Items.Clear();
-            comboBoxReturnDate.Items.AddRange(_logicSearch.ReadReturnDate(rated));
-            comboBoxReturnDate.Items.Add("");
-            if (comboBoxReturnDate.Items.Count > 0)
-            {
-                comboBoxReturnDate.Text = comboBoxReturnDate.Items[0].ToString();
+                if (comboBoxBorrower.Text == "")
+                {
+                    comboBoxBorrower.Items.Clear();
+                    comboBoxBorrower.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Borrower = comboBoxBorrowingRate.Text;
+                }
+
+                if (comboBoxReturnDate.Text == "")
+                {
+                    comboBoxReturnDate.Items.Clear();
+                    comboBoxReturnDate.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.ReturnDate = Util.ParseDate(comboBoxBorrowingRate.Text, DateTime.MinValue);
+                }
+
+                _logicSearch.ReadVideos(_videoSearch, out DataTable dataTable);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string id = row["ID"].ToString();
+                    string title = row["Title"].ToString();
+                    string releaseYear = row["ReleaseYear"].ToString();
+                    string runningTime = row["RunningTime"].ToString();
+                    string borrowingRate = row["BorrowingRate"].ToString();
+                    string borrower = row["Borrower"].ToString();
+                    string genre = row["Genre"].ToString();
+                    string returnDate = row["ReturnDate"].ToString();
+
+                    if (comboBoxID.Text == "")
+                    {
+                        comboBoxID.Items.Add(id);
+                    }
+
+                    if (comboBoxTitle.Text == "" && comboBoxTitle.FindStringExact(title) == -1)
+                    {
+                        comboBoxTitle.Items.Add(title);
+                    }
+
+                    if (comboBoxGenre.Text == "" && comboBoxGenre.FindStringExact(genre) == -1)
+                    {
+                        comboBoxBorrowingRate.Items.Add(genre);
+                    }
+
+                    if (comboBoxBorrowingRate.Text == "" && comboBoxBorrowingRate.FindStringExact(borrowingRate) == -1)
+                    {
+                        comboBoxBorrowingRate.Items.Add(borrowingRate);
+                    }
+
+                    if (comboBoxReleaseYear.Text == "" && comboBoxReleaseYear.FindStringExact(releaseYear) == -1)
+                    {
+                        comboBoxReleaseYear.Items.Add(releaseYear);
+                    }
+
+                    if (comboBoxRunningTime.Text == "" && comboBoxRunningTime.FindStringExact(runningTime) == -1)
+                    {
+                        comboBoxRunningTime.Items.Add(runningTime);
+                    }
+
+                    if (comboBoxBorrower.Text == "" && comboBoxBorrower.FindStringExact(borrower) == -1)
+                    {
+                        comboBoxBorrower.Items.Add(borrower);
+                    }
+
+                    if (comboBoxReturnDate.Text == "" && comboBoxReturnDate.FindStringExact(returnDate) == -1)
+                    {
+                        comboBoxReturnDate.Items.Add(returnDate);
+                    }
+                }
             }
         }
 
         private void comboBoxBorrower_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Auswahl Ausleihender
-            string borrower = comboBoxBorrower.Text;
-
-            // Die IDs zum Ausleihenden auslesen
-            comboBoxID.Items.Clear();
-            comboBoxID.Items.AddRange(_logicSearch.ReadID(borrower));
-            comboBoxID.Items.Add("");
-            if (comboBoxID.Items.Count > 0)
+            if (comboBoxBorrower.Text == "")
             {
-                comboBoxID.Text = comboBoxID.Items[0].ToString();
+                ResetAll();
             }
-
-            // Die Titel zum Ausleihenden auslesen
-            comboBoxTitle.Items.Clear();
-            comboBoxTitle.Items.AddRange(_logicSearch.ReadTitle(borrower));
-            comboBoxTitle.Items.Add("");
-            if (comboBoxTitle.Items.Count > 0)
+            else
             {
-                comboBoxTitle.Text = comboBoxTitle.Items[0].ToString();
-            }
+                _videoSearch.Borrower = comboBoxRunningTime.Text;
 
-            // Die Genre zum Ausleihenden auslesen
-            comboBoxGenre.Items.Clear();
-            comboBoxGenre.Items.AddRange(_logicSearch.ReadGenre(borrower));
-            comboBoxGenre.Items.Add("");
-            if (comboBoxGenre.Items.Count > 0)
-            {
-                comboBoxGenre.Text = comboBoxGenre.Items[0].ToString();
-            }
+                if (comboBoxID.Text == "")
+                {
+                    comboBoxID.Items.Clear();
+                    comboBoxID.Items.Add("");
+                }
 
-            // Die Preise zum Ausleihenden auslesen
-            comboBoxBorrowingRate.Items.Clear();
-            comboBoxBorrowingRate.Items.AddRange(_logicSearch.ReadBorrowingRate(borrower));
-            comboBoxBorrowingRate.Items.Add("");
-            if (comboBoxBorrowingRate.Items.Count > 0)
-            {
-                comboBoxBorrowingRate.Text = comboBoxBorrowingRate.Items[0].ToString();
-            }
+                if (comboBoxTitle.Text == "")
+                {
+                    comboBoxTitle.Items.Clear();
+                    comboBoxTitle.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Title = comboBoxTitle.Text;
+                }
 
-            // Die Erscheinungsjahre zum Ausleihenden auslesen
-            comboBoxReleaseYear.Items.Clear();
-            comboBoxReleaseYear.Items.AddRange(_logicSearch.ReadReleaseYear(borrower));
-            comboBoxReleaseYear.Items.Add("");
-            if (comboBoxReleaseYear.Items.Count > 0)
-            {
-                comboBoxReleaseYear.Text = comboBoxReleaseYear.Items[0].ToString();
-            }
+                if (comboBoxGenre.Text == "")
+                {
+                    comboBoxGenre.Items.Clear();
+                    comboBoxGenre.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Genre = comboBoxGenre.Text;
+                }
 
+                if (comboBoxBorrowingRate.Text == "")
+                {
+                    comboBoxBorrowingRate.Items.Clear();
+                    comboBoxBorrowingRate.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.BorrowingRate = Util.ParseDouble(comboBoxBorrowingRate.Text, 0.0);
+                }
 
-            // Die Laufzeiten zum Ausleihenden auslesen
-            comboBoxRunningTime.Items.Clear();
-            comboBoxRunningTime.Items.AddRange(_logicSearch.ReadRunningTime(borrower));
-            comboBoxRunningTime.Items.Add("");
-            if (comboBoxRunningTime.Items.Count > 0)
-            {
-                comboBoxRunningTime.Text = comboBoxRunningTime.Items[0].ToString();
-            }
+                if (comboBoxReleaseYear.Text == "")
+                {
+                    comboBoxReleaseYear.Items.Clear();
+                    comboBoxReleaseYear.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.ReleaseYear = Util.ParseInt(comboBoxReleaseYear.Text, 0);
+                }
 
-            // Die FSKs zum Ausleihenden auslesen
-            comboBoxRated.Items.Clear();
-            comboBoxRated.Items.AddRange(_logicSearch.ReadRated(borrower));
-            comboBoxRated.Items.Add("");
-            if (comboBoxRated.Items.Count > 0)
-            {
-                comboBoxRated.Text = comboBoxRated.Items[0].ToString();
-            }
+                if (comboBoxRunningTime.Text == "")
+                {
+                    comboBoxRunningTime.Items.Clear();
+                    comboBoxRunningTime.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.RunningTime = Util.ParseInt(comboBoxRunningTime.Text, 0);
+                }
 
-            // Die Rückgabedaten zum Ausleihenden auslesen
-            comboBoxReturnDate.Items.Clear();
-            comboBoxReturnDate.Items.AddRange(_logicSearch.ReadReturnDate(borrower));
-            comboBoxReturnDate.Items.Add("");
-            if (comboBoxReturnDate.Items.Count > 0)
-            {
-                comboBoxReturnDate.Text = comboBoxReturnDate.Items[0].ToString();
+                if (comboBoxRated.Text == "")
+                {
+                    _videoSearch.Rated = 1;
+
+                    comboBoxRated.Items.Clear();
+                    comboBoxRated.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Rated = Util.ParseInt(comboBoxRated.Text, 1);
+                }
+
+                if (comboBoxReturnDate.Text == "")
+                {
+                    comboBoxReturnDate.Items.Clear();
+                    comboBoxReturnDate.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.ReturnDate = Util.ParseDate(comboBoxBorrowingRate.Text, DateTime.MinValue);
+                }
+
+                _logicSearch.ReadVideos(_videoSearch, out DataTable dataTable);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string id = row["ID"].ToString();
+                    string title = row["Title"].ToString();
+                    string releaseYear = row["ReleaseYear"].ToString();
+                    string runningTime = row["RunningTime"].ToString();
+                    string borrowingRate = row["BorrowingRate"].ToString();
+                    string rated = row["Rated"].ToString();
+                    string genre = row["Genre"].ToString();
+                    string returnDate = row["ReturnDate"].ToString();
+
+                    if (comboBoxID.Text == "")
+                    {
+                        comboBoxID.Items.Add(id);
+                    }
+
+                    if (comboBoxTitle.Text == "" && comboBoxTitle.FindStringExact(title) == -1)
+                    {
+                        comboBoxTitle.Items.Add(title);
+                    }
+
+                    if (comboBoxGenre.Text == "" && comboBoxGenre.FindStringExact(genre) == -1)
+                    {
+                        comboBoxBorrowingRate.Items.Add(genre);
+                    }
+
+                    if (comboBoxBorrowingRate.Text == "" && comboBoxBorrowingRate.FindStringExact(borrowingRate) == -1)
+                    {
+                        comboBoxBorrowingRate.Items.Add(borrowingRate);
+                    }
+
+                    if (comboBoxReleaseYear.Text == "" && comboBoxReleaseYear.FindStringExact(releaseYear) == -1)
+                    {
+                        comboBoxReleaseYear.Items.Add(releaseYear);
+                    }
+
+                    if (comboBoxRunningTime.Text == "" && comboBoxRunningTime.FindStringExact(runningTime) == -1)
+                    {
+                        comboBoxRunningTime.Items.Add(runningTime);
+                    }
+
+                    if (comboBoxRated.Text == "" && comboBoxRated.FindStringExact(rated) == -1)
+                    {
+                        comboBoxRated.Items.Add(rated);
+                    }
+
+                    if (comboBoxReturnDate.Text == "" && comboBoxReturnDate.FindStringExact(returnDate) == -1)
+                    {
+                        comboBoxReturnDate.Items.Add(returnDate);
+                    }
+                }
             }
         }
 
         private void comboBoxReturnDate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Auswahl Rückgabedatum
-            string returnDate = comboBoxReturnDate.Text;
-
-            // Die IDs zum Rückgabedatum auslesen
-            comboBoxID.Items.Clear();
-            comboBoxID.Items.AddRange(_logicSearch.ReadID(returnDate));
-            comboBoxID.Items.Add("");
-            if (comboBoxID.Items.Count > 0)
+            if (comboBoxReturnDate.Text == "")
             {
-                comboBoxID.Text = comboBoxID.Items[0].ToString();
+                ResetAll();
             }
-
-            // Die Titel zum Rückgabedatum auslesen
-            comboBoxTitle.Items.Clear();
-            comboBoxTitle.Items.AddRange(_logicSearch.ReadTitle(returnDate));
-            comboBoxTitle.Items.Add("");
-            if (comboBoxTitle.Items.Count > 0)
+            else
             {
-                comboBoxTitle.Text = comboBoxTitle.Items[0].ToString();
-            }
+                _videoSearch.ReturnDate = Util.ParseDate(comboBoxRunningTime.Text, DateTime.MinValue);
 
-            // Die Genre zum Rückgabedatum auslesen
-            comboBoxGenre.Items.Clear();
-            comboBoxGenre.Items.AddRange(_logicSearch.ReadGenre(returnDate));
-            comboBoxGenre.Items.Add("");
-            if (comboBoxGenre.Items.Count > 0)
-            {
-                comboBoxGenre.Text = comboBoxGenre.Items[0].ToString();
-            }
+                if (comboBoxID.Text == "")
+                {
+                    comboBoxID.Items.Clear();
+                    comboBoxID.Items.Add("");
+                }
 
-            // Die Preise zum Rückgabedatum auslesen
-            comboBoxBorrowingRate.Items.Clear();
-            comboBoxBorrowingRate.Items.AddRange(_logicSearch.ReadBorrowingRate(returnDate));
-            comboBoxBorrowingRate.Items.Add("");
-            if (comboBoxBorrowingRate.Items.Count > 0)
-            {
-                comboBoxBorrowingRate.Text = comboBoxBorrowingRate.Items[0].ToString();
-            }
+                if (comboBoxTitle.Text == "")
+                {
+                    comboBoxTitle.Items.Clear();
+                    comboBoxTitle.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Title = comboBoxTitle.Text;
+                }
 
-            // Die Erscheinungsjahre zum Rückgabedatum auslesen
-            comboBoxReleaseYear.Items.Clear();
-            comboBoxReleaseYear.Items.AddRange(_logicSearch.ReadReleaseYear(returnDate));
-            comboBoxReleaseYear.Items.Add("");
-            if (comboBoxReleaseYear.Items.Count > 0)
-            {
-                comboBoxReleaseYear.Text = comboBoxReleaseYear.Items[0].ToString();
-            }
+                if (comboBoxGenre.Text == "")
+                {
+                    comboBoxGenre.Items.Clear();
+                    comboBoxGenre.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Genre = comboBoxGenre.Text;
+                }
 
+                if (comboBoxBorrowingRate.Text == "")
+                {
+                    comboBoxBorrowingRate.Items.Clear();
+                    comboBoxBorrowingRate.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.BorrowingRate = Util.ParseDouble(comboBoxBorrowingRate.Text, 0.0);
+                }
 
-            // Die Laufzeiten zum Rückgabedatum auslesen
-            comboBoxRunningTime.Items.Clear();
-            comboBoxRunningTime.Items.AddRange(_logicSearch.ReadRunningTime(returnDate));
-            comboBoxRunningTime.Items.Add("");
-            if (comboBoxRunningTime.Items.Count > 0)
-            {
-                comboBoxRunningTime.Text = comboBoxRunningTime.Items[0].ToString();
-            }
+                if (comboBoxReleaseYear.Text == "")
+                {
+                    comboBoxReleaseYear.Items.Clear();
+                    comboBoxReleaseYear.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.ReleaseYear = Util.ParseInt(comboBoxReleaseYear.Text, 0);
+                }
 
-            // Die FSKs zum Rückgabedatum auslesen
-            comboBoxRated.Items.Clear();
-            comboBoxRated.Items.AddRange(_logicSearch.ReadRated(returnDate));
-            comboBoxRated.Items.Add("");
-            if (comboBoxRated.Items.Count > 0)
-            {
-                comboBoxRated.Text = comboBoxRated.Items[0].ToString();
-            }
+                if (comboBoxRunningTime.Text == "")
+                {
+                    comboBoxRunningTime.Items.Clear();
+                    comboBoxRunningTime.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.RunningTime = Util.ParseInt(comboBoxRunningTime.Text, 0);
+                }
 
-            // Die Ausleihenden zum Rückgabedatum auslesen
-            comboBoxBorrower.Items.Clear();
-            comboBoxBorrower.Items.AddRange(_logicSearch.ReadBorrower(returnDate));
-            comboBoxBorrower.Items.Add("");
-            if (comboBoxBorrower.Items.Count > 0)
-            {
-                comboBoxBorrower.Text = comboBoxBorrower.Items[0].ToString();
+                if (comboBoxRated.Text == "")
+                {
+                    _videoSearch.Rated = 1;
+                    comboBoxRated.Items.Clear();
+                    comboBoxRated.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Rated = Util.ParseInt(comboBoxRated.Text, 1);
+                }
+
+                if (comboBoxBorrower.Text == "")
+                {
+                    comboBoxBorrower.Items.Clear();
+                    comboBoxBorrower.Items.Add("");
+                }
+                else
+                {
+                    _videoSearch.Borrower = comboBoxBorrowingRate.Text;
+                }
+
+                _logicSearch.ReadVideos(_videoSearch, out DataTable dataTable);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string id = row["ID"].ToString();
+                    string title = row["Title"].ToString();
+                    string releaseYear = row["ReleaseYear"].ToString();
+                    string runningTime = row["RunningTime"].ToString();
+                    string borrowingRate = row["BorrowingRate"].ToString();
+                    string rated = row["Rated"].ToString();
+                    string genre = row["Genre"].ToString();
+                    string borrower = row["Borrower"].ToString();
+
+                    if (comboBoxID.Text == "")
+                    {
+                        comboBoxID.Items.Add(id);
+                    }
+
+                    if (comboBoxTitle.Text == "" && comboBoxTitle.FindStringExact(title) == -1)
+                    {
+                        comboBoxTitle.Items.Add(title);
+                    }
+
+                    if (comboBoxGenre.Text == "" && comboBoxGenre.FindStringExact(genre) == -1)
+                    {
+                        comboBoxBorrowingRate.Items.Add(genre);
+                    }
+
+                    if (comboBoxBorrowingRate.Text == "" && comboBoxBorrowingRate.FindStringExact(borrowingRate) == -1)
+                    {
+                        comboBoxBorrowingRate.Items.Add(borrowingRate);
+                    }
+
+                    if (comboBoxReleaseYear.Text == "" && comboBoxReleaseYear.FindStringExact(releaseYear) == -1)
+                    {
+                        comboBoxReleaseYear.Items.Add(releaseYear);
+                    }
+
+                    if (comboBoxRunningTime.Text == "" && comboBoxRunningTime.FindStringExact(runningTime) == -1)
+                    {
+                        comboBoxRunningTime.Items.Add(runningTime);
+                    }
+
+                    if (comboBoxRated.Text == "" && comboBoxRated.FindStringExact(rated) == -1)
+                    {
+                        comboBoxRated.Items.Add(rated);
+                    }
+
+                    if (comboBoxBorrower.Text == "" && comboBoxBorrower.FindStringExact(borrower) == -1)
+                    {
+                        comboBoxBorrower.Items.Add(borrower);
+                    }
+                }
             }
         }
 

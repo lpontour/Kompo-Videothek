@@ -20,6 +20,7 @@ namespace VideoDialog
         #region fields
         private VideoDtoSearch _videoSearch;
         private VideoDtoLoan _videoLoan;
+        private VideoDtoLoan _videoLoanExisting;
         private ILogic _logic;
         private object[] _id;
         private object[] _arrayTitle;
@@ -60,6 +61,7 @@ namespace VideoDialog
             _logic = logic;
             _videoSearch = new VideoDtoSearch();
             _videoLoan = new VideoDtoLoan();
+            _videoLoanExisting = new VideoDtoLoan();
         }
         #endregion
 
@@ -106,9 +108,56 @@ namespace VideoDialog
             {
                 DialogResult dialogResult = DialogLoanInsert.ShowDialog();
                 DataTable dataTable = new DataTable();
+
                 if (dialogResult == DialogResult.OK)
                 {
-                    _videoLoan = DialogLoanInsert.VideoDtoLoan;
+                    _videoLoanExisting = DialogLoanInsert.VideoDtoLoan;
+                    _videoLoanExisting.ID = _videoLoan.ID;
+                    _videoLoanExisting.Title = _videoLoan.Title;
+                    _videoLoanExisting.Borrower = "";
+                    if (_videoLoan.ID == 0)
+                    {
+                        _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
+                        foreach (DataRow row in dataTable.Rows)
+                        {
+                            int id = Util.ParseInt(row["ID"].ToString(), 0);
+                            string title = row["Title"].ToString();
+                            string borrower = row["Borrower"].ToString();
+                            DateTime returnDate = Util.ParseDate(row["ReturnDate"].ToString(), DateTime.Now);
+                            if (borrower == "" && returnDate == Util.ParseDate("01.01.2001", DateTime.Now))
+                            {
+                                _videoLoan.ID = id;
+                                break;
+                            }
+                        }
+                        if (_videoLoan.ID == 0)
+                        {
+                            MessageBox.Show("Kein Film mit den Namen " + _videoLoan.Title + " zur Ausleihe verfügbar", "Hinweis: Neue Ausleihe",
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
+                        if (dataTable.Rows.Count == 0)
+                        {
+                            MessageBox.Show("Titel und ID stimmen nicht überein oder existieren nicht", "Hinweis: Neue Ausleihe",
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
+                        else
+                        {
+                            string borrower = dataTable.Rows[0]["Borrower"].ToString();
+                            DateTime returnDate = Util.ParseDate(dataTable.Rows[0]["ReturnDate"].ToString(), DateTime.Now);
+                            if ((borrower != "") && (returnDate != Util.ParseDate("01.01.2001", DateTime.Now)))
+                            {
+                                MessageBox.Show("Film ist bereits ausgeliehen.", "Hinweis: Neue Ausleihe",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                return;
+                            }
+                        }
+                    }
                     _logic.Loan.InsertVideoTable(_videoLoan);
                     _logic.Search.ReadVideo(_videoLoan, out dataTable);
                     DialogSearchResult.ResultTable = dataTable;
@@ -134,8 +183,40 @@ namespace VideoDialog
             {
                 DialogResult dialogResult = DialogLoanUpdate.ShowDialog();
                 DataTable dataTable = new DataTable();
+
                 if (dialogResult == DialogResult.OK)
                 {
+                    _videoLoan = DialogLoanUpdate.VideoDtoLoan;
+                    _videoLoanExisting.ID = _videoLoan.ID;
+                    _videoLoanExisting.Title = _videoLoan.Title;
+                    _videoLoanExisting.Borrower = "";
+
+                    _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
+
+                    if (dataTable.Rows.Count == 0)
+                    {
+                        MessageBox.Show("Titel und ID stimmen nicht überein oder existieren nicht", "Hinweis: Neue Ausleihe",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return;
+                    }
+                    else
+                    {
+                        string borrower = dataTable.Rows[0]["Borrower"].ToString();
+                        DateTime returnDate = Util.ParseDate(dataTable.Rows[0]["ReturnDate"].ToString(), DateTime.Now);
+                        if ((borrower == "") && (returnDate == Util.ParseDate("01.01.2001", DateTime.Now)))
+                        {
+                            MessageBox.Show("Film ist nicht ausgeliehen.", "Hinweis: Neue Ausleihe",
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
+                        if ((borrower != _videoLoan.Borrower))
+                        {
+                            MessageBox.Show("Angegebene Person hat den Film nicht ausgeliehen.", "Hinweis: Neue Ausleihe",
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
+                    }
+
                     _videoLoan = DialogLoanUpdate.VideoDtoLoan;
                     _logic.Loan.UpdateVideoTable(_videoLoan);
                     _logic.Search.ReadVideo(_videoLoan, out dataTable);
@@ -162,8 +243,23 @@ namespace VideoDialog
             {
                 DialogResult dialogResult = DialogLoanDelete.ShowDialog();
                 DataTable dataTable = new DataTable();
+
                 if (dialogResult == DialogResult.OK)
                 {
+                    _videoLoan = DialogLoanDelete.VideoDtoLoan;
+                    _videoLoanExisting.ID = _videoLoan.ID;
+                    _videoLoanExisting.Title = _videoLoan.Title;
+                    _videoLoanExisting.Borrower = "";
+
+                    _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
+
+                    if (dataTable.Rows.Count == 0)
+                    {
+                        MessageBox.Show("Keine passenden Einträge gefunden.", "Hinweis: Neue Ausleihe",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return;
+                    }
+
                     _videoLoan = DialogLoanDelete.VideoDtoLoan;
                     _logic.Loan.DeleteVideoTable(_videoLoan);
                     _logic.Search.ReadVideo(_videoLoan, out dataTable);

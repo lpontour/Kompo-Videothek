@@ -47,7 +47,7 @@ namespace VideoDialog.Loan
                 videoLoan.ID = Util.ParseInt(textBoxID.Text, 0); ;
                 videoLoan.Title = textBoxTitle.Text;
                 videoLoan.Borrower = textBoxBorrower.Text;
-                videoLoan.ReturnDate = Util.ParseDate(textBoxReturnDate.Text, DateTime.Now);
+                videoLoan.ReturnDate = Util.ParseDate(textBoxReturnDate.Text, DateTime.MinValue);
                 this.VideoDtoLoan = videoLoan;
                 this.DialogResult = DialogResult.OK;
                 this.Close();
