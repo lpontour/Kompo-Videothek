@@ -6,14 +6,14 @@ using System;
 
 namespace VideoLogic
 {
-    internal class CLogicSearch : ILogicSearch
-    {
+	internal class CLogicSearch : ILogicSearch
+	{
 		#region fields
 		private IDataSearch _dataSearch;
 		#endregion
 
 		#region ctor
-		internal CLogicSearch(IDataSearch dataSearch) 
+		internal CLogicSearch(IDataSearch dataSearch)
 		{
 			_dataSearch = dataSearch;
 		}
@@ -21,7 +21,7 @@ namespace VideoLogic
 
 		#region interface ILogicSearch methods
 
-		public void ReadVideos(VideoDtoSearch videoSearch, out DataTable datatable) 
+		public void ReadVideos(VideoDtoSearch videoSearch, out DataTable datatable)
 		{
 			_dataSearch.ReadVideos(videoSearch, out datatable);
 		}
@@ -34,6 +34,7 @@ namespace VideoLogic
 				Title = videoLoan.Title,
 				Borrower = videoLoan.Borrower,
 				ReturnDate = videoLoan.ReturnDate,
+				Rated = 1,
 			};
 			_dataSearch.ReadVideos(videoSearch, out dataTable);
 
@@ -107,7 +108,7 @@ namespace VideoLogic
 			IList<string> listBorrower = null;
 			_dataSearch.ReadBorrower(value, out listBorrower);
 			//if (listBorrower == null)
-				//throw new CDataException("Ausleiherliste ist leer");
+			//throw new CDataException("Ausleiherliste ist leer");
 			return Util.ToArray(listBorrower);
 		}
 
@@ -116,10 +117,11 @@ namespace VideoLogic
 			IList<DateTime> listReturnDate = null;
 			_dataSearch.ReadReturnDate(value, out listReturnDate);
 			//if (listReturnDate == null)
-				//throw new CDataException("Rückgabedatumliste ist leer");
+			//throw new CDataException("Rückgabedatumliste ist leer");
 			return Util.ToArray(listReturnDate);
 		}
 
 		#endregion
 	}
 }
+
