@@ -31,6 +31,7 @@ namespace VideoDialog
         private object[] _rated;
         private object[] _borrower;
         private object[] _returnDate;
+        bool exists;
 
         #endregion
 
@@ -118,6 +119,13 @@ namespace VideoDialog
                     if (_videoLoan.ID == 0)
                     {
                         _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
+                        if (dataTable.Rows.Count == 0)
+                        {
+                            MessageBox.Show("Kein Film mit dem Titel " + _videoLoan.Title + " zur Ausleihe verfügbar", "Hinweis: Neue Ausleihe",
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
+                        exists = false;
                         foreach (DataRow row in dataTable.Rows)
                         {
                             int id = Util.ParseInt(row["ID"].ToString(), 0);
@@ -126,11 +134,11 @@ namespace VideoDialog
                             DateTime returnDate = Util.ParseDate(row["ReturnDate"].ToString(), DateTime.Now);
                             if (borrower == "" && returnDate == Util.ParseDate("01.01.2001", DateTime.Now))
                             {
-                                _videoLoan.ID = id;
+                                exists = true;
                                 break;
                             }
                         }
-                        if (_videoLoan.ID == 0)
+                        if (exists == false)
                         {
                             MessageBox.Show("Kein Film mit den Namen " + _videoLoan.Title + " zur Ausleihe verfügbar", "Hinweis: Neue Ausleihe",
                             MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -195,7 +203,7 @@ namespace VideoDialog
 
                     if (dataTable.Rows.Count == 0)
                     {
-                        MessageBox.Show("Titel und ID stimmen nicht überein oder existieren nicht", "Hinweis: Neue Ausleihe",
+                        MessageBox.Show("Angaben stimmen nicht überein oder existieren nicht", "Hinweis: Neue Ausleihe",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return;
                     }
@@ -203,13 +211,13 @@ namespace VideoDialog
                     {
                         string borrower = dataTable.Rows[0]["Borrower"].ToString();
                         DateTime returnDate = Util.ParseDate(dataTable.Rows[0]["ReturnDate"].ToString(), DateTime.Now);
-                        if ((borrower == "") && (returnDate == Util.ParseDate("01.01.2001", DateTime.Now)))
+                        if ((_videoLoan.ID != 0) && (borrower == "") && (returnDate == Util.ParseDate("01.01.2001", DateTime.Now)))
                         {
                             MessageBox.Show("Film ist nicht ausgeliehen.", "Hinweis: Neue Ausleihe",
                             MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
-                        if ((borrower != _videoLoan.Borrower))
+                        if ((_videoLoan.ID != 0) && (_videoLoan.Borrower != "") && (borrower != _videoLoan.Borrower))
                         {
                             MessageBox.Show("Angegebene Person hat den Film nicht ausgeliehen.", "Hinweis: Neue Ausleihe",
                             MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
