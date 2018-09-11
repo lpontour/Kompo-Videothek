@@ -511,50 +511,54 @@ namespace VideoData
                     dbCommand.CommandText += " AND RunningTime <= @RunningTime";
                     AData.AddParameter(dbCommand, "@RunningTime", videoSearch.RunningTime);
                 }
-
-                if (videoSearch.Rated != 1)
-                {
-                    if (dbCommand.CommandText == "SELECT * FROM VideoTable")
-                    {
-                        dbCommand.CommandText += " WHERE Rated = @Rated";
-                        AData.AddParameter(dbCommand, "@Rated", videoSearch.Rated);
-                    }
-                    else
-                    {
-                        dbCommand.CommandText += " AND Rated = @Rated";
-                        AData.AddParameter(dbCommand, "@Rated", videoSearch.Rated);
-                    }
-                }
-
-                if (videoSearch.Borrower != "" && videoSearch.Borrower != null)
-                {
-                    if (dbCommand.CommandText == "SELECT * FROM VideoTable")
-                    {
-                        dbCommand.CommandText += " WHERE Borrower = @Borrower";
-                        AData.AddParameter(dbCommand, "@Borrower", videoSearch.Borrower);
-                    }
-                    else
-                    {
-                        dbCommand.CommandText += " AND Borrower = @Borrower";
-                        AData.AddParameter(dbCommand, "@Borrower", videoSearch.Borrower);
-                    }
-                }
-                if (videoSearch.ReturnDate != DateTime.MinValue)
-                {
-                    if (dbCommand.CommandText == "SELECT * FROM VideoTable")
-                    {
-                        dbCommand.CommandText += " WHERE ReturnDate = @ReturnDate";
-                        AData.AddParameter(dbCommand, "@ReturnDate", videoSearch.ReturnDate);
-                    }
-                    else
-                    {
-                        dbCommand.CommandText += " AND ReturnDate = @ReturnDate";
-                        AData.AddParameter(dbCommand, "@ReturnDate", videoSearch.ReturnDate);
-                    }
-                }
-
-                dbCommand.CommandText += " ORDER BY ID;";
             }
+            if (videoSearch.Rated != 1)
+            {
+                if (dbCommand.CommandText == "SELECT * FROM VideoTable")
+                {
+                    dbCommand.CommandText += " WHERE Rated = @Rated";
+                    AData.AddParameter(dbCommand, "@Rated", videoSearch.Rated);
+                }
+                else
+                {
+                    dbCommand.CommandText += " AND Rated = @Rated";
+                    AData.AddParameter(dbCommand, "@Rated", videoSearch.Rated);
+                }
+            }
+
+            if (videoSearch.Borrower != "" && videoSearch.Borrower != null)
+            {
+                if (dbCommand.CommandText == "SELECT * FROM VideoTable")
+                {
+                    dbCommand.CommandText += " WHERE Borrower = @Borrower";
+                    AData.AddParameter(dbCommand, "@Borrower", videoSearch.Borrower);
+                }
+                else
+                {
+                    dbCommand.CommandText += " AND Borrower = @Borrower";
+                    AData.AddParameter(dbCommand, "@Borrower", videoSearch.Borrower);
+                }
+            }
+            if (videoSearch.ReturnDate != DateTime.MinValue)
+            {
+                if (dbCommand.CommandText == "SELECT * FROM VideoTable")
+                {
+                    dbCommand.CommandText += " WHERE ReturnDate >= @ReturnDateMin";
+                    AData.AddParameter(dbCommand, "@ReturnDateMin", DateTime.MinValue);
+                    dbCommand.CommandText += " AND ReturnDate <= @ReturnDate";
+                    AData.AddParameter(dbCommand, "@ReturnDate", videoSearch.ReturnDate);
+                }
+                else
+                {
+                    dbCommand.CommandText += " AND ReturnDate >= @ReturnDateMin";
+                    AData.AddParameter(dbCommand, "@ReturnDateMin", DateTime.MinValue);
+                    dbCommand.CommandText += " AND ReturnDate <= @ReturnDate";
+                    AData.AddParameter(dbCommand, "@ReturnDate", videoSearch.ReturnDate);
+                }
+            }
+
+            dbCommand.CommandText += " ORDER BY ID;";
+
 
             #endregion
 

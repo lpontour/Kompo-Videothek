@@ -219,7 +219,7 @@ namespace VideoData
         public int InsertVideoTable(VideoDtoLoan videoLoan)
         {
            
-                this.SqlUptadeVideoLoan(videoLoan, _dbCommand);
+                this.SqlNewVideoLoan(videoLoan, _dbCommand);
                 AData.Open(_dbConnection);
                 int nRecords = _dbCommand.ExecuteNonQuery();
                 AData.Close(_dbConnection);
@@ -271,16 +271,35 @@ namespace VideoData
         }
         protected void SqlNewVideoLoan(Loan video, DbCommand dbCommand)
         {
-            dbCommand.CommandType = CommandType.Text;
-            dbCommand.Parameters.Clear();
-            dbCommand.CommandText = $"UPDATE VideoTable " +
-               $"SET " +
-               $"Borrower = ?, ReturnDate = ? " +
-               $"WHERE ID = ?;";
-            dbCommand.Parameters.Clear();
-            AData.AddParameter(dbCommand, "Borrower", video.Borrower);
-            AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
-            AData.AddParameter(dbCommand, "ID", video.ID);
+            if(video.ID!=0)
+            {
+                dbCommand.CommandType = CommandType.Text;
+                dbCommand.Parameters.Clear();
+                dbCommand.CommandText = $"UPDATE VideoTable " +
+                   $"SET " +
+                   $"Borrower = ?, ReturnDate = ? " +
+                   $"WHERE ID = ?;";
+                dbCommand.Parameters.Clear();
+                AData.AddParameter(dbCommand, "Borrower", video.Borrower);
+                AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
+                AData.AddParameter(dbCommand, "ID", video.ID);
+            }
+            else
+            {
+                dbCommand.CommandType = CommandType.Text;
+                dbCommand.Parameters.Clear();
+                dbCommand.CommandText = $"UPDATE VideoTable " +
+                   $"SET " +
+                   $"Borrower = ?, ReturnDate = ? " +
+                   $"WHERE Title = ?"+
+                   $"And Borrower =?";
+                dbCommand.Parameters.Clear();
+                AData.AddParameter(dbCommand, "Borrower", video.Borrower);
+                AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
+                AData.AddParameter(dbCommand, "Title", video.Title);
+                AData.AddParameter(dbCommand, "NewBorrower", "");
+
+            }
         }
         protected void SqlReturnVideoLoan(Loan video, DbCommand dbCommand)
         {
@@ -326,7 +345,7 @@ namespace VideoData
                     dbCommand.CommandText += $"WHERE Borrower = @OldBorrower";
                     AData.AddParameter(dbCommand, "@OldBorrower", video.Borrower);
                     dbCommand.CommandText += $" AND ReturnDate >= @DateNow";
-                    AData.AddParameter(dbCommand, "@DateNow", DateTime.Now.ToString("G"));
+                    AData.AddParameter(dbCommand, "@DateNow", DateTime.MinValue.ToString("G"));
                     dbCommand.CommandText += $" AND ReturnDate <= @TillReturnDate;";
                     AData.AddParameter(dbCommand, "@TillReturnDate", video.ReturnDate.ToString("G"));
                 }
@@ -348,22 +367,6 @@ namespace VideoData
             }
             else
             {
-                if (video.Title !="")
-                {
-                    dbCommand.CommandType = CommandType.Text;
-                    dbCommand.Parameters.Clear();
-                    dbCommand.CommandText = $"UPDATE VideoTable " +
-                       $"SET " +
-                       $"ReturnDate = ? " +
-                       $"WHERE Title = ? "+
-                       $"AND Borrower = ?;";
-                    dbCommand.Parameters.Clear();
-                    AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
-                    AData.AddParameter(dbCommand, "Title", video.Title);
-                    AData.AddParameter(dbCommand, "Borrower", video.Borrower);
-                }
-                else
-                {
                     dbCommand.CommandType = CommandType.Text;
                     dbCommand.Parameters.Clear();
                     dbCommand.CommandText = $"UPDATE VideoTable " +
@@ -373,7 +376,6 @@ namespace VideoData
                     dbCommand.Parameters.Clear();
                     AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
                     AData.AddParameter(dbCommand, "Borrower", video.Borrower);
-                }
             }
         }
         void SqlDeleteVideo(int id, DbCommand dbCommand)
