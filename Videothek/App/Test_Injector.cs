@@ -25,19 +25,11 @@ namespace App
         void Run()
         {
 
-            // 1. Initialisierung der Datenbank  (InitDb)    
-            // Vorgabe: Connection String (Datenbankserver, Datenbank ...)
+            // Pfad zur Datenbank
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\VideoDatabase.accdb";
-            string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
-            #if !DEBUG
-            version  = ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-            path     = ApplicationDeployment.CurrentDeployment.DataDirectory+@"\CarDatabase.accdb";
-            #endif
-
             string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";";
 
-
+            // Objekterstellung passend zu den gewählten Factories
             IFactoryIData factoryData = new CFactoryCDataAccess();
             _data = factoryData.Create(connectionString);
 
@@ -66,7 +58,7 @@ namespace App
         [STAThread]
         static void Main(string[] args)
         {
-
+            // Einstellungen zum Stil der Anwendung
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             new Test_Injector().Run();

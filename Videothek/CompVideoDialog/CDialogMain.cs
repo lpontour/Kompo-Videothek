@@ -267,10 +267,8 @@ namespace VideoDialog
                         }
 
                         _videoLoan = DialogLoanDelete.VideoDtoLoan;
-
                         _logic.Search.ReadVideo(_videoLoan, out dataTable);
                         _logic.Loan.DeleteVideoTable(_videoLoan);
-
                         DialogSearchResult.ResultTable = dataTable;
                         dialogResult = DialogSearchResult.ShowDialog();
 

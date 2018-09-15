@@ -180,12 +180,14 @@ namespace VideoDialog.Search
 
         private void FillUnselectedBoxes()
         {
+            _videoSearch.Rated = 1;
             // Überprüfen, ob Combobox ID leer ist
             if (comboBoxID.Text == "")
             {
                 // Löschen der Itemliste und hinzufügen des leeren Eintrages
                 comboBoxID.Items.Clear();
                 comboBoxID.Items.Add("");
+                _videoSearch.ID = 0;
             }
             else
             {
@@ -197,6 +199,7 @@ namespace VideoDialog.Search
             {
                 comboBoxTitle.Items.Clear();
                 comboBoxTitle.Items.Add("");
+                _videoSearch.Title = "";
             }
             else
             {
@@ -209,6 +212,7 @@ namespace VideoDialog.Search
             {
                 comboBoxGenre.Items.Clear();
                 comboBoxGenre.Items.Add("");
+                _videoSearch.Genre = "";
             }
             else
             {
@@ -220,6 +224,7 @@ namespace VideoDialog.Search
             {
                 comboBoxBorrowingRate.Items.Clear();
                 comboBoxBorrowingRate.Items.Add("");
+                _videoSearch.BorrowingRate = 0.0;
             }
             else
             {
@@ -231,6 +236,7 @@ namespace VideoDialog.Search
             {
                 comboBoxReleaseYear.Items.Clear();
                 comboBoxReleaseYear.Items.Add("");
+                _videoSearch.ReleaseYear = 0;
             }
             else
             {
@@ -242,6 +248,7 @@ namespace VideoDialog.Search
             {
                 comboBoxRunningTime.Items.Clear();
                 comboBoxRunningTime.Items.Add("");
+                _videoSearch.RunningTime = 0;
             }
             else
             {
@@ -265,6 +272,7 @@ namespace VideoDialog.Search
             {
                 comboBoxBorrower.Items.Clear();
                 comboBoxBorrower.Items.Add("");
+                _videoSearch.Borrower = "";
             }
             else
             {
@@ -276,87 +284,50 @@ namespace VideoDialog.Search
             {
                 comboBoxReturnDate.Items.Clear();
                 comboBoxReturnDate.Items.Add("");
+                _videoSearch.ReturnDate = DateTime.MinValue;
             }
             else
             {
                 _videoSearch.ReturnDate = Util.ParseDate(comboBoxBorrowingRate.Text, DateTime.MinValue);
             }
 
-            // Suche in der Datenbank mit den vorher bestimmten Werten der Comboboxen
-            _logicSearch.ReadVideos(_videoSearch, out DataTable dataTable);
-
-            // Gehe alle Reihen der zurückkomenden Datentabelle durch
-            foreach (DataRow row in dataTable.Rows)
+            if (comboBoxID.Text == "")
             {
-                // Fülle die Attribute mit den Werten der Datentabellenreihe
-                string id = row["ID"].ToString();
-                string title = row["Title"].ToString();
-                string genre = row["Genre"].ToString();
-                string runningTime = row["RunningTime"].ToString();
-                string rated = row["Rated"].ToString();
-                string releaseYear = row["ReleaseYear"].ToString();
-                string borrower = row["Borrower"].ToString();
-                string borrowRate = row["BorrowingRate"].ToString();
-                string returnDate = row["ReturnDate"].ToString();
-
-                // Wenn ID leer ist, wird der gefundene Wert aus der DB als Item hinzugefügt
-                if (comboBoxID.Text == "")
-                {
-                    comboBoxID.Items.Add(id);
-                }
-
-                // Wenn Titel leer ist, wird der gefundene Wert aus der DB als Item hinzugefügt
-                // überprüft, ob noch kein Item mit dem Wert vorhanden ist
-                if (comboBoxTitle.Text == "" && comboBoxTitle.FindStringExact(title) == -1)
-                {
-                    comboBoxTitle.Items.Add(title);
-                }
-
-                // Überprüft, ob Genre leer und noch kein Item mit dem Namen vorhanden
-                if (comboBoxGenre.Text == "" && comboBoxGenre.FindStringExact(genre) == -1)
-                {
-                    comboBoxGenre.Items.Add(genre);
-                }
-
-                // Überprüft, ob Preis leer und noch kein Item mit dem Namen vorhanden
-                if (comboBoxBorrowingRate.Text == "" && comboBoxBorrowingRate.FindStringExact(borrowRate) == -1)
-                {
-                    comboBoxBorrowingRate.Items.Add(borrowRate);
-                }
-
-                // Überprüft, ob Erscheinungsjahr leer und noch kein Item mit dem Namen vorhanden
-                if (comboBoxReleaseYear.Text == "" && comboBoxReleaseYear.FindStringExact(releaseYear) == -1)
-                {
-                    comboBoxReleaseYear.Items.Add(releaseYear);
-                }
-
-                // Überprüft, ob Laufzeit leer und noch kein Item mit dem Namen vorhanden
-                if (comboBoxRunningTime.Text == "" && comboBoxRunningTime.FindStringExact(runningTime) == -1)
-                {
-                    comboBoxRunningTime.Items.Add(runningTime);
-                }
-
-                // Überprüft, ob FSK leer und noch kein Item mit dem Namen vorhanden
-                if (comboBoxRated.Text == "" && comboBoxRated.FindStringExact(rated) == -1)
-                {
-                    comboBoxRated.Items.Add(rated);
-                }
-
-                // Überprüft, ob Ausleihender leer und noch kein Item mit dem Namen vorhanden
-                if (comboBoxBorrower.Text == "" && comboBoxBorrower.FindStringExact(borrower) == -1)
-                {
-                    comboBoxBorrower.Items.Add(borrower);
-                }
-
-                // Überprüft, ob Rückgabedatum leer und noch kein Item mit dem Namen vorhanden
-                if (comboBoxReturnDate.Text == "" && comboBoxReturnDate.FindStringExact(returnDate) == -1 && (Util.ParseDate("1.1.2001", DateTime.MinValue)!= Util.ParseDate(returnDate, DateTime.MinValue)))
-                {
-                    comboBoxReturnDate.Items.Add(returnDate);
-                }
+                comboBoxID.Items.AddRange(_logicSearch.ReadID(_videoSearch));
             }
-
+            if (comboBoxTitle.Text == "")
+            {
+                comboBoxTitle.Items.AddRange(_logicSearch.ReadTitle(_videoSearch));
+            }
+            if (comboBoxGenre.Text == "")
+            {
+                comboBoxGenre.Items.AddRange(_logicSearch.ReadGenre(_videoSearch));
+            }
+            if (comboBoxBorrowingRate.Text == "")
+            {
+                comboBoxBorrowingRate.Items.AddRange(_logicSearch.ReadBorrowingRate(_videoSearch));
+            }
+            if (comboBoxReleaseYear.Text == "")
+            {
+                comboBoxReleaseYear.Items.AddRange(_logicSearch.ReadReleaseYear(_videoSearch));
+            }
+            if (comboBoxRunningTime.Text == "")
+            {
+                comboBoxRunningTime.Items.AddRange(_logicSearch.ReadRunningTime(_videoSearch));
+            }
+            if (comboBoxRated.Text == "")
+            {
+                comboBoxRated.Items.AddRange(_logicSearch.ReadRated(_videoSearch));
+            }
+            if (comboBoxBorrower.Text == "")
+            {
+                comboBoxBorrower.Items.AddRange(_logicSearch.ReadBorrower(_videoSearch));
+            }
+            if (comboBoxReturnDate.Text == "")
+            {
+                comboBoxReturnDate.Items.AddRange(_logicSearch.ReadReturnDate(_videoSearch));
+            }
         }
-
 
         #endregion
 
