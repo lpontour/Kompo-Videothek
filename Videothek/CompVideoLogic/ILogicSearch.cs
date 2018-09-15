@@ -33,4 +33,3 @@ namespace VideoLogic
 		void ReadVideo(VideoDtoLoan videoLoan, out DataTable dataTable);
 	}
 }
-}
