@@ -41,7 +41,6 @@ namespace VideoLogic
 
 		}
 
-		//Liest alle IDs aus
 		public object[] ReadID(VideoDtoSearch value)
 		{
 			List<int> listID = new List<int>();
@@ -57,7 +56,7 @@ namespace VideoLogic
 			return Util.ToArray(listID);
 		}
 
-
+		//Liest alle IDs aus
 		public object[] ReadID(string value)
 		{
 			IList<int> listID = null;
@@ -298,4 +297,3 @@ namespace VideoLogic
 		#endregion
 	}
 }
-
