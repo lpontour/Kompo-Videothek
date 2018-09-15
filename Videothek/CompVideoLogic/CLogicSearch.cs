@@ -275,7 +275,7 @@ namespace VideoLogic
 			foreach (DataRow row in dataTable.Rows)
 			{
 				string returnDate = row["ReturnDate"].ToString();
-				if (!listReturnDate.Contains(Util.ParseDate(returnDate, DateTime.MinValue)))
+				if (!listReturnDate.Contains(Util.ParseDate(returnDate, DateTime.MinValue)) && (Util.ParseDate("1.1.2001", DateTime.MinValue) != Util.ParseDate(returnDate, DateTime.MinValue)))
 				{
 					listReturnDate.Add(Util.ParseDate(returnDate, DateTime.MinValue));
 					listReturnDate.Sort();
