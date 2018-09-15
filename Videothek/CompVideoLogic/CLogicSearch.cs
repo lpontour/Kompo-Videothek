@@ -41,6 +41,20 @@ namespace VideoLogic
 
 		}
 
+		public object[] ReadID(VideoDtoSearch value)
+		{
+			IList<int> listID = new List<int>();
+			ReadVideos(value, out DataTable dataTable);
+			foreach (DataRow row in dataTable.Rows)
+			{
+				string id = row["ID"].ToString();
+				listID.Add(Util.ParseInt(id, 0));
+			}
+			if (listID == null)
+				throw new CDataException("ID-Liste ist leer");
+			return Util.ToArray(listID);
+		}
+
 		//Liest alle IDs aus
 		public object[] ReadID(string value)
 		{
@@ -50,7 +64,22 @@ namespace VideoLogic
 				throw new CDataException("ID-Liste ist leer");
 			return Util.ToArray(listID);
 		}
-
+		public object[] ReadTitle(VideoDtoSearch value)
+		{
+			IList<string> listTitle = new List<string>();
+			ReadVideos(value, out DataTable dataTable);
+			foreach (DataRow row in dataTable.Rows)
+			{
+				string title = row["Title"].ToString();
+				if (!listTitle.Contains(title))
+				{
+					listTitle.Add(title);
+				}
+			}
+			if (listTitle == null)
+				throw new CDataException("Titelliste ist leer");
+			return Util.ToArray(listTitle);
+		}
 
 		//Liest alla Titel aus
 		public object[] ReadTitle(string value)
@@ -60,6 +89,23 @@ namespace VideoLogic
 			if (listTitle == null)
 				throw new CDataException("Titelliste ist leer");
 			return Util.ToArray(listTitle);
+		}
+
+		public object[] ReadGenre(VideoDtoSearch value)
+		{
+			IList<string> listGenre = new List<string>();
+			ReadVideos(value, out DataTable dataTable);
+			foreach (DataRow row in dataTable.Rows)
+			{
+				string genre = row["Genre"].ToString();
+				if (!listGenre.Contains(genre))
+				{
+					listGenre.Add(genre);
+				}
+			}
+			if (listGenre == null)
+				throw new CDataException("Genreliste ist leer");
+			return Util.ToArray(listGenre);
 		}
 
 		//Liest alle Genre aus
@@ -72,6 +118,23 @@ namespace VideoLogic
 			return Util.ToArray(listGenre);
 		}
 
+		public object[] ReadBorrowingRate(VideoDtoSearch value)
+		{
+			IList<double> listBorrowingRate = new List<double>();
+			ReadVideos(value, out DataTable dataTable);
+			foreach (DataRow row in dataTable.Rows)
+			{
+				string borrowingRate = row["BorrowingRate"].ToString();
+				if (!listBorrowingRate.Contains(Util.ParseDouble(borrowingRate, 0.0)))
+				{
+					listBorrowingRate.Add(Util.ParseDouble(borrowingRate, 0.0));
+				}
+			}
+			if (listBorrowingRate == null)
+				throw new CDataException("Preisiste-Liste ist leer");
+			return Util.ToArray(listBorrowingRate);
+		}
+
 		//Liest alle Preise aus
 		public object[] ReadBorrowingRate(string value)
 		{
@@ -80,6 +143,23 @@ namespace VideoLogic
 			if (listBorrowingRate == null)
 				throw new CDataException("Preisiste ist leer");
 			return Util.ToArray(listBorrowingRate);
+		}
+
+		public object[] ReadReleaseYear(VideoDtoSearch value)
+		{
+			IList<int> listReleaseYear = new List<int>();
+			ReadVideos(value, out DataTable dataTable);
+			foreach (DataRow row in dataTable.Rows)
+			{
+				string releaseYear = row["ReleaseYear"].ToString();
+				if (!listReleaseYear.Contains(Util.ParseInt(releaseYear, 0)))
+				{
+					listReleaseYear.Add(Util.ParseInt(releaseYear, 0));
+				}
+			}
+			if (listReleaseYear == null)
+				throw new CDataException("Erscheinungsjahrliste ist leer");
+			return Util.ToArray(listReleaseYear);
 		}
 
 		//Liest alle Releas Daten aus
@@ -92,6 +172,23 @@ namespace VideoLogic
 			return Util.ToArray(listReleaseYear);
 		}
 
+		public object[] ReadRunningTime(VideoDtoSearch value)
+		{
+			IList<int> listRunningTime = new List<int>();
+			ReadVideos(value, out DataTable dataTable);
+			foreach (DataRow row in dataTable.Rows)
+			{
+				string runningTime = row["RunningTime"].ToString();
+				if (!listRunningTime.Contains(Util.ParseInt(runningTime, 0)))
+				{
+					listRunningTime.Add(Util.ParseInt(runningTime, 0));
+				}
+			}
+			if (listRunningTime == null)
+				throw new CDataException("Laufzeitliste-Liste ist leer");
+			return Util.ToArray(listRunningTime);
+		}
+
 		//Liest alle Laufzeiten aus
 		public object[] ReadRunningTime(string value)
 		{
@@ -100,6 +197,23 @@ namespace VideoLogic
 			if (listRunningTime == null)
 				throw new CDataException("Laufzeitliste ist leer");
 			return Util.ToArray(listRunningTime);
+		}
+
+		public object[] ReadRated(VideoDtoSearch value)
+		{
+			IList<int> listRated = new List<int>();
+			ReadVideos(value, out DataTable dataTable);
+			foreach (DataRow row in dataTable.Rows)
+			{
+				string rated = row["Rated"].ToString();
+				if (!listRated.Contains(Util.ParseInt(rated, 1)))
+				{
+					listRated.Add(Util.ParseInt(rated, 1));
+				}
+			}
+			if (listRated == null)
+				throw new CDataException("FSK-Liste ist leer");
+			return Util.ToArray(listRated);
 		}
 
 		//Liest die FSK aus
@@ -112,12 +226,46 @@ namespace VideoLogic
 			return Util.ToArray(listRated);
 		}
 
+		public object[] ReadBorrower(VideoDtoSearch value)
+		{
+			IList<string> listBorrower = new List<string>();
+			ReadVideos(value, out DataTable dataTable);
+			foreach (DataRow row in dataTable.Rows)
+			{
+				string borrower = row["Borrower"].ToString();
+				if (!listBorrower.Contains(borrower))
+				{
+					listBorrower.Add(borrower);
+				}
+			}
+			if (listBorrower == null)
+				throw new CDataException("Borrower-Liste ist leer");
+			return Util.ToArray(listBorrower);
+		}
+
 		//Gibt alle Ausleihenden aus
 		public object[] ReadBorrower(string value)
 		{
 			IList<string> listBorrower = null;
 			_dataSearch.ReadBorrower(value, out listBorrower);
 			return Util.ToArray(listBorrower);
+		}
+
+		public object[] ReadReturnDate(VideoDtoSearch value)
+		{
+			IList<DateTime> listReturnDate = new List<DateTime>();
+			ReadVideos(value, out DataTable dataTable);
+			foreach (DataRow row in dataTable.Rows)
+			{
+				string returnDate = row["ReturnDate"].ToString();
+				if (!listReturnDate.Contains(Util.ParseDate(returnDate, DateTime.MinValue)))
+				{
+					listReturnDate.Add(Util.ParseDate(returnDate, DateTime.MinValue));
+				}
+			}
+			if (listReturnDate == null)
+				throw new CDataException("ReturnDate-Liste ist leer");
+			return Util.ToArray(listReturnDate);
 		}
 
 		//Gibt das Rückgabedatum zurück
