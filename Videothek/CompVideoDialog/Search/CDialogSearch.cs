@@ -576,7 +576,7 @@ namespace VideoDialog.Search
             videoSearch.BorrowingRate = Util.ParseDouble(comboBoxBorrowingRate.Text, _videoSearch.BorrowingRate);
             videoSearch.ReleaseYear = Util.ParseInt(comboBoxReleaseYear.Text, _videoSearch.ReleaseYear);
             videoSearch.RunningTime = Util.ParseInt(comboBoxRunningTime.Text, _videoSearch.RunningTime);
-            videoSearch.Rated = Util.ParseInt(comboBoxRated.Text, videoSearch.Rated);
+            videoSearch.Rated = Util.ParseInt(comboBoxRated.Text, 1);
             videoSearch.Borrower = comboBoxBorrower.Text;
             videoSearch.ReturnDate = Util.ParseDate(comboBoxReturnDate.Text, videoSearch.ReturnDate);
 
