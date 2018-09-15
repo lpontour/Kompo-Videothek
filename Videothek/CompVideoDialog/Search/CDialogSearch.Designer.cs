@@ -179,7 +179,7 @@
             this.comboBoxID.Name = "comboBoxID";
             this.comboBoxID.Size = new System.Drawing.Size(165, 21);
             this.comboBoxID.TabIndex = 26;
-            this.comboBoxID.SelectedIndexChanged += new System.EventHandler(this.comboBoxID_SelectedIndexChanged);
+            this.comboBoxID.SelectionChangeCommitted += new System.EventHandler(this.comboBoxID_SelectionChangeCommitted);
             // 
             // comboBoxGenre
             // 
@@ -189,7 +189,7 @@
             this.comboBoxGenre.Name = "comboBoxGenre";
             this.comboBoxGenre.Size = new System.Drawing.Size(165, 21);
             this.comboBoxGenre.TabIndex = 27;
-            this.comboBoxGenre.SelectedIndexChanged += new System.EventHandler(this.comboBoxGenre_SelectedIndexChanged);
+            this.comboBoxGenre.SelectionChangeCommitted += new System.EventHandler(this.comboBoxGenre_SelectionChangeCommitted);
             // 
             // comboBoxRunningTime
             // 
@@ -199,7 +199,7 @@
             this.comboBoxRunningTime.Name = "comboBoxRunningTime";
             this.comboBoxRunningTime.Size = new System.Drawing.Size(165, 21);
             this.comboBoxRunningTime.TabIndex = 28;
-            this.comboBoxRunningTime.SelectedIndexChanged += new System.EventHandler(this.comboBoxRunningTime_SelectedIndexChanged);
+            this.comboBoxRunningTime.SelectionChangeCommitted += new System.EventHandler(this.comboBoxRunningTime_SelectionChangeCommitted);
             // 
             // comboBoxBorrowingRate
             // 
@@ -209,7 +209,7 @@
             this.comboBoxBorrowingRate.Name = "comboBoxBorrowingRate";
             this.comboBoxBorrowingRate.Size = new System.Drawing.Size(165, 21);
             this.comboBoxBorrowingRate.TabIndex = 29;
-            this.comboBoxBorrowingRate.SelectedIndexChanged += new System.EventHandler(this.comboBoxBorrowingRate_SelectedIndexChanged);
+            this.comboBoxBorrowingRate.SelectionChangeCommitted += new System.EventHandler(this.comboBoxBorrowingRate_SelectionChangeCommitted);
             // 
             // comboBoxReleaseYear
             // 
@@ -219,7 +219,7 @@
             this.comboBoxReleaseYear.Name = "comboBoxReleaseYear";
             this.comboBoxReleaseYear.Size = new System.Drawing.Size(165, 21);
             this.comboBoxReleaseYear.TabIndex = 30;
-            this.comboBoxReleaseYear.SelectedIndexChanged += new System.EventHandler(this.comboBoxReleaseYear_SelectedIndexChanged);
+            this.comboBoxReleaseYear.SelectionChangeCommitted += new System.EventHandler(this.comboBoxReleaseYear_SelectionChangeCommitted);
             // 
             // comboBoxTitle
             // 
@@ -229,7 +229,7 @@
             this.comboBoxTitle.Name = "comboBoxTitle";
             this.comboBoxTitle.Size = new System.Drawing.Size(165, 21);
             this.comboBoxTitle.TabIndex = 31;
-            this.comboBoxTitle.SelectedIndexChanged += new System.EventHandler(this.comboBoxTitle_SelectedIndexChanged);
+            this.comboBoxTitle.SelectionChangeCommitted += new System.EventHandler(this.comboBoxTitle_SelectionChangeCommitted);
             // 
             // comboBoxRated
             // 
@@ -239,7 +239,7 @@
             this.comboBoxRated.Name = "comboBoxRated";
             this.comboBoxRated.Size = new System.Drawing.Size(165, 21);
             this.comboBoxRated.TabIndex = 32;
-            this.comboBoxRated.SelectedIndexChanged += new System.EventHandler(this.comboBoxRated_SelectedIndexChanged);
+            this.comboBoxRated.SelectionChangeCommitted += new System.EventHandler(this.comboBoxRated_SelectionChangeCommitted);
             // 
             // comboBoxBorrower
             // 
@@ -249,7 +249,7 @@
             this.comboBoxBorrower.Name = "comboBoxBorrower";
             this.comboBoxBorrower.Size = new System.Drawing.Size(165, 21);
             this.comboBoxBorrower.TabIndex = 33;
-            this.comboBoxBorrower.SelectedIndexChanged += new System.EventHandler(this.comboBoxBorrower_SelectedIndexChanged);
+            this.comboBoxBorrower.SelectionChangeCommitted += new System.EventHandler(this.comboBoxBorrower_SelectionChangeCommitted);
             // 
             // comboBoxReturnDate
             // 
@@ -259,7 +259,7 @@
             this.comboBoxReturnDate.Name = "comboBoxReturnDate";
             this.comboBoxReturnDate.Size = new System.Drawing.Size(165, 21);
             this.comboBoxReturnDate.TabIndex = 34;
-            this.comboBoxReturnDate.SelectedIndexChanged += new System.EventHandler(this.comboBoxReturnDate_SelectedIndexChanged);
+            this.comboBoxReturnDate.SelectionChangeCommitted += new System.EventHandler(this.comboBoxReturnDate_SelectionChangeCommitted);
             // 
             // CDialogSearch
             // 

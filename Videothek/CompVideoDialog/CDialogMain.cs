@@ -22,30 +22,11 @@ namespace VideoDialog
         private VideoDtoLoan _videoLoan;
         private VideoDtoLoan _videoLoanExisting;
         private ILogic _logic;
-        private object[] _id;
-        private object[] _arrayTitle;
-        private object[] _arrayGenre;
-        private object[] _borrowingRate;
-        private object[] _releaseYear;
-        private object[] _runningTime;
-        private object[] _rated;
-        private object[] _borrower;
-        private object[] _returnDate;
         bool exists;
 
         #endregion
 
         #region properties
-        internal object[] ID { get { return _id; } }
-        internal object[] Titel { get { return _arrayTitle; } }
-        internal object[] Genre { get { return _arrayGenre; } }
-        internal object[] BorrowingRate { get { return _borrowingRate; } }
-        internal object[] ReleaseYear { get { return _releaseYear; } }
-        internal object[] RunningTime { get { return _runningTime; } }
-        internal object[] Rated { get { return _rated; } }
-        internal object[] Borrower { get { return _borrower; } }
-        internal object[] ReturnDate { get { return _returnDate; } }
-
         internal VideoDtoSearch VideoSearch { get { return _videoSearch; } }
         internal VideoDtoLoan VideoLoan { get { return _videoLoan; } }
         internal CDialogSearch DialogSearch { get; set; }
@@ -73,17 +54,20 @@ namespace VideoDialog
             {
                 while (true)
                 {
+                    // Zeigt Fenster zum Suchen
                     DialogResult dialogResult = DialogSearch.ShowDialog();
 
+                    // wenn Button Bestätigen bei der Suche gedrückt
                     if (dialogResult == DialogResult.OK)
                     {
                         _videoSearch = DialogSearch.VideoDtoSearch;
-                        // Suchen ausführen
+                        // wird Suchen ausgeführt
                         _logic.Search.ReadVideos(_videoSearch, out DataTable dataTable);
-                        // Ergebnis in DialogSearchView darstellen
+                        // und das Ergebnis in DialogSearchView dargestellen
                         DialogSearchResult.ResultTable = dataTable;
                         dialogResult = DialogSearchResult.ShowDialog();
                     }
+                    // wenn Button Abbrechen gedrückt, wird das Fenster geschlossen ohne eine Aktion auszuführen
                     else
                     {
                         return;
@@ -107,69 +91,77 @@ namespace VideoDialog
             // Insert
             try
             {
-                DialogResult dialogResult = DialogLoanInsert.ShowDialog();
                 DataTable dataTable = new DataTable();
 
-                if (dialogResult == DialogResult.OK)
+                while (true)
                 {
-                    _videoLoanExisting = DialogLoanInsert.VideoDtoLoan;
-                    _videoLoanExisting.ID = _videoLoan.ID;
-                    _videoLoanExisting.Title = _videoLoan.Title;
-                    _videoLoanExisting.Borrower = "";
-                    if (_videoLoan.ID == 0)
+                    DialogResult dialogResult = DialogLoanInsert.ShowDialog();
+
+                    if (dialogResult == DialogResult.OK)
                     {
-                        _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
-                        if (dataTable.Rows.Count == 0)
+                        _videoLoanExisting = DialogLoanInsert.VideoDtoLoan;
+                        _videoLoanExisting.ID = _videoLoan.ID;
+                        _videoLoanExisting.Title = _videoLoan.Title;
+                        _videoLoanExisting.Borrower = "";
+                        if (_videoLoan.ID == 0)
                         {
-                            MessageBox.Show("Kein Film mit dem Titel " + _videoLoan.Title + " zur Ausleihe verfügbar", "Hinweis: Neue Ausleihe",
-                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            return;
-                        }
-                        exists = false;
-                        foreach (DataRow row in dataTable.Rows)
-                        {
-                            int id = Util.ParseInt(row["ID"].ToString(), 0);
-                            string title = row["Title"].ToString();
-                            string borrower = row["Borrower"].ToString();
-                            DateTime returnDate = Util.ParseDate(row["ReturnDate"].ToString(), DateTime.Now);
-                            if (borrower == "" && returnDate == Util.ParseDate("01.01.2001", DateTime.Now))
+                            _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
+                            if (dataTable.Rows.Count == 0)
                             {
-                                exists = true;
-                                break;
+                                MessageBox.Show("Kein Film mit dem Titel " + _videoLoan.Title + " zur Ausleihe verfügbar", "Hinweis: Neue Ausleihe",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                return;
                             }
-                        }
-                        if (exists == false)
-                        {
-                            MessageBox.Show("Kein Film mit den Namen " + _videoLoan.Title + " zur Ausleihe verfügbar", "Hinweis: Neue Ausleihe",
-                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
-                        if (dataTable.Rows.Count == 0)
-                        {
-                            MessageBox.Show("Titel und ID stimmen nicht überein oder existieren nicht", "Hinweis: Neue Ausleihe",
-                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            return;
-                        }
-                        else
-                        {
-                            string borrower = dataTable.Rows[0]["Borrower"].ToString();
-                            DateTime returnDate = Util.ParseDate(dataTable.Rows[0]["ReturnDate"].ToString(), DateTime.Now);
-                            if ((borrower != "") && (returnDate != Util.ParseDate("01.01.2001", DateTime.Now)))
+                            exists = false;
+                            foreach (DataRow row in dataTable.Rows)
                             {
-                                MessageBox.Show("Film ist bereits ausgeliehen.", "Hinweis: Neue Ausleihe",
+                                int id = Util.ParseInt(row["ID"].ToString(), 0);
+                                string title = row["Title"].ToString();
+                                string borrower = row["Borrower"].ToString();
+                                DateTime returnDate = Util.ParseDate(row["ReturnDate"].ToString(), DateTime.Now);
+                                if (borrower == "" && returnDate == Util.ParseDate("01.01.2001", DateTime.Now))
+                                {
+                                    exists = true;
+                                    break;
+                                }
+                            }
+                            if (exists == false)
+                            {
+                                MessageBox.Show("Kein Film mit den Namen " + _videoLoan.Title + " zur Ausleihe verfügbar", "Hinweis: Neue Ausleihe",
                                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                 return;
                             }
                         }
+                        else
+                        {
+                            _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
+                            if (dataTable.Rows.Count == 0)
+                            {
+                                MessageBox.Show("Titel und ID stimmen nicht überein oder existieren nicht", "Hinweis: Neue Ausleihe",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                return;
+                            }
+                            else
+                            {
+                                string borrower = dataTable.Rows[0]["Borrower"].ToString();
+                                DateTime returnDate = Util.ParseDate(dataTable.Rows[0]["ReturnDate"].ToString(), DateTime.Now);
+                                if ((borrower != "") && (returnDate != Util.ParseDate("01.01.2001", DateTime.Now)))
+                                {
+                                    MessageBox.Show("Film ist bereits ausgeliehen.", "Hinweis: Neue Ausleihe",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                    return;
+                                }
+                            }
+                        }
+                        _logic.Loan.InsertVideoTable(_videoLoan);
+                        _logic.Search.ReadVideo(_videoLoan, out dataTable);
+                        DialogSearchResult.ResultTable = dataTable;
+                        dialogResult = DialogSearchResult.ShowDialog();
                     }
-                    _logic.Loan.InsertVideoTable(_videoLoan);
-                    _logic.Search.ReadVideo(_videoLoan, out dataTable);
-                    DialogSearchResult.ResultTable = dataTable;
-                    dialogResult = DialogSearchResult.ShowDialog();
+                    else
+                    {
+                        return;
+                    }
                 }
             }
             catch (DataException dataException)
@@ -189,47 +181,55 @@ namespace VideoDialog
             // Update
             try
             {
-                DialogResult dialogResult = DialogLoanUpdate.ShowDialog();
                 DataTable dataTable = new DataTable();
 
-                if (dialogResult == DialogResult.OK)
+                while (true)
                 {
-                    _videoLoan = DialogLoanUpdate.VideoDtoLoan;
-                    _videoLoanExisting.ID = _videoLoan.ID;
-                    _videoLoanExisting.Title = _videoLoan.Title;
-                    _videoLoanExisting.Borrower = "";
+                    DialogResult dialogResult = DialogLoanUpdate.ShowDialog();
 
-                    _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
-
-                    if (dataTable.Rows.Count == 0)
+                    if (dialogResult == DialogResult.OK)
                     {
-                        MessageBox.Show("Angaben stimmen nicht überein oder existieren nicht", "Hinweis: Neue Ausleihe",
-                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        return;
+                        _videoLoan = DialogLoanUpdate.VideoDtoLoan;
+                        _videoLoanExisting.ID = _videoLoan.ID;
+                        _videoLoanExisting.Title = _videoLoan.Title;
+                        _videoLoanExisting.Borrower = "";
+
+                        _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
+
+                        if (dataTable.Rows.Count == 0)
+                        {
+                            MessageBox.Show("Angaben stimmen nicht überein oder existieren nicht", "Hinweis: Neue Ausleihe",
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
+                        else
+                        {
+                            string borrower = dataTable.Rows[0]["Borrower"].ToString();
+                            DateTime returnDate = Util.ParseDate(dataTable.Rows[0]["ReturnDate"].ToString(), DateTime.Now);
+                            if ((_videoLoan.ID != 0) && (borrower == "") && (returnDate == Util.ParseDate("01.01.2001", DateTime.Now)))
+                            {
+                                MessageBox.Show("Film ist nicht ausgeliehen.", "Hinweis: Neue Ausleihe",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                return;
+                            }
+                            if ((_videoLoan.ID != 0) && (_videoLoan.Borrower != "") && (borrower != _videoLoan.Borrower))
+                            {
+                                MessageBox.Show("Angegebene Person hat den Film nicht ausgeliehen.", "Hinweis: Neue Ausleihe",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                return;
+                            }
+                        }
+
+                        _videoLoan = DialogLoanUpdate.VideoDtoLoan;
+                        _logic.Loan.UpdateVideoTable(_videoLoan);
+                        _logic.Search.ReadVideo(_videoLoan, out dataTable);
+                        DialogSearchResult.ResultTable = dataTable;
+                        dialogResult = DialogSearchResult.ShowDialog();
                     }
                     else
                     {
-                        string borrower = dataTable.Rows[0]["Borrower"].ToString();
-                        DateTime returnDate = Util.ParseDate(dataTable.Rows[0]["ReturnDate"].ToString(), DateTime.Now);
-                        if ((_videoLoan.ID != 0) && (borrower == "") && (returnDate == Util.ParseDate("01.01.2001", DateTime.Now)))
-                        {
-                            MessageBox.Show("Film ist nicht ausgeliehen.", "Hinweis: Neue Ausleihe",
-                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            return;
-                        }
-                        if ((_videoLoan.ID != 0) && (_videoLoan.Borrower != "") && (borrower != _videoLoan.Borrower))
-                        {
-                            MessageBox.Show("Angegebene Person hat den Film nicht ausgeliehen.", "Hinweis: Neue Ausleihe",
-                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            return;
-                        }
+                        return;
                     }
-
-                    _videoLoan = DialogLoanUpdate.VideoDtoLoan;
-                    _logic.Loan.UpdateVideoTable(_videoLoan);
-                    _logic.Search.ReadVideo(_videoLoan, out dataTable);
-                    DialogSearchResult.ResultTable = dataTable;
-                    dialogResult = DialogSearchResult.ShowDialog();
                 }
             }
             catch (DataException dataException)
@@ -249,30 +249,39 @@ namespace VideoDialog
             // Delete
             try
             {
-                DialogResult dialogResult = DialogLoanDelete.ShowDialog();
                 DataTable dataTable = new DataTable();
 
-                if (dialogResult == DialogResult.OK)
+                while (true)
                 {
-                    _videoLoan = DialogLoanDelete.VideoDtoLoan;
-                    _videoLoanExisting.ID = _videoLoan.ID;
-                    _videoLoanExisting.Title = _videoLoan.Title;
-                    _videoLoanExisting.Borrower = "";
+                    DialogResult dialogResult = DialogLoanDelete.ShowDialog();
 
-                    _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
-
-                    if (dataTable.Rows.Count == 0)
+                    if (dialogResult == DialogResult.OK)
                     {
-                        MessageBox.Show("Keine passenden Einträge gefunden.", "Hinweis: Neue Ausleihe",
-                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        _videoLoan = DialogLoanDelete.VideoDtoLoan;
+                        _videoLoanExisting.ID = _videoLoan.ID;
+                        _videoLoanExisting.Title = _videoLoan.Title;
+                        _videoLoanExisting.Borrower = "";
+
+                        _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
+
+                        if (dataTable.Rows.Count == 0)
+                        {
+                            MessageBox.Show("Keine passenden Einträge gefunden.", "Hinweis: Neue Ausleihe",
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
+
+                        _videoLoan = DialogLoanDelete.VideoDtoLoan;
+                        _logic.Loan.DeleteVideoTable(_videoLoan);
+                        _logic.Search.ReadVideo(_videoLoan, out dataTable);
+                        DialogSearchResult.ResultTable = dataTable;
+                        dialogResult = DialogSearchResult.ShowDialog();
+
+                    }
+                    else
+                    {
                         return;
                     }
-
-                    _videoLoan = DialogLoanDelete.VideoDtoLoan;
-                    _logic.Loan.DeleteVideoTable(_videoLoan);
-                    _logic.Search.ReadVideo(_videoLoan, out dataTable);
-                    DialogSearchResult.ResultTable = dataTable;
-                    dialogResult = DialogSearchResult.ShowDialog();
                 }
             }
             catch (DataException dataException)
