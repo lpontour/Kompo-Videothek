@@ -248,7 +248,7 @@ namespace VideoLogic
 			foreach (DataRow row in dataTable.Rows)
 			{
 				string borrower = row["Borrower"].ToString();
-				if (!listBorrower.Contains(borrower))
+				if (!listBorrower.Contains(borrower) && (borrower != ""))
 				{
 					listBorrower.Add(borrower);
 					listBorrower.Sort();
