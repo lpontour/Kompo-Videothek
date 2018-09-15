@@ -189,7 +189,7 @@ namespace VideoDialog.Search
             }
             else
             {
-                _videoSearch.Title = comboBoxID.Text;
+                _videoSearch.ID = Util.ParseInt(comboBoxID.Text, 0);
             }
 
             // Überprüfen, ob Combobox Titel leer ist
@@ -365,8 +365,19 @@ namespace VideoDialog.Search
 
         private void CDialogSearch_Load(object sender, EventArgs e)
         {
-                // Füllen aller Comboboxen mit Items aus der DB
-                ResetAll();
+            comboBoxID.Text = "";
+            comboBoxTitle.Text = "";
+            comboBoxGenre.Text = "";
+            comboBoxBorrowingRate.Text = "";
+            comboBoxReleaseYear.Text = "";
+            comboBoxRunningTime.Text = "";
+            comboBoxRated.Text = "";
+            comboBoxBorrower.Text = "";
+            comboBoxReturnDate.Text = "";
+
+            // Füllen aller Comboboxen mit Items aus der DB
+            ResetAll();
+
         }
 
         private void comboBoxID_SelectionChangeCommitted(object sender, EventArgs e)
@@ -439,7 +450,6 @@ namespace VideoDialog.Search
             }
         }
         
-
         private void comboBoxBorrowingRate_SelectionChangeCommitted(object sender, EventArgs e)
         {
             // Überprüft Preis auf Wert
