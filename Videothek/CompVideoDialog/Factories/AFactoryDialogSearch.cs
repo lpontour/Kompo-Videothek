@@ -11,6 +11,7 @@ namespace VideoDialog.Factories
 {
     public abstract class AFactoryDialogSearch
     {
+        // Erstellen CDialogSearch für Suchen
         public static void SearchCreate(ILogicSearch logicSearch, IDialog dialogMain)
         {
             if(dialogMain is CDialogMain)
@@ -19,6 +20,7 @@ namespace VideoDialog.Factories
             }
         }
 
+        // Erstellen CDialogSearchResult für Suchergebnisse
         public static void SearchResultCreate(IDialog dialogMain)
         {
             if (dialogMain is CDialogMain)

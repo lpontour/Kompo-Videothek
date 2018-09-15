@@ -11,6 +11,7 @@ namespace VideoDialog.Factories
 {
     public class CFactoryCDialog  : IFactoryIDialog
     {
+        // Erstellen der CDialogMain
         public IDialog Create (ILogic ilogic)
         {
             return new CDialogMain(ilogic);
