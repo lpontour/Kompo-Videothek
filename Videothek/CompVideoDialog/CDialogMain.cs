@@ -22,9 +22,6 @@ namespace VideoDialog
         private VideoDtoLoan _videoLoan;
         private VideoDtoLoan _videoLoanExisting;
         private ILogic _logic;
-
-
-        private bool exists;
         #endregion
 
         #region properties
