@@ -55,6 +55,12 @@ namespace VideoDialog.Loan
                 MessageBox.Show("ID oder Ausleihender muss angegeben werden.", "Hinweis: Ausleihe ändern",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+            // Prüft, ob die ID richtig umgewandelt werden konnte
+            else if (Util.ParseInt(textBoxID.Text, 0) == 0 && textBoxTitle.Text == "")
+            {
+                MessageBox.Show("Es wurde eine falsche ID angegeben.", "Hinweis: Neue Ausleihe",
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
             // wenn Eingabe in Ordnung, wird diese weitrgegeben
             else
             {
