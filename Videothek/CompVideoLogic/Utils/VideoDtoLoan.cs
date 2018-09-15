@@ -24,8 +24,5 @@ namespace VideoLogic.Utils
 			ReturnDate = Convert.ToDateTime(dataRow.ItemArray[4]);
 		}
 		#endregion
-
-		// AddNewRow nicht benötigt --> keine neuen Einträge in DB
-
 	}
 }
