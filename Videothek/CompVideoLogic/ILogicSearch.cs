@@ -26,9 +26,11 @@ namespace VideoLogic
 		object[] ReadBorrower(VideoDtoSearch suche);
 		object[] ReadReturnDate(string ReturnDate);
 		object[] ReadReturnDate(VideoDtoSearch suche);
+		bool FreeTitles(VideoDtoLoan ausleihe);
 		// Lese alle Daten der Tabelle
 		void ReadVideos(VideoDtoSearch videoSearch, out DataTable dataTable);
 		// Lese nur geänderte Einträge der Tabelle
 		void ReadVideo(VideoDtoLoan videoLoan, out DataTable dataTable);
 	}
+}
 }

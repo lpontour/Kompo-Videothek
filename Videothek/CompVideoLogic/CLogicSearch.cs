@@ -294,6 +294,26 @@ namespace VideoLogic
 			return Util.ToArray(listReturnDate);
 		}
 
+		//Liest Verfügbare Filme aus
+		public bool FreeTitles(VideoDtoLoan ausleihe)
+		{
+			ReadVideo(ausleihe, out DataTable dataTable);
+			if (dataTable.Rows.Count == 0)
+			{
+				return false;
+			}
+			foreach (DataRow row in dataTable.Rows)
+			{
+				string borrower = row["Borrower"].ToString();
+				DateTime returnDate = Util.ParseDate(row["ReturnDate"].ToString(), DateTime.Now);
+				if (borrower == "" && returnDate == Util.ParseDate("01.01.2001", DateTime.Now))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
 		#endregion
 	}
 }
