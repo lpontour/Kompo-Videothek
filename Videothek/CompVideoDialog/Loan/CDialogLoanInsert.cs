@@ -41,12 +41,18 @@ namespace VideoDialog.Loan
             if (textBoxBorrower.Text == "" || textBoxReturnDate.Text == "")
             {
                 MessageBox.Show("Ausleihender und Rückgabedatum müssen angegeben werden.", "Hinweis: Neue Ausleihe",
-                   MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             // Prüft, ob Titel und ID leer sind
             else if (textBoxID.Text == "" && textBoxTitle.Text == "")
             {
                 MessageBox.Show("ID oder Titel des Film muss noch angegeben werden.", "Hinweis: Neue Ausleihe",
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            //
+            else if (Util.ParseInt(textBoxID.Text,0)==0)
+            {
+                MessageBox.Show("Bitte gib die ID nochmal ein.", "Hinweis: Neue Ausleihe",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             // wenn Eingabe in Ordnung, wird diese weitrgegeben
