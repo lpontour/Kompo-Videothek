@@ -332,7 +332,7 @@ namespace VideoData
                 {
                     dbCommand.CommandText += $"WHERE Title = @Title";
                     AData.AddParameter(dbCommand, "@Title", video.Title);
-                    dbCommand.CommandText += $"And Borrower = @OldBorrower";
+                    dbCommand.CommandText += $" And Borrower = @OldBorrower";
                     AData.AddParameter(dbCommand, "@OldBorrower", video.Borrower);
                 }
                 else
