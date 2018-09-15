@@ -43,12 +43,13 @@ namespace VideoLogic
 
 		public object[] ReadID(VideoDtoSearch value)
 		{
-			IList<int> listID = new List<int>();
+			List<int> listID = new List<int>();
 			ReadVideos(value, out DataTable dataTable);
 			foreach (DataRow row in dataTable.Rows)
 			{
 				string id = row["ID"].ToString();
 				listID.Add(Util.ParseInt(id, 0));
+				listID.Sort();
 			}
 			if (listID == null)
 				throw new CDataException("ID-Liste ist leer");
@@ -64,9 +65,11 @@ namespace VideoLogic
 				throw new CDataException("ID-Liste ist leer");
 			return Util.ToArray(listID);
 		}
+
+		//Liest alla Titel aus
 		public object[] ReadTitle(VideoDtoSearch value)
 		{
-			IList<string> listTitle = new List<string>();
+			List<string> listTitle = new List<string>();
 			ReadVideos(value, out DataTable dataTable);
 			foreach (DataRow row in dataTable.Rows)
 			{
@@ -74,6 +77,7 @@ namespace VideoLogic
 				if (!listTitle.Contains(title))
 				{
 					listTitle.Add(title);
+					listTitle.Sort();
 				}
 			}
 			if (listTitle == null)
@@ -81,7 +85,7 @@ namespace VideoLogic
 			return Util.ToArray(listTitle);
 		}
 
-		//Liest alla Titel aus
+
 		public object[] ReadTitle(string value)
 		{
 			IList<string> listTitle = null;
@@ -91,9 +95,10 @@ namespace VideoLogic
 			return Util.ToArray(listTitle);
 		}
 
+		//Liest alle Genre aus
 		public object[] ReadGenre(VideoDtoSearch value)
 		{
-			IList<string> listGenre = new List<string>();
+			List<string> listGenre = new List<string>();
 			ReadVideos(value, out DataTable dataTable);
 			foreach (DataRow row in dataTable.Rows)
 			{
@@ -101,6 +106,7 @@ namespace VideoLogic
 				if (!listGenre.Contains(genre))
 				{
 					listGenre.Add(genre);
+					listGenre.Sort();
 				}
 			}
 			if (listGenre == null)
@@ -108,7 +114,7 @@ namespace VideoLogic
 			return Util.ToArray(listGenre);
 		}
 
-		//Liest alle Genre aus
+
 		public object[] ReadGenre(string value)
 		{
 			IList<string> listGenre = null;
@@ -118,9 +124,10 @@ namespace VideoLogic
 			return Util.ToArray(listGenre);
 		}
 
+		//Liest alle Preise aus
 		public object[] ReadBorrowingRate(VideoDtoSearch value)
 		{
-			IList<double> listBorrowingRate = new List<double>();
+			List<double> listBorrowingRate = new List<double>();
 			ReadVideos(value, out DataTable dataTable);
 			foreach (DataRow row in dataTable.Rows)
 			{
@@ -128,6 +135,7 @@ namespace VideoLogic
 				if (!listBorrowingRate.Contains(Util.ParseDouble(borrowingRate, 0.0)))
 				{
 					listBorrowingRate.Add(Util.ParseDouble(borrowingRate, 0.0));
+					listBorrowingRate.Sort();
 				}
 			}
 			if (listBorrowingRate == null)
@@ -135,7 +143,7 @@ namespace VideoLogic
 			return Util.ToArray(listBorrowingRate);
 		}
 
-		//Liest alle Preise aus
+
 		public object[] ReadBorrowingRate(string value)
 		{
 			IList<double> listBorrowingRate = null;
@@ -145,9 +153,10 @@ namespace VideoLogic
 			return Util.ToArray(listBorrowingRate);
 		}
 
+		//Liest alle Release Daten aus
 		public object[] ReadReleaseYear(VideoDtoSearch value)
 		{
-			IList<int> listReleaseYear = new List<int>();
+			List<int> listReleaseYear = new List<int>();
 			ReadVideos(value, out DataTable dataTable);
 			foreach (DataRow row in dataTable.Rows)
 			{
@@ -155,6 +164,7 @@ namespace VideoLogic
 				if (!listReleaseYear.Contains(Util.ParseInt(releaseYear, 0)))
 				{
 					listReleaseYear.Add(Util.ParseInt(releaseYear, 0));
+					listReleaseYear.Sort();
 				}
 			}
 			if (listReleaseYear == null)
@@ -162,7 +172,7 @@ namespace VideoLogic
 			return Util.ToArray(listReleaseYear);
 		}
 
-		//Liest alle Releas Daten aus
+
 		public object[] ReadReleaseYear(string value)
 		{
 			IList<int> listReleaseYear = null;
@@ -172,9 +182,10 @@ namespace VideoLogic
 			return Util.ToArray(listReleaseYear);
 		}
 
+		//Liest alle Laufzeiten aus
 		public object[] ReadRunningTime(VideoDtoSearch value)
 		{
-			IList<int> listRunningTime = new List<int>();
+			List<int> listRunningTime = new List<int>();
 			ReadVideos(value, out DataTable dataTable);
 			foreach (DataRow row in dataTable.Rows)
 			{
@@ -182,6 +193,7 @@ namespace VideoLogic
 				if (!listRunningTime.Contains(Util.ParseInt(runningTime, 0)))
 				{
 					listRunningTime.Add(Util.ParseInt(runningTime, 0));
+					listRunningTime.Sort();
 				}
 			}
 			if (listRunningTime == null)
@@ -189,7 +201,7 @@ namespace VideoLogic
 			return Util.ToArray(listRunningTime);
 		}
 
-		//Liest alle Laufzeiten aus
+
 		public object[] ReadRunningTime(string value)
 		{
 			IList<int> listRunningTime = null;
@@ -199,9 +211,10 @@ namespace VideoLogic
 			return Util.ToArray(listRunningTime);
 		}
 
+		//Liest die FSK aus
 		public object[] ReadRated(VideoDtoSearch value)
 		{
-			IList<int> listRated = new List<int>();
+			List<int> listRated = new List<int>();
 			ReadVideos(value, out DataTable dataTable);
 			foreach (DataRow row in dataTable.Rows)
 			{
@@ -209,6 +222,7 @@ namespace VideoLogic
 				if (!listRated.Contains(Util.ParseInt(rated, 1)))
 				{
 					listRated.Add(Util.ParseInt(rated, 1));
+					listRated.Sort();
 				}
 			}
 			if (listRated == null)
@@ -216,7 +230,7 @@ namespace VideoLogic
 			return Util.ToArray(listRated);
 		}
 
-		//Liest die FSK aus
+
 		public object[] ReadRated(string value)
 		{
 			IList<int> listRated = null;
@@ -226,9 +240,10 @@ namespace VideoLogic
 			return Util.ToArray(listRated);
 		}
 
+		//Gibt alle Ausleihenden aus
 		public object[] ReadBorrower(VideoDtoSearch value)
 		{
-			IList<string> listBorrower = new List<string>();
+			List<string> listBorrower = new List<string>();
 			ReadVideos(value, out DataTable dataTable);
 			foreach (DataRow row in dataTable.Rows)
 			{
@@ -236,6 +251,7 @@ namespace VideoLogic
 				if (!listBorrower.Contains(borrower))
 				{
 					listBorrower.Add(borrower);
+					listBorrower.Sort();
 				}
 			}
 			if (listBorrower == null)
@@ -243,7 +259,7 @@ namespace VideoLogic
 			return Util.ToArray(listBorrower);
 		}
 
-		//Gibt alle Ausleihenden aus
+
 		public object[] ReadBorrower(string value)
 		{
 			IList<string> listBorrower = null;
@@ -251,9 +267,10 @@ namespace VideoLogic
 			return Util.ToArray(listBorrower);
 		}
 
+		//Gibt das Rückgabedatum zurück
 		public object[] ReadReturnDate(VideoDtoSearch value)
 		{
-			IList<DateTime> listReturnDate = new List<DateTime>();
+			List<DateTime> listReturnDate = new List<DateTime>();
 			ReadVideos(value, out DataTable dataTable);
 			foreach (DataRow row in dataTable.Rows)
 			{
@@ -261,6 +278,7 @@ namespace VideoLogic
 				if (!listReturnDate.Contains(Util.ParseDate(returnDate, DateTime.MinValue)))
 				{
 					listReturnDate.Add(Util.ParseDate(returnDate, DateTime.MinValue));
+					listReturnDate.Sort();
 				}
 			}
 			if (listReturnDate == null)
@@ -268,7 +286,7 @@ namespace VideoLogic
 			return Util.ToArray(listReturnDate);
 		}
 
-		//Gibt das Rückgabedatum zurück
+
 		public object[] ReadReturnDate(string value)
 		{
 			IList<DateTime> listReturnDate = null;
