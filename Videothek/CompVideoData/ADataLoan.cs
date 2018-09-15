@@ -28,7 +28,7 @@ namespace VideoData
         #endregion
         #region interface IDataLoan
         //Initialisiert eine Verbindung
-        public void Init(DbProviderFactory dbProviderFactory,DbConnection dbConnection, DbCommand dbCommand)
+        public void Init(DbProviderFactory dbProviderFactory, DbConnection dbConnection, DbCommand dbCommand)
         {
             _dbProviderFactory = dbProviderFactory;
             _dbConnection = dbConnection;
@@ -39,7 +39,7 @@ namespace VideoData
         //Legt einen neuen Eintrag in die Datenbank an
         public int InsertLoan(Loan video)
         {
-            
+
             this.SqlInsertVideo(video, _dbCommand);
             AData.Open(_dbConnection);
             int nRecords = _dbCommand.ExecuteNonQuery();
@@ -67,12 +67,12 @@ namespace VideoData
         //Legt eine Neue Ausleihe an in dem ein eintrag verändert wird
         public int InsertVideoTable(VideoDtoLoan videoLoan)
         {
-           
-                this.SqlNewVideoLoan(videoLoan, _dbCommand);
-                AData.Open(_dbConnection);
-                int nRecords = _dbCommand.ExecuteNonQuery();
-                AData.Close(_dbConnection);
-                return nRecords;
+
+            this.SqlNewVideoLoan(videoLoan, _dbCommand);
+            AData.Open(_dbConnection);
+            int nRecords = _dbCommand.ExecuteNonQuery();
+            AData.Close(_dbConnection);
+            return nRecords;
         }
         //Verändert eine Ausleihe
         public int UpdateVideoTable(VideoDtoLoan videoLoan, DateTime returnDate)
@@ -112,20 +112,20 @@ namespace VideoData
         {
             dbCommand.CommandType = CommandType.Text;
             dbCommand.Parameters.Clear();
-                dbCommand.CommandText = $"UPDATE VideoTable " +
-                   $"SET " +
-                   $"Borrower = ?, ReturnDate = ? " +
-                   $"WHERE ID = ?;";
-                dbCommand.Parameters.Clear();
-                AData.AddParameter(dbCommand, "Borrower", video.Borrower);
-                AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
-                AData.AddParameter(dbCommand, "ID", video.ID);
-  
+            dbCommand.CommandText = $"UPDATE VideoTable " +
+               $"SET " +
+               $"Borrower = ?, ReturnDate = ? " +
+               $"WHERE ID = ?;";
+            dbCommand.Parameters.Clear();
+            AData.AddParameter(dbCommand, "Borrower", video.Borrower);
+            AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
+            AData.AddParameter(dbCommand, "ID", video.ID);
+
         }
         //Erstellt den SQL Befehl für das Erstellen einer neuen Ausleihe und setzt ihn in DbCommand command ein
         protected void SqlNewVideoLoan(Loan video, DbCommand dbCommand)
         {
-            if(video.ID!=0)
+            if (video.ID != 0)
             {
                 dbCommand.CommandType = CommandType.Text;
                 dbCommand.Parameters.Clear();
@@ -145,7 +145,7 @@ namespace VideoData
                 dbCommand.CommandText = $"UPDATE VideoTable " +
                    $"SET " +
                    $"Borrower = ?, ReturnDate = ? " +
-                   $"WHERE Title = ?"+
+                   $"WHERE Title = ?" +
                    $"And Borrower =?";
                 dbCommand.Parameters.Clear();
                 AData.AddParameter(dbCommand, "Borrower", video.Borrower);
@@ -202,7 +202,7 @@ namespace VideoData
                     dbCommand.CommandText += $" AND ReturnDate <= @TillReturnDate;";
                     AData.AddParameter(dbCommand, "@TillReturnDate", video.ReturnDate.ToString("G"));
                 }
-            }       
+            }
         }
         //Erstellt den SQL Befehl für das anpassen eines Eintrages und setzt ihn in DbCommand command ein
         protected void SqlUptadeVideoLoan(Loan video, DbCommand dbCommand)
@@ -221,15 +221,24 @@ namespace VideoData
             }
             else
             {
-                    dbCommand.CommandType = CommandType.Text;
-                    dbCommand.Parameters.Clear();
-                    dbCommand.CommandText = $"UPDATE VideoTable " +
-                       $"SET " +
-                       $"ReturnDate = ? " +
-                       $"WHERE Borrower = ? ";
-                    dbCommand.Parameters.Clear();
-                    AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
-                    AData.AddParameter(dbCommand, "Borrower", video.Borrower);
+                dbCommand.CommandType = CommandType.Text;
+                dbCommand.Parameters.Clear();
+                dbCommand.CommandText = @"UPDATE VideoTable ";
+                dbCommand.CommandText += "SET ";
+                dbCommand.CommandText += "ReturnDate = @newReturnDate ";
+                AData.AddParameter(dbCommand, "@newReturnDate", video.ReturnDate);
+                if (video.Title != "" && video.Title != null)
+                {
+                    dbCommand.CommandText += $"WHERE Title = @Title";
+                    AData.AddParameter(dbCommand, "@Title", video.Title);
+                    dbCommand.CommandText += $" And Borrower = @Borrower";
+                    AData.AddParameter(dbCommand, "@Borrower", video.Borrower);
+                }
+                else
+                {
+                    dbCommand.CommandText += $"WHERE Borrower = @Borrower";
+                    AData.AddParameter(dbCommand, "@Borrower", video.Borrower);
+                }
             }
         }
         #endregion
