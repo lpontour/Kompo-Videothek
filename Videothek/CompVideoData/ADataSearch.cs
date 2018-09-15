@@ -26,14 +26,15 @@ namespace VideoData
         }
         #endregion
         #region interface ISearch methods
-        public void Init(DbProviderFactory dbProviderFactory,
-           DbConnection dbConnection, DbCommand dbCommand)
+        //Initialisiert eine Verbindung
+        public void Init(DbProviderFactory dbProviderFactory, DbConnection dbConnection, DbCommand dbCommand)
         {
             _dbProviderFactory = dbProviderFactory;
             _dbConnection = dbConnection;
             _dbCommand = dbCommand;
         }
-
+        //Gibt eine Liste der Genres anhand eines strignes zurück
+        //Fals ein leerer string kommt werden alle Genres ausgegeben
         public void ReadGenre(string genre, out IList<string> listGenre)
         {
             listGenre = new List<string>();
@@ -48,7 +49,7 @@ namespace VideoData
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
         }
-
+        //Gibt eine Liste der Videos anhand einer VideoDtoSearch
         public void ReadVideos(VideoDtoSearch videoSearch, out IList<Loan> videos)
         {
             videos = new List<Loan>();
@@ -73,7 +74,7 @@ namespace VideoData
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
         }
-
+        //Gibt eine Daten Tabelle der Videos anhand einer VideoDtoSearch
         public void ReadVideos(VideoDtoSearch videoSearch, out DataTable dataTableVideos)
         {
             dataTableVideos = new DataTable("Videos");
@@ -85,7 +86,8 @@ namespace VideoData
             int records = dbDataAdapter.Fill(dataTableVideos);
             AData.Close(_dbConnection);
         }
-
+        //Gibt eine Liste der Ausleiher anhand eines strignes zurück
+        //Fals ein leerer string kommt werden alle Ausleiher ausgegeben
         public void ReadBorrower(string borrower, out IList<string> ListBorrower)
         {
             ListBorrower = new List<string>();
@@ -107,7 +109,8 @@ namespace VideoData
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
         }
-
+        //Gibt eine Liste der Preise anhand eines strignes zurück
+        //Fals ein leerer string kommt werden alle Preise ausgegeben
         public void ReadBorrowingRate(string BorrowingRate, out IList<double> ListBorrowingRate)
         {
             ListBorrowingRate = new List<double>();
@@ -129,7 +132,8 @@ namespace VideoData
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
         }
-
+        //Gibt eine Liste der IDs anhand eines strignes zurück
+        //Fals ein leerer string kommt werden alle IDs ausgegeben
         public void ReadID(string ID, out IList<int> ListID)
         {
             ListID = new List<int>();
@@ -146,7 +150,8 @@ namespace VideoData
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
         }
-
+        //Gibt eine Liste der Altersfreigaben anhand eines strignes zurück
+        //Fals ein leerer string kommt werden alle Altersfreigaben ausgegeben
         public void ReadRated(string Rated, out IList<int> ListRated)
         {
             ListRated = new List<int>();
@@ -163,7 +168,8 @@ namespace VideoData
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
         }
-
+        //Gibt eine Liste der Erscheinungsjahre anhand eines strignes zurück
+        //Fals ein leerer string kommt werden alle Erscheinungsjahre ausgegeben
         public void ReadReleaseYear(string ReleaseYear, out IList<int> ListReleaseYear)
         {
             ListReleaseYear = new List<int>();
@@ -180,7 +186,8 @@ namespace VideoData
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
         }
-
+        //Gibt eine Liste der Rückgabedaten anhand eines strignes zurück
+        //Fals ein leerer string kommt werden alle Rückgabedaten ausgegeben
         public void ReadReturnDate(string ReturnDate, out IList<DateTime> ListReturnDate)
         {
             ListReturnDate = new List<DateTime>();
@@ -211,7 +218,8 @@ namespace VideoData
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
         }
-
+        //Gibt eine Liste der Laufzeiten anhand eines strignes zurück
+        //Fals ein leerer string kommt werden alle Rückgabedaten ausgegeben
         public void ReadRunningTime(string RunningTime, out IList<int> ListRunningTime)
         {
             ListRunningTime = new List<int>();
@@ -228,7 +236,8 @@ namespace VideoData
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
         }
-
+        //Gibt eine Liste der Titel anhand eines strignes zurück
+        //Fals ein leerer string kommt werden alle Titel ausgegeben
         public void ReadTitle(string Title, out IList<string> ListTitle)
         {
             ListTitle = new List<string>();
@@ -243,22 +252,9 @@ namespace VideoData
             if (!dbDataReader.IsClosed) dbDataReader.Close();
             AData.Close(_dbConnection);
         }
-
-        public void ReadTitle(string Title, out DataTable dataTableVideos)
-        {
-            dataTableVideos = new DataTable("Videos");
-            AData.Open(_dbConnection);
-            DbDataAdapter dbDataAdapter = _dbProviderFactory.CreateDataAdapter();
-            this.SqlGetTitle(Title, _dbCommand);
-            _dbCommand.Connection = _dbConnection;
-            dbDataAdapter.SelectCommand = _dbCommand;
-            int records = dbDataAdapter.Fill(dataTableVideos);
-            AData.Close(_dbConnection);
-        }
-
-
         #endregion
         #region virtual methods      
+        //Erstellt den SQL Befehl für das Ausgeben der Genres und setzt ihn in DbCommand command ein
         protected virtual void SqlGetGenre(string genre, DbCommand dbCommand)
         {
             if (genre != "")
@@ -276,7 +272,7 @@ namespace VideoData
                 dbCommand.CommandType = CommandType.Text;
             }
         }
-
+        //Erstellt den SQL Befehl für das Ausgeben der Ausleiher und setzt ihn in DbCommand command ein
         protected virtual void SqlGetBorrower(string borrower, DbCommand dbCommand)
         {
             if (borrower != "")
@@ -294,7 +290,7 @@ namespace VideoData
                 dbCommand.CommandType = CommandType.Text;
             }
         }
-
+        //Erstellt den SQL Befehl für das Ausgeben der Preise und setzt ihn in DbCommand command ein
         protected virtual void SqlGetBorrowingRate(double borrowingRate, DbCommand dbCommand)
         {
             if (borrowingRate != 0.0)
@@ -313,7 +309,7 @@ namespace VideoData
 
             }
         }
-
+        //Erstellt den SQL Befehl für das Ausgeben der IDs und setzt ihn in DbCommand command ein
         protected virtual void SqlGetID(int ID, DbCommand dbCommand)
         {
             if (ID != 0)
@@ -331,7 +327,7 @@ namespace VideoData
                 dbCommand.CommandType = CommandType.Text;
             }
         }
-
+        //Erstellt den SQL Befehl für das Ausgeben der Altersfreigaben und setzt ihn in DbCommand command ein
         protected virtual void SqlGetRated(int rated, DbCommand dbCommand)
         {
             if (rated != 0)
@@ -349,7 +345,7 @@ namespace VideoData
                 dbCommand.CommandType = CommandType.Text;
             }
         }
-
+        //Erstellt den SQL Befehl für das Ausgeben der Erscheinungsjahre und setzt ihn in DbCommand command ein
         protected virtual void SqlGetReleaseYear(int releaseYear, DbCommand dbCommand)
         {
             if (releaseYear != 0)
@@ -367,7 +363,7 @@ namespace VideoData
                 dbCommand.CommandType = CommandType.Text;
             }
         }
-
+        //Erstellt den SQL Befehl für das Ausgeben der Rückgabedaten und setzt ihn in DbCommand command ein
         protected virtual void SqlGetReturnDate(DateTime returnDate, DbCommand dbCommand)
         {
             if (returnDate != DateTime.MinValue)
@@ -386,7 +382,7 @@ namespace VideoData
 
             }
         }
-
+        //Erstellt den SQL Befehl für das Ausgeben der Laufzeiten und setzt ihn in DbCommand command ein
         protected virtual void SqlGetRunningTime(int runningTime, DbCommand dbCommand)
         {
             if (runningTime != 0)
@@ -404,7 +400,7 @@ namespace VideoData
                 dbCommand.CommandType = CommandType.Text;
             }
         }
-
+        //Erstellt den SQL Befehl für das Ausgeben der Title und setzt ihn in DbCommand command ein
         protected virtual void SqlGetTitle(string title, DbCommand dbCommand)
         {
             if (title != "")
@@ -423,7 +419,7 @@ namespace VideoData
             }
 
         }
-
+        //Erstellt den SQL Befehl für das Ausgeben der Videos und setzt ihn in DbCommand command ein
         protected virtual void SqlSelectVideo(VideoDtoSearch videoSearch, DbCommand dbCommand)
         {
             dbCommand.CommandType = CommandType.Text;
@@ -559,9 +555,7 @@ namespace VideoData
 
             dbCommand.CommandText += " ORDER BY ID;";
 
-
-            #endregion
-
         }
+        #endregion
     }
 }

@@ -9,8 +9,7 @@ namespace VideoData.Access
     internal class CDataSearch : ADataSearch
     {
         #region ctor
-        internal CDataSearch(AData data)
-           : base(data)
+        internal CDataSearch(AData data): base(data)
         {
         }
         #endregion
