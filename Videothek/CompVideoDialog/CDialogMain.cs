@@ -193,7 +193,7 @@ namespace VideoDialog
                         _videoLoan = DialogLoanUpdate.VideoDtoLoan;
                         _videoLoanExisting.ID = _videoLoan.ID;
                         _videoLoanExisting.Title = _videoLoan.Title;
-                        _videoLoanExisting.Borrower = "";
+                        _videoLoanExisting.Borrower = _videoLoan.Borrower;
 
                         _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
 
@@ -210,12 +210,6 @@ namespace VideoDialog
                             if ((_videoLoan.ID != 0) && (borrower == "") && (returnDate == Util.ParseDate("01.01.2001", DateTime.Now)))
                             {
                                 MessageBox.Show("Film ist nicht ausgeliehen.", "Hinweis: Neue Ausleihe",
-                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                return;
-                            }
-                            if ((_videoLoan.ID != 0) && (_videoLoan.Borrower != "") && (borrower != _videoLoan.Borrower))
-                            {
-                                MessageBox.Show("Angegebene Person hat den Film nicht ausgeliehen.", "Hinweis: Neue Ausleihe",
                                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                 return;
                             }
@@ -261,7 +255,7 @@ namespace VideoDialog
                         _videoLoan = DialogLoanDelete.VideoDtoLoan;
                         _videoLoanExisting.ID = _videoLoan.ID;
                         _videoLoanExisting.Title = _videoLoan.Title;
-                        _videoLoanExisting.Borrower = "";
+                        _videoLoanExisting.Borrower = _videoLoan.Borrower;
 
                         _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
 
@@ -273,8 +267,10 @@ namespace VideoDialog
                         }
 
                         _videoLoan = DialogLoanDelete.VideoDtoLoan;
-                        _logic.Loan.DeleteVideoTable(_videoLoan);
+
                         _logic.Search.ReadVideo(_videoLoan, out dataTable);
+                        _logic.Loan.DeleteVideoTable(_videoLoan);
+
                         DialogSearchResult.ResultTable = dataTable;
                         dialogResult = DialogSearchResult.ShowDialog();
 
