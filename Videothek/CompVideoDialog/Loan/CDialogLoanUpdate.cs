@@ -36,21 +36,26 @@ namespace VideoDialog.Loan
         #region Eventhandler
         private void ButtonConfirm_Click(object sender, EventArgs e)
         {
+            // Prüfen erlaubter Eingabekombinationen
+            // Prüfen, ob Rückgabedatum als Pflichtfeld gefüllt ist
             if (textBoxReturnDate.Text == "")
             {
                 MessageBox.Show("Das Rückgabedatum muss angegeben werden.", "Hinweis: Ausleihe ändern",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+            // Prüft, ob mehr als nur das Datum angegeben ist
             else if (textBoxID.Text == "" && textBoxTitle.Text == "" && textBoxBorrower.Text == "")
             {
                 MessageBox.Show("ID, Titel oder Ausleihender muss angegeben werden.", "Hinweis: Ausleihe ändern",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+            // Prüft, ob zum Datum und zum Titel zusätzlich noch ID oder Ausleihender eingetragen wurden
             else if (textBoxID.Text == "" && textBoxBorrower.Text == "" && !(textBoxTitle.Text == "") && !(textBoxReturnDate.Text == ""))
             {
                 MessageBox.Show("ID oder Ausleihender muss angegeben werden.", "Hinweis: Ausleihe ändern",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+            // wenn Eingabe in Ordnung, wird diese weitrgegeben
             else
             {
                 VideoDtoLoan videoLoan = _dialogMain.VideoLoan;
@@ -66,6 +71,11 @@ namespace VideoDialog.Loan
 
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
+            // Schließen des Fensters und leeren der Felder
+            textBoxID.Text = "";
+            textBoxTitle.Text = "";
+            textBoxBorrower.Text = "";
+            textBoxReturnDate.Text = "";
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }

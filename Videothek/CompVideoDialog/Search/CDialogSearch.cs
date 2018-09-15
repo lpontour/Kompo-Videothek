@@ -180,13 +180,16 @@ namespace VideoDialog.Search
 
         private void FillUnselectedBoxes()
         {
+            // setzen der FSk auf 1, stellvertretend für den leeren Eintrag
             _videoSearch.Rated = 1;
+
             // Überprüfen, ob Combobox ID leer ist
             if (comboBoxID.Text == "")
             {
                 // Löschen der Itemliste und hinzufügen des leeren Eintrages
                 comboBoxID.Items.Clear();
                 comboBoxID.Items.Add("");
+                // 0 stellvertretend für den leeren Eintrag
                 _videoSearch.ID = 0;
             }
             else
@@ -224,6 +227,7 @@ namespace VideoDialog.Search
             {
                 comboBoxBorrowingRate.Items.Clear();
                 comboBoxBorrowingRate.Items.Add("");
+                // 0.0 stellvertretend für den leeren Eintrag
                 _videoSearch.BorrowingRate = 0.0;
             }
             else
@@ -236,6 +240,7 @@ namespace VideoDialog.Search
             {
                 comboBoxReleaseYear.Items.Clear();
                 comboBoxReleaseYear.Items.Add("");
+                // 0 stellvertretend für den leeren Eintrag
                 _videoSearch.ReleaseYear = 0;
             }
             else
@@ -248,6 +253,7 @@ namespace VideoDialog.Search
             {
                 comboBoxRunningTime.Items.Clear();
                 comboBoxRunningTime.Items.Add("");
+                // 0 stellvertretend für den leeren Eintrag
                 _videoSearch.RunningTime = 0;
             }
             else
@@ -258,9 +264,10 @@ namespace VideoDialog.Search
             // Überprüfen, ob Combobox FSK leer ist
             if (comboBoxRated.Text == "")
             {
-                _videoSearch.Rated = 1;
                 comboBoxRated.Items.Clear();
                 comboBoxRated.Items.Add("");
+                // 1 stellvertretend für den leeren Eintrag
+                _videoSearch.Rated = 1;
             }
             else
             {
@@ -284,6 +291,7 @@ namespace VideoDialog.Search
             {
                 comboBoxReturnDate.Items.Clear();
                 comboBoxReturnDate.Items.Add("");
+                // DateTime.MinValue(1.1.2001) stellvertretend für den leeren Eintrag
                 _videoSearch.ReturnDate = DateTime.MinValue;
             }
             else
@@ -291,38 +299,47 @@ namespace VideoDialog.Search
                 _videoSearch.ReturnDate = Util.ParseDate(comboBoxBorrowingRate.Text, DateTime.MinValue);
             }
 
+            // Wenn ID leer, dann füllen der Combobox-Items mit Werten aus der Datenbank
             if (comboBoxID.Text == "")
             {
                 comboBoxID.Items.AddRange(_logicSearch.ReadID(_videoSearch));
             }
+            // Wenn Titel leer, dann füllen der Combobox-Items mit Werten aus der Datenbank
             if (comboBoxTitle.Text == "")
             {
                 comboBoxTitle.Items.AddRange(_logicSearch.ReadTitle(_videoSearch));
             }
+            // Wenn Genre leer, dann füllen der Combobox-Items mit Werten aus der Datenbank
             if (comboBoxGenre.Text == "")
             {
                 comboBoxGenre.Items.AddRange(_logicSearch.ReadGenre(_videoSearch));
             }
+            // Wenn Preis leer, dann füllen der Combobox-Items mit Werten aus der Datenbank
             if (comboBoxBorrowingRate.Text == "")
             {
                 comboBoxBorrowingRate.Items.AddRange(_logicSearch.ReadBorrowingRate(_videoSearch));
             }
+            // Wenn Erscheinungsjahr leer, dann füllen der Combobox-Items mit Werten aus der Datenbank
             if (comboBoxReleaseYear.Text == "")
             {
                 comboBoxReleaseYear.Items.AddRange(_logicSearch.ReadReleaseYear(_videoSearch));
             }
+            // Wenn Laufzeit leer, dann füllen der Combobox-Items mit Werten aus der Datenbank
             if (comboBoxRunningTime.Text == "")
             {
                 comboBoxRunningTime.Items.AddRange(_logicSearch.ReadRunningTime(_videoSearch));
             }
+            // Wenn FSK leer, dann füllen der Combobox-Items mit Werten aus der Datenbank
             if (comboBoxRated.Text == "")
             {
                 comboBoxRated.Items.AddRange(_logicSearch.ReadRated(_videoSearch));
             }
+            // Wenn Ausleihender leer, dann füllen der Combobox-Items mit Werten aus der Datenbank
             if (comboBoxBorrower.Text == "")
             {
                 comboBoxBorrower.Items.AddRange(_logicSearch.ReadBorrower(_videoSearch));
             }
+            // Wenn Rückgabedatum leer, dann füllen der Combobox-Items mit Werten aus der Datenbank
             if (comboBoxReturnDate.Text == "")
             {
                 comboBoxReturnDate.Items.AddRange(_logicSearch.ReadReturnDate(_videoSearch));
@@ -336,6 +353,7 @@ namespace VideoDialog.Search
 
         private void CDialogSearch_Load(object sender, EventArgs e)
         {
+            // leeren aller Comboboxen zu beginn
             comboBoxID.Text = "";
             comboBoxTitle.Text = "";
             comboBoxGenre.Text = "";

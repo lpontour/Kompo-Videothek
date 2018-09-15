@@ -11,6 +11,7 @@ namespace VideoDialog.Factories
 {
     public abstract class AFactoryDialogLoan
     {
+        // Erstellen CDialogLoanInsert fürs Insert
         public static void LoanInsertCreate(ILogic logic, IDialog dialogMain)
         {
             if (dialogMain is CDialogMain)
@@ -18,6 +19,8 @@ namespace VideoDialog.Factories
                 (dialogMain as CDialogMain).DialogLoanInsert = new CDialogLoanInsert(logic, dialogMain);
             }
         }
+
+        // Erstellen CDialogLoanUpdate fürs Update
         public static void LoanUpdateCreate(ILogic logic, IDialog dialogMain)
         {
             if (dialogMain is CDialogMain)
@@ -25,6 +28,8 @@ namespace VideoDialog.Factories
                 (dialogMain as CDialogMain).DialogLoanUpdate = new CDialogLoanUpdate(logic, dialogMain);
             }
         }
+
+        // Erstellen CDialogLoanDelete fürs Delete
         public static void LoanDeleteCreate(ILogic logic, IDialog dialogMain)
         {
             if (dialogMain is CDialogMain)
