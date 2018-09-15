@@ -4,6 +4,7 @@ namespace VideoLogic.Utils
 {
     public class VideoDtoSearch
     {
+		//Stellt die Propertis für die Suche zur Verfügung
 		public int ID { get; set; }
 		public string Title { get; set; }
 		public string Genre { get; set; }

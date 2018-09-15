@@ -7,6 +7,7 @@ namespace VideoLogic
 {
     public interface ILogicSearch
     {
+		//Das Suchen Interface
 		object[] ReadID(string ID);
 		object[] ReadTitle(string Title);
 		object[] ReadGenre(string Genre);

@@ -10,6 +10,7 @@ namespace VideoLogic
 {
     public interface ILogicLoan
     {
+		//Das Leihen Interface
 		int InsertVideoTable(VideoDtoLoan videoLoan);
 		int UpdateVideoTable(VideoDtoLoan videoLoan);
 		int DeleteVideoTable(VideoDtoLoan videoLoan);

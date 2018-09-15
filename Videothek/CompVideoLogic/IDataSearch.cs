@@ -7,6 +7,7 @@ namespace VideoLogic
 {
     public interface IDataSearch
     {
+		//Das Suchen Interface
 		void ReadID(string ID, out IList<int> ListID);
 		void ReadTitle(string Title, out IList<string> ListTitle);
 		void ReadGenre(string Genre, out IList<string> ListGenre);

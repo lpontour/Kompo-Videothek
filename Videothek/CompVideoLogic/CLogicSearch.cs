@@ -20,12 +20,13 @@ namespace VideoLogic
 		#endregion
 
 		#region interface ILogicSearch methods
-
+		//Sucht nach einem Video
 		public void ReadVideos(VideoDtoSearch videoSearch, out DataTable datatable)
 		{
 			_dataSearch.ReadVideos(videoSearch, out datatable);
 		}
 
+		//Sucht mit Filtern nach einem Video
 		public void ReadVideo(VideoDtoLoan videoLoan, out DataTable dataTable)
 		{
 			VideoDtoSearch videoSearch = new VideoDtoSearch()
@@ -40,6 +41,7 @@ namespace VideoLogic
 
 		}
 
+		//Liest alle IDs aus
 		public object[] ReadID(string value)
 		{
 			IList<int> listID = null;
@@ -49,6 +51,8 @@ namespace VideoLogic
 			return Util.ToArray(listID);
 		}
 
+
+		//Liest alla Titel aus
 		public object[] ReadTitle(string value)
 		{
 			IList<string> listTitle = null;
@@ -58,6 +62,7 @@ namespace VideoLogic
 			return Util.ToArray(listTitle);
 		}
 
+		//Liest alle Genre aus
 		public object[] ReadGenre(string value)
 		{
 			IList<string> listGenre = null;
@@ -67,6 +72,7 @@ namespace VideoLogic
 			return Util.ToArray(listGenre);
 		}
 
+		//Liest alle Preise aus
 		public object[] ReadBorrowingRate(string value)
 		{
 			IList<double> listBorrowingRate = null;
@@ -76,6 +82,7 @@ namespace VideoLogic
 			return Util.ToArray(listBorrowingRate);
 		}
 
+		//Liest alle Releas Daten aus
 		public object[] ReadReleaseYear(string value)
 		{
 			IList<int> listReleaseYear = null;
@@ -85,6 +92,7 @@ namespace VideoLogic
 			return Util.ToArray(listReleaseYear);
 		}
 
+		//Liest alle Laufzeiten aus
 		public object[] ReadRunningTime(string value)
 		{
 			IList<int> listRunningTime = null;
@@ -94,6 +102,7 @@ namespace VideoLogic
 			return Util.ToArray(listRunningTime);
 		}
 
+		//Liest die FSK aus
 		public object[] ReadRated(string value)
 		{
 			IList<int> listRated = null;
@@ -103,21 +112,19 @@ namespace VideoLogic
 			return Util.ToArray(listRated);
 		}
 
+		//Gibt alle Ausleihenden aus
 		public object[] ReadBorrower(string value)
 		{
 			IList<string> listBorrower = null;
 			_dataSearch.ReadBorrower(value, out listBorrower);
-			//if (listBorrower == null)
-			//throw new CDataException("Ausleiherliste ist leer");
 			return Util.ToArray(listBorrower);
 		}
 
+		//Gibt das Rückgabedatum zurück
 		public object[] ReadReturnDate(string value)
 		{
 			IList<DateTime> listReturnDate = null;
 			_dataSearch.ReadReturnDate(value, out listReturnDate);
-			//if (listReturnDate == null)
-			//throw new CDataException("Rückgabedatumliste ist leer");
 			return Util.ToArray(listReturnDate);
 		}
 
