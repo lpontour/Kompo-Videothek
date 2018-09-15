@@ -42,10 +42,10 @@ namespace VideoDialog.Search
 
         private void CDialogSearchResult_Load(object sender, EventArgs e)
         {
-            // set datasource
+            // Daten werden eingetragen
             this.dataGridViewVideoTable.DataSource = ResultTable;
 
-            // column width auto
+            // Spaltenbreite wird automatisch ermittelt
             foreach (DataGridViewColumn dataGridViewColumn in this.dataGridViewVideoTable.Columns)
             {
                 dataGridViewColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
