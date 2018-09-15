@@ -320,30 +320,28 @@ namespace VideoData
             }
             else
             {
-                if (video.ReturnDate == DateTime.MinValue)
+                dbCommand.CommandType = CommandType.Text;
+                dbCommand.Parameters.Clear();
+                dbCommand.CommandText = @"UPDATE VideoTable ";
+                dbCommand.CommandText += "SET ";
+                dbCommand.CommandText += "Borrower = @NewBorrower, ";
+                AData.AddParameter(dbCommand, "@NewBorrower", "");
+                dbCommand.CommandText += "ReturnDate = @newReturnDate ";
+                AData.AddParameter(dbCommand, "@newReturnDate", DateTime.MinValue);
+                if (video.Title != "" && video.Title != null)
                 {
-                    dbCommand.CommandType = CommandType.Text;
-                    dbCommand.Parameters.Clear();
-                    dbCommand.CommandText = $"UPDATE VideoTable " +
-                       $"SET " +
-                       $"Borrower = ?, ReturnDate = ? " +
-                       $"WHERE Borrower = ?;";
-                    dbCommand.Parameters.Clear();
-                    AData.AddParameter(dbCommand, "Borrower", "");
-                    AData.AddParameter(dbCommand, "ReturnDate", video.ReturnDate);
-                    AData.AddParameter(dbCommand, "Borrower", video.Borrower);
-                }else
+                    dbCommand.CommandText += $"WHERE Title = @Title";
+                    AData.AddParameter(dbCommand, "@Title", video.Title);
+                    dbCommand.CommandText += $"And Borrower = @OldBorrower";
+                    AData.AddParameter(dbCommand, "@OldBorrower", video.Borrower);
+                }
+                else
                 {
-                    dbCommand.CommandType = CommandType.Text;
-                    dbCommand.Parameters.Clear();
-                    dbCommand.CommandText = @"UPDATE VideoTable ";
-                    dbCommand.CommandText += "SET ";
-                    dbCommand.CommandText += "Borrower = @NewBorrower, ";
-                    AData.AddParameter(dbCommand, "@NewBorrower", "");
-                    dbCommand.CommandText += "ReturnDate = @newReturnDate ";
-                    AData.AddParameter(dbCommand, "@newReturnDate", DateTime.MinValue);
                     dbCommand.CommandText += $"WHERE Borrower = @OldBorrower";
                     AData.AddParameter(dbCommand, "@OldBorrower", video.Borrower);
+                }
+                if (video.ReturnDate != DateTime.MinValue)
+                {
                     dbCommand.CommandText += $" AND ReturnDate >= @DateNow";
                     AData.AddParameter(dbCommand, "@DateNow", DateTime.MinValue.ToString("G"));
                     dbCommand.CommandText += $" AND ReturnDate <= @TillReturnDate;";
