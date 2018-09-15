@@ -349,7 +349,7 @@ namespace VideoDialog.Search
                 }
 
                 // Überprüft, ob Rückgabedatum leer und noch kein Item mit dem Namen vorhanden
-                if (comboBoxReturnDate.Text == "" && comboBoxReturnDate.FindStringExact(returnDate) == -1)
+                if (comboBoxReturnDate.Text == "" && comboBoxReturnDate.FindStringExact(returnDate) == -1 && (Util.ParseDate("1.1.2001", DateTime.MinValue)!= Util.ParseDate(returnDate, DateTime.MinValue)))
                 {
                     comboBoxReturnDate.Items.Add(returnDate);
                 }
@@ -593,11 +593,15 @@ namespace VideoDialog.Search
             // Weitergeben der Daten und schließen des Fensters
             this.VideoDtoSearch = videoSearch;
             this.DialogResult = DialogResult.OK;
+            // Zurücksetzen aller Combobox-Items, wenn Ergebnis erhalten
+            ResetAll();
             this.Close();
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
+            // Zurücksetzen der Combobox-Items wenn Fenster geschlossen wird
+            ResetAll();
             // Schließen des Fensters
             this.DialogResult = DialogResult.Cancel;
             this.Close();

@@ -99,10 +99,11 @@ namespace VideoDialog
 
                     if (dialogResult == DialogResult.OK)
                     {
-                        _videoLoanExisting = DialogLoanInsert.VideoDtoLoan;
+                        _videoLoan = DialogLoanInsert.VideoDtoLoan;
                         _videoLoanExisting.ID = _videoLoan.ID;
                         _videoLoanExisting.Title = _videoLoan.Title;
                         _videoLoanExisting.Borrower = "";
+
                         if (_videoLoan.ID == 0)
                         {
                             _logic.Search.ReadVideo(_videoLoanExisting, out dataTable);
