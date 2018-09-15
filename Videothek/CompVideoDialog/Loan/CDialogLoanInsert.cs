@@ -49,10 +49,10 @@ namespace VideoDialog.Loan
                 MessageBox.Show("ID oder Titel des Film muss noch angegeben werden.", "Hinweis: Neue Ausleihe",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            //
-            else if (Util.ParseInt(textBoxID.Text,0)==0)
+            // Prüft, ob die ID richtig umgewandelt werden konnte
+            else if (Util.ParseInt(textBoxID.Text,0)==0 && textBoxTitle.Text == "")
             {
-                MessageBox.Show("Bitte gib die ID nochmal ein.", "Hinweis: Neue Ausleihe",
+                MessageBox.Show("Es wurde eine falsche ID angegeben.", "Hinweis: Neue Ausleihe",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             // wenn Eingabe in Ordnung, wird diese weitrgegeben
